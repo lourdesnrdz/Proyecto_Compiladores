@@ -256,18 +256,23 @@ def p_funciones_especiales():
 	| dist_poisson
 	'''
 
-
-
-
-
-
-
-
-
-
-
-
-
+# empty
 def p_empty(p):
 	'''empty :'''
 	pass
+
+# Error rule for syntax errors
+def p_error(p):
+    # print("Syntax error in input!")
+    p[0] = "Invalid"
+
+# Build the parser
+yacc.yacc()
+
+file = sys.argv[1]
+f = open(file, 'r')
+data = f.read()
+f.close()
+yacc.parse(data)
+if yacc.parse(data) == "invalid":
+	print("Sintax error")
