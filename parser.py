@@ -205,7 +205,10 @@ def p_variables(p):
 	| variabe COMA variables '''
 
 
-
+# estatuto de escritura
+def p_escritura(p):
+	''' escritura : ESCRIBIR PARENT_A
+	'''
 
 
 
