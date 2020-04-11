@@ -24,3 +24,31 @@ reserved = {
 	'hasta' : 'HASTA',
 	'hacer' : 'HACER'
 }
+
+#tokens
+tokens = {
+	'CTE_I',
+	'CTE_F',
+	'CTE_CH',
+	'COMA',
+	'PUNTOCOMA',
+	'PARENT_A',
+	'PARENT_C',
+	'CORCHETE_A',
+	'CORCHETE_C',
+	'LLAVE_A',
+	'LLAVE_C',
+	'IGUAL',
+	'OR',
+	'AND',
+	'MAYORQUE',
+	'MENORQUE',
+	'MAYORIGUAL',
+	'MENORIGUAL',
+	'IGUALIGUAL',
+	'DIFERENTE',
+	'MAS',
+	'MENOS',
+	'POR',
+	'DIV'
+}
