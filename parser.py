@@ -103,16 +103,16 @@ def p_params(p):
 
 # tipos de estatutos
 def p_estatutos(p):
-	'''estatutos : asignacion estatutos_dos
-	| llamada estatutos_dos
-	| retorno estatutos_dos
-	| lectura estatutos_dos
-	| escritura estatutos_dos
-	| carga_datos estatutos_dos
-	| decision estatutos_dos
-	| ciclo_for estatutos_dos
-	| ciclo_while estatutos_dos
-	| funciones_especiales estatutos_dos
+	'''estatutos : asignacion estatutos_dos PUNTOCOMA
+	| llamada estatutos_dos PUNTOCOMA
+	| retorno estatutos_dos PUNTOCOMA
+	| lectura estatutos_dos PUNTOCOMA
+	| escritura estatutos_dos PUNTOCOMA
+	| carga_datos estatutos_dos PUNTOCOMA
+	| decision estatutos_dos PUNTOCOMA
+	| ciclo_for estatutos_dos PUNTOCOMA
+	| ciclo_while estatutos_dos PUNTOCOMA
+	| funciones_especiales estatutos_dos PUNTOCOMA
 	'''
 
 # llamar o no a estatutos
