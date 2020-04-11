@@ -192,11 +192,11 @@ def p_factor(p):
 
 # retorno de una funcion
 def p_retorno(p):
-	'''retorno : REGRESA PARENT_A expresion PARENT_C'''
+	'retorno : REGRESA PARENT_A expresion PARENT_C'
 
 # estatuto de lectura
 def p_lectura(p):
-	'''lectura : LEER PARENT_A variables PARENT_C'''
+	'lectura : LEER PARENT_A variables PARENT_C'
 
 
 # varias variables
@@ -207,15 +207,54 @@ def p_variables(p):
 
 # estatuto de escritura
 def p_escritura(p):
-	''' escritura : ESCRIBIR PARENT_A
+	'escritura : ESCRIBIR PARENT_A escr PARENT_C'
+
+# imprimir letrero o funcion
+def p_escritura_dos(p):
+	'''escritura_dos : LETRERO 
+	| EXPRESION
 	'''
 
+# imprimir uno o varios letreros o expresiones
+def p_escr(p):
+	'''escr : escritura_dos
+	| escritura_dos COMA escr
+	'''
 
+# estatuto de cargar archivo
+def p_carga_datos(p):
+	'carga_datos : CARGAARCHIVO PARENT_A ID COMA RUTA_ARCHIVO COMA CTE_I COMA CTE_I PARENT_C'
 
+# ESTATUTOS IF
+def p_decision(p):
+	'''decision : if 
+	| if else'''
 
+# condicion if
+def p_if(p):
+	'if : SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C'
 
+# condicion else
+def p_else(p):
+	'else : SINO LLAVE_A estatutos_dos LLAVE_C'
 
+# ciclo while
+def p_ciclo_while(p):
+	'ciclo_while : MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C'
 
+# ciclo for
+def p_ciclo_for(p):
+	'ciclo_for : DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C'
+
+# funciones especiales
+def p_funciones_especiales():
+	'''funciones_especiales : var_archivo
+	| media
+	| moda
+	| varianza
+	| dist_normal
+	| dist_poisson
+	'''
 
 
 
