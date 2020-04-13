@@ -62,7 +62,7 @@ def p_dimension(p):
 	'''
 
 # declaracion de variables
-def variable(p):
+def p_variable(p):
 	'''variable : ID
 	| ID dim
 	'''
@@ -76,7 +76,7 @@ def p_dim(p):
 # declaración para funciones
 # tipo simple o void
 def p_funcion(p):
-	'''funcion: FUNCION tipo_simple func_dos
+	'''funcion : FUNCION tipo_simple func_dos
 	| FUNCION VOID func_dos
 	'''
 # cuerpo de la funcion
@@ -153,7 +153,7 @@ def p_t_expresion(p):
 # expresiones logicas
 def p_g_expresion(p):
 	'''g_expresion : m_expresion
-	| m_expresion op_logicos mexpresion
+	| m_expresion op_logicos m_expresion
 	'''
 
 # operadores logicos
@@ -169,7 +169,8 @@ def p_op_logicos(p):
 # sumas o restas
 def p_m_expresion(p):
 	'''m_expresion : termino
-	| termino + m_expresion
+	| termino MAS m_expresion
+	| termino MENOS m_expresion
 	'''
 
 # multiplicacion y division
@@ -202,7 +203,7 @@ def p_lectura(p):
 # varias variables
 def p_variables(p):
 	'''variables : variable
-	| variabe COMA variables '''
+	| variable COMA variables '''
 
 
 # estatuto de escritura
@@ -212,7 +213,7 @@ def p_escritura(p):
 # imprimir letrero o funcion
 def p_escritura_dos(p):
 	'''escritura_dos : LETRERO 
-	| EXPRESION
+	| expresion
 	'''
 
 # imprimir uno o varios letreros o expresiones
@@ -247,7 +248,7 @@ def p_ciclo_for(p):
 	'ciclo_for : DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C'
 
 # funciones especiales
-def p_funciones_especiales():
+def p_funciones_especiales(p):
 	'''funciones_especiales : var_archivo
 	| media
 	| moda
@@ -255,16 +256,37 @@ def p_funciones_especiales():
 	| dist_normal
 	| dist_poisson
 	'''
+# var_archivo
+def p_var_archivo(p):
+	'''var_archivo : expresion'''
+
+# media
+def p_media(p):
+	'''media : expresion'''
+
+# moda
+def p_moda(p):
+	'''moda : expresion'''
+
+# varianza
+def p_varianza(p):
+	'''varianza : expresion'''
+
+# dist_normal
+def p_dist_normal(p):
+	'''dist_normal : expresion'''
+
+# dist_poisson
+def p_dist_poisson(p):
+	'''dist_poisson : expresion'''
 
 # empty
 def p_empty(p):
 	'''empty :'''
-	pass
 
 # Error rule for syntax errors
 def p_error(p):
-    # print("Syntax error in input!")
-    p[0] = "Invalid"
+    print("Syntax error in input!", p)
 
 # Build the parser
 yacc.yacc()
@@ -274,5 +296,5 @@ f = open(file, 'r')
 data = f.read()
 f.close()
 yacc.parse(data)
-if yacc.parse(data) == "invalid":
-	print("Sintax error")
+# if yacc.parse(data) == "invalid":
+# 	print("Sintax error")
