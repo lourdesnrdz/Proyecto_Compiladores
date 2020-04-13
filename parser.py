@@ -8,8 +8,7 @@ from scanner import tokens
 
 # funcion principal del programa
 def p_programa(p) :
-	'''programa : PROGRAMA ID PUNTOCOMA prog
-	'''
+	'programa : PROGRAMA ID PUNTOCOMA prog'
 	# p[0] = "Valid"
 
 # declarar o no variables y/o funciones
@@ -22,14 +21,18 @@ def p_prog(p):
 
 # funcion main
 def p_main(p):
-	'''main : PRINCIPAL PARENT_A PARENT_C LLAVE_A LLAVE_C
-	| PRINCIPAL PARENT_A PARENT_C LLAVE_A estatutos_dos LLAVE_C
-	'''
+	'main : PRINCIPAL PARENT_A PARENT_C dec_est'
+
+# # funcion main
+# def p_main(p):
+# 	'''main : PRINCIPAL PARENT_A PARENT_C LLAVE_A LLAVE_C
+# 	| PRINCIPAL PARENT_A PARENT_C LLAVE_A estatutos_dos LLAVE_C
+# 	'''
 
 # declaración de variables
 def p_dec_vars(p):
-	'''dec_vars : VAR vars
-	'''
+	'dec_vars : VAR vars'
+
 # declarar una o más variables
 def p_vars(p):
 	'''vars : tipo_simple ids_simple PUNTOCOMA
@@ -53,8 +56,7 @@ def p_ids_simple(p):
 
 # establecer las dimensiones para vectores o matrices
 def p_dimension(p):
-	'''dimension : CORCHETE_A CTE_I CORCHETE_C
-	'''
+	'dimension : CORCHETE_A CTE_I CORCHETE_C'
 
 # declaracion de variables
 def p_variable(p):
@@ -62,28 +64,29 @@ def p_variable(p):
 	| ID dim
 	'''
 
-# varias variables
+# declarar unao varias variables
 def p_variables(p):
 	'''variables : variable
-	| variable COMA variables '''
-
+	| variable COMA variables 
+	'''
 
 # establecer las dimensiones para vectores o matrices
 def p_dim(p):
 	'''dim : CORCHETE_A expresion CORCHETE_C
 	'''
 
-# declaración para funciones
+# declaración para una o varias funciones
 def p_dec_funciones(p):
 	'''dec_funciones : funcion
 	| funcion dec_funciones
 	'''
 
-# tipo simple o void
+# tipo simple o void para funciones
 def p_funcion(p):
 	'''funcion : FUNCION tipo_simple ID func_dos
 	| FUNCION VOID ID func_dos
 	'''
+
 # declarar o no parametros en una funcion
 def p_func_dos(p):
 	'''func_dos : PARENT_A PARENT_C var_funcs
@@ -134,7 +137,7 @@ def p_estatutos_dos(p):
 
 # asignacion a una variable
 def p_asignacion(p):
-	'''asignacion : variable IGUAL expresion'''
+	'asignacion : variable IGUAL expresion'
 
 # llamada de una funcion
 def p_llamada(p):
@@ -208,9 +211,11 @@ def p_retorno(p):
 def p_lectura(p):
 	'lectura : LEER PARENT_A variables PARENT_C'
 
+
 # estatuto de escritura
 def p_escritura(p):
 	'escritura : ESCRIBIR PARENT_A escr PARENT_C'
+
 
 # imprimir letrero o funcion
 def p_escritura_dos(p):
