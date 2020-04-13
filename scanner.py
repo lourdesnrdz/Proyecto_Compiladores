@@ -6,17 +6,15 @@ reserved = {
 	'programa' : 'PROGRAMA',
 	'var' : 'VAR',
 	'principal' : 'PRINCIPAL',
-	'end' : 'END',
+	# 'end' : 'END',
 	'int' : 'INT',
 	'float' : 'FLOAT',
 	'char' : 'CHAR',
-	'string' : 'STRING',
 	'void' : 'VOID',
-	'dataframe' : 'DATAFRAME',
 	'funcion' : 'FUNCION',
 	'regresa' : 'REGRESA',
-	'leer' : 'LEER',
-	'escribir' : 'ESCRIBIR',
+	'lee' : 'LEER',
+	'escribe' : 'ESCRIBIR',
 	'si' : 'SI',
 	'entonces' : 'ENTONCES',
 	'sino' : 'SINO',
@@ -25,7 +23,6 @@ reserved = {
 	'desde' : 'DESDE',
 	'hasta' : 'HASTA',
 	'hacer' : 'HACER',
-	'CargaArchivo' : 'CARGAARCHIVO'
 }
 
 #tokens
@@ -33,12 +30,10 @@ tokens = [
 	'PROGRAMA',
 	'VAR',
 	'PRINCIPAL',
-	'END',
+	# 'END',
 	'INT',
 	'FLOAT',
 	'CHAR',
-	'STRING',
-	'DATAFRAME',
 	'VOID',
 	'FUNCION',
 	'REGRESA',
@@ -52,7 +47,6 @@ tokens = [
 	'DESDE',
 	'HASTA',
 	'HACER',
-	'CARGAARCHIVO',
 	'ID',
 	'CTE_I',
 	'CTE_F',
@@ -60,8 +54,8 @@ tokens = [
 	'CTE_STR',
 	'COMA',
 	'PUNTOCOMA',
-	'DOSPUNTOS',
-	'PUNTO',
+	# 'DOSPUNTOS',
+	# 'PUNTO',
 	'PARENT_A',
 	'PARENT_C',
 	'CORCHETE_A',
@@ -81,8 +75,6 @@ tokens = [
 	'MENOS',
 	'POR',
 	'DIV',
-	'LETRERO',
-	'RUTA_ARCHIVO',
 ]
 
 #Regular expressions
@@ -111,22 +103,21 @@ t_DIV = r'/'
 t_ignore  = ' \t'
 
 def t_ID(t):
-    # r'[a-zA-Z_][a-zA-Z_0-9]*'
-    r'[A-za-z]([A-za-z]|[0-9])*'
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
+    # r'[A-za-z]([A-za-z]|[0-9])*'
     t.type = reserved.get(t.value, 'ID')
     return t
-
-# Define a float number
-def t_CTE_F(t):
-    r'[0-9]*\.[0-9]+|[0-9]+'
-    t.value = float(t.value)
-    return t
-
 
 # Define a variable int
 def t_CTE_I(t):
     r'\d+'
     t.value = int(t.value)
+    return t
+
+# Define a float number
+def t_CTE_F(t):
+    r'[0-9]+\.[0-9]+|[0-9]+'
+    t.value = float(t.value)
     return t
 
 # OR
@@ -177,3 +168,64 @@ def t_error(t):
 
 # Build the lexer
 lex.lex()
+
+# # Test it out
+# data = '''
+# programa foreveralone; 
+# var
+# 	int i, j, p;
+# 	int Arreglo[10], OtroArreglo[10];
+# 	float valor; 
+
+# funcion int fact (int j)
+# var int i;
+# {
+# 	i = j + (p - j * 2 + j);
+# 	si (j == 1) entonces 
+# 	{ regresa (j);}
+# 	sino
+# 	{regresa (j * fact(j - 1));}
+# }
+
+# funcion void inicia (int y)
+# var int x;
+# {
+# 	x = 0;
+# 	mientras (x < 11) haz
+# 	{
+# 	Arreglo[x] = y * x;
+# 	x = x+1;
+# 	}
+# }
+
+# principal()
+# {
+# 	lee(p); j = p * 2;
+# 	inicia (p * j - 5);
+# 	desde i = 0 hasta 9 hacer
+# 		{ 
+# 		Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
+# 		}
+# 	desde i = 0 hasta 9 hacer
+# 		{ 
+# 		OtroArreglo[i] = Arreglo[i] - p;
+# 		}
+# 	mientras (i < 10) haz
+# 	{ 
+# 		escribe("Otros datos", OtroArreglo[i], p, i + OtroArreglo[i]);
+# 		i = i + 1;
+# 	}
+# }
+
+
+# '''
+
+# # Give the lexer some input
+# lex.input(data)
+
+# # Tokenize
+# while 1:
+#     tok = lex.token()
+#     if not tok: 
+#     	break      # No more input
+#     print(tok)
