@@ -101,8 +101,8 @@ def p_var_funcs(p):
 
 # declaracion de parametros
 def p_parametros(p):
-	'''parametros : tipo_simple variable
-	| tipo_simple variable COMA parametros
+	'''parametros : tipo_simple ID
+	| tipo_simple ID COMA parametros
 	'''
 
 # # declarar parametros o no 
