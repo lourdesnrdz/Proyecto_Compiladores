@@ -6,10 +6,61 @@ import ply.yacc as yacc
 
 from scanner import tokens
 
+# variable para guardar el tipo de variables o funciones
+current_type = ''
+# variable que guarda el nombre de las funciones
+func_name = 'global'
+# variable que guarda el nombre de las variables
+var_name = ''
+# variable que guarda el tamaño de un vector
+value_dim = 0
+
+# diccionario para guardar las variables globales y locales
+# luego se agrega a la symbol table
+lista_vars = {}
+
+# diccionario para guardar los parametros de una funcion
+lista_params = {}
+
+
+symbol_table = {}
+
+# symbol_table = {
+# 	'nombre' : {
+# 		'tipo': 'int'
+# 		'var': {
+# 			'nombre': {
+# 				'tipo':¨'int'
+# 			}
+
+# 		}
+# 	}
+# 	'global': {
+# 		'var':¨{
+# 			'nombre':¨{
+# 				'tipo': 'int'
+# 			}
+# 		}
+# 	}
+# }
+
+# precedencia de operadores en caso de conflicto
+precedence = (
+   ("right", 'IGUAL'),
+   ("left", 'OR'),
+   ("left", 'AND'),
+   ("nonassoc", 'MENORQUE', 'MAYORQUE', 'IGUALIGUAL', 'DIFERENTE', 'MENORIGUAL', 'MAYORIGUAL'),
+   ("left", 'MAS', 'MENOS'),
+   ("left", 'POR', 'DIV')
+)
+
 # funcion principal del programa
 def p_programa(p) :
 	'programa : PROGRAMA ID PUNTOCOMA prog'
 	# p[0] = "Valid"
+
+	#guarda el nombre del programa 
+	symbol_table['programa'] = p[2]
 
 # declarar o no variables y/o funciones
 def p_prog(p):
@@ -31,11 +82,39 @@ def p_main(p):
 
 # declaración de variables
 def p_dec_vars(p):
-	'dec_vars : VAR vars'
+	'dec_vars : VAR create_vars_table vars'
+
+	# global lista_vars
+	# print(lista_vars)
+	# lista_vars.clear()
+
+
+# crear la tabla de variables globales
+def p_create_vars_table(p):
+	'''create_vars_table : '''
+	# crea el espacio en la symbol table para las variables globales
+	if(func_name == 'global'):
+		symbol_table[func_name] = {
+			'vars' : {
+
+			}
+		}
+
+
+# guarda las variables en la lista de variables de la funcion
+def p_guarda_vars(p):
+	'''guarda_vars : '''
+
+	global symbol_table, lista_vars
+	# guarda las variables dentro de a funcion
+	symbol_table[func_name]['vars'] = lista_vars
+
+	lista_vars = {}
+
 
 # declarar una o más variables
 def p_vars(p):
-	'''vars : tipo_simple ids_simple PUNTOCOMA
+	'''vars : tipo_simple ids_simple PUNTOCOMA guarda_vars
 	| tipo_simple ids_simple PUNTOCOMA vars
 	'''
 
@@ -46,6 +125,11 @@ def p_tipo_simple(p):
 	| CHAR
 	'''
 
+	# guarda el tipo
+	global current_type
+	current_type = p[1]
+
+
 #ids con o sin dimensión 
 def p_ids_simple(p):
 	'''ids_simple : ID
@@ -53,10 +137,30 @@ def p_ids_simple(p):
 	| ID COMA ids_simple
 	| ID dimension COMA ids_simple
 	'''
+	# guarda el nombre de la variable
+	global var_name, lista_vars, value_dim
+
+	var_name = p[1]
+
+	# guarda las variables en el diccionario de variables
+	# print(var_name, ' - ', value_dim)
+	lista_vars[var_name] = {
+		'type' : current_type
+	}
+
+	# # si la variable tiene dimensión, se guarda el tamaño en el diccionario
+	if(value_dim > 0): 
+		lista_vars[var_name]['dimension'] = value_dim
+		value_dim = 0
 
 # establecer las dimensiones para vectores o matrices
 def p_dimension(p):
 	'dimension : CORCHETE_A CTE_I CORCHETE_C'
+
+	# guarda el tamaño del vector (la cte_i)
+	global value_dim
+	value_dim = p[2]
+	print(var_name, ' - ', value_dim)
 
 # declaracion de variables
 def p_variable(p):
@@ -81,11 +185,43 @@ def p_dec_funciones(p):
 	| funcion dec_funciones
 	'''
 
+
+# # crear la tabla de funciones
+# def p_create_func_table(p):
+# 	'''create_func_table : '''
+
+# 	# crea el espacio en la symbol table para las funciones
+# 	symbol_table[func_name] = {
+# 		'vars' : {
+
+# 		}
+# 	}
+	
+
 # tipo simple o void para funciones
 def p_funcion(p):
-	'''funcion : FUNCION tipo_simple ID func_dos
-	| FUNCION VOID ID func_dos
+	'''funcion : FUNCION tipo_simple ID register_func func_dos
+	| FUNCION VOID save_type_void ID register_func func_dos
 	'''
+
+
+def p_save_type_void(p):
+	'''save_type_void : '''
+	# guarda el tipo
+	global current_type
+	current_type = p[-1]
+
+def p_register_func(p):
+	'''register_func : '''
+	global func_name
+	func_name = p[-1]
+
+	symbol_table[func_name] = {
+		'tipo' : current_type,
+		'vars' : {
+
+		}
+	}
 
 # declarar o no parametros en una funcion
 def p_func_dos(p):
@@ -272,3 +408,9 @@ yacc.parse(data)
 # else:
 # 	print("Invalid input")
 
+# print(symbol_table)
+for key, val in symbol_table.items():
+	print(key, ':', val)
+	print('\n')
+
+print(lista_vars)

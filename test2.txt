@@ -1,7 +1,7 @@
 programa foreveralone; 
 var
 	int i, j, p;
-	int Arreglo[10], OtroArreglo[10];
+	int Arreglo[5], OtroArreglo[10];
 	float valor; 
 
 funcion int fact (int j)
