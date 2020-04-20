@@ -61,6 +61,15 @@ def p_prog(p):
 def p_main(p):
 	'main : PRINCIPAL PARENT_A PARENT_C dec_est'
 
+	global func_name, symbol_table
+
+	func_name = 'principal'
+
+	symbol_table[func_name] = {
+	
+	}
+
+
 # # funcion main
 # def p_main(p):
 # 	'''main : PRINCIPAL PARENT_A PARENT_C LLAVE_A LLAVE_C
@@ -398,6 +407,6 @@ yacc.parse(data)
 # 	print("Invalid input")
 
 # print(symbol_table)
-# for key, val in symbol_table.items():
-# 	print(key, ':', val)
-# 	print('\n')
+for key, val in symbol_table.items():
+	print(key, ':', val)
+	print('\n')
