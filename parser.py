@@ -406,7 +406,7 @@ yacc.parse(data)
 # else:
 # 	print("Invalid input")
 
-# print(symbol_table)
-for key, val in symbol_table.items():
-	print(key, ':', val)
-	print('\n')
+print(symbol_table)
+# for key, val in symbol_table.items():
+# 	print(key, ':', val)
+# 	print('\n')
