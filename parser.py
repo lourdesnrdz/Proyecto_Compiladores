@@ -202,6 +202,9 @@ def p_create_func_table(p):
 		'func_type' : current_type,
 		'vars' : {
 
+		},
+		'params' : {
+		
 		}
 	}
 
@@ -407,6 +410,6 @@ yacc.parse(data)
 # 	print("Invalid input")
 
 print(symbol_table)
-# for key, val in symbol_table.items():
-# 	print(key, ':', val)
-# 	print('\n')
+for key, val in symbol_table.items():
+	print(key, ':', val)
+	print('\n')
