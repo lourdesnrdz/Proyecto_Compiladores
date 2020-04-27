@@ -156,7 +156,7 @@ def p_save_vars_name(p):
 
 	# checar si la variable ya existe dentro de la función
 	if var_name in list_vars:
-		error('variable ya declarada')
+		error(p, 'variable ya declarada')
 
 	# si no existe, la agrega a la lista de variables
 	list_vars[var_name] = {
@@ -190,16 +190,31 @@ def p_r_push_id(p):
 	global pila_o, pila_type
 	var_name = p[-1]
 	parent_func = ''
-	if var_name in symbol_table[func_name]['vars']:
+
+	# checa si la variable es recibida como parámetro
+	if var_name in symbol_table[func_name]['params']:
 		parent_func = func_name
+		pila_o.append(var_name)
+		pila_type.append(symbol_table[parent_func]['params'][var_name]['type'])
+	# checa si la variable está definida dentro de la función
+	elif var_name in symbol_table[func_name]['vars']:
+		parent_func = func_name
+		pila_o.append(var_name)
+		pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+	# checa si es una variable global
 	elif var_name in symbol_table['global']['vars']:
 		parent_func = 'global'
+		pila_o.append(var_name)
+		pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+	# si la variable no existe, manda error
 	else:
-		error('variable no declarada')
-	pila_o.append(var_name)
-	pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+		print(func_name, var_name)
+		error(p, 'variable no declarada')
 
-	aux = pila.pop()
+	# pila_o.append(var_name)
+	# pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+
+	# aux = pila.pop()
 
 
 # declarar unao varias variables
@@ -242,7 +257,7 @@ def p_create_func_table(p):
 	# checa si la función ya está declarada
 	# para que no haya dos funciones con el mismo nombre
 	if func_name in symbol_table:
-		error('funcion ya declarada')
+		error(p, 'funcion ya declarada')
 
 	# sino existe, la guarda en la tabla de funciones
 	symbol_table[func_name] = {
@@ -250,9 +265,9 @@ def p_create_func_table(p):
 		'vars' : {
 
 		},
-		'next_int':¨1002,
-		'next_float':¨2000,
-		'next_char':¨3000
+		'next_int': '1002',
+		'next_float': '2000',
+		'next_char': '3000'
 	}
 
 # declarar o no parametros en una funcion
@@ -294,7 +309,7 @@ def p_save_params_list(p):
 
 	#checa si el parámetro ya existe en la lista de parámetros 
 	if param_name in list_params:
-		error('dos parámentros con el mismo nombre')
+		error(p, 'dos parámentros con el mismo nombre')
 
 	# guarda los parametros en la lista de parametros
 	list_params[param_name] = {
@@ -390,13 +405,15 @@ def p_r_push_oper(p):
 
 
 def p_r_generate_quad_masmen(p):
+	'''r_generate_quad_masmen : '''
 	generate_quadruple(['+', '-'])
 
-def p_r_generate_quad_müldiv(p):
+def p_r_generate_quad_muldiv(p):
+	'''r_generate_quad_muldiv : '''
 	generate_quadruple(['*', '/'])
 
 
-def generate_quadruple(operations)
+def generate_quadruple(operations):
 	# ...
 	if pila_oper.top() in operations:
 		pass
