@@ -26,10 +26,15 @@ list_params = {}
 # tabla de simbolos
 symbol_table = {
 	'global': {
-		'vars': {},
-		'next_int': 100,
-		'next_float': 200,
-		'next_char': 300
+		'vars': {
+
+		}
+		# 'next_int': 100,
+		# 'next_float': 200,
+		# 'next_char': 300
+	},
+	'principal' : {
+
 	}
 }
 
@@ -56,10 +61,10 @@ quadruples = []
 def p_programa(p) :
 	'programa : PROGRAMA ID PUNTOCOMA prog'
 	
-	global symbol_table
+	# global symbol_table
 
-	# guardo el nombre del programa
-	symbol_table['programa'] =  p[2]
+	# # guardo el nombre del programa
+	# symbol_table['programa'] =  p[2]
 
 
 # declarar o no variables y/o funciones
@@ -74,13 +79,13 @@ def p_prog(p):
 def p_main(p):
 	'main : PRINCIPAL PARENT_A PARENT_C dec_est'
 
-	global func_name, symbol_table
+	# global func_name, symbol_table
 
-	func_name = 'principal'
+	# func_name = 'principal'
 
-	symbol_table[func_name] = {
+	# symbol_table[func_name] = {
 	
-	}
+	# }
 
 
 # # funcion main
@@ -149,9 +154,14 @@ def p_save_vars_name(p):
 
 	var_name = p[-1]
 
+	# checar si la variable ya existe dentro de la función
+	if var_name in list_vars:
+		error('variable ya declarada')
+
+	# si no existe, la agrega a la lista de variables
 	list_vars[var_name] = {
 		'type' : current_type
-		'address': get_address(func_name, current_type)
+		# 'address': get_address(func_name, current_type)
 	}
 
 
@@ -174,6 +184,7 @@ def p_variable(p):
 	| ID r_push_id dim
 	'''
 
+# regla para guardar el id en la pila
 def p_r_push_id(p):
 	'''r_push_id : '''
 	global pila_o, pila_type
@@ -228,9 +239,12 @@ def p_create_func_table(p):
 
 	func_name = p[-1]
 
+	# checa si la función ya está declarada
+	# para que no haya dos funciones con el mismo nombre
 	if func_name in symbol_table:
 		error('funcion ya declarada')
 
+	# sino existe, la guarda en la tabla de funciones
 	symbol_table[func_name] = {
 		'func_type' : current_type,
 		'vars' : {
@@ -252,6 +266,7 @@ def p_save_params(p):
 	'''save_params : '''
 
 	global symbol_table, list_params
+
 	# guarda los parametros en la tabla de la funcion
 	symbol_table[func_name]['params'] = list_params
 
@@ -276,6 +291,11 @@ def p_save_params_list(p):
 	global list_params
 
 	param_name = p[-1]
+
+	#checa si el parámetro ya existe en la lista de parámetros 
+	if param_name in list_params:
+		error('dos parámentros con el mismo nombre')
+
 	# guarda los parametros en la lista de parametros
 	list_params[param_name] = {
 			'type' : current_type
