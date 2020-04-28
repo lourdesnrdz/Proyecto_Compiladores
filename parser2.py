@@ -28,13 +28,11 @@ symbol_table = {
 	'global': {
 		'vars': {
 
-		}
-		# 'next_int': 100,
-		# 'next_float': 200,
-		# 'next_char': 300
-	},
-	'principal' : {
-
+		},
+		'next_int' : 1,
+		'next_float' : 3000,
+		'next_char' : 6000,
+		'next_temp' : 9000
 	}
 }
 
@@ -48,10 +46,30 @@ precedence = (
    ("left", 'POR', 'DIV')
 )
 
-pila_o = []
-pila_type = []
-pila_oper = []
+# DIRECCIONES DE MEMORIA
+# GLOBAL
+# Global int : 1 - 2999
+# Global float : 3000 - 5999
+# GLOBAL char : 6000 - 8999
+# Global temporales : 9000 - 9999
 
+# LOCAL
+# Local int : 10000 - 12999
+# Local float : 13000 - 15999
+# Local char : 16000 - 18999
+# Local temporales : 19000 - 19999
+
+# CONSTANTES
+# Constantes : 20000 - 22999
+
+
+# pila de operandos
+op_stack = [] 
+# pila de tipos
+type_stack = []
+# pila de operadores
+oper_stack = []
+#arreglo de cuadruplos
 quadruples = []
 
 
@@ -61,10 +79,14 @@ quadruples = []
 def p_programa(p) :
 	'programa : PROGRAMA ID PUNTOCOMA prog'
 	
-	# global symbol_table
+	global symbol_table
 
-	# # guardo el nombre del programa
-	# symbol_table['programa'] =  p[2]
+	program_name = p[2]
+
+	# guardo el nombre del programa
+	symbol_table[program_name] =  {
+		'type' : 'program'
+	}
 
 
 # declarar o no variables y/o funciones
@@ -160,8 +182,8 @@ def p_save_vars_name(p):
 
 	# si no existe, la agrega a la lista de variables
 	list_vars[var_name] = {
-		'type' : current_type
-		# 'address': get_address(func_name, current_type)
+		'type' : current_type,
+		'address': get_address(func_name, current_type)
 	}
 
 
@@ -187,35 +209,35 @@ def p_variable(p):
 # regla para guardar el id en la pila
 def p_r_push_id(p):
 	'''r_push_id : '''
-	global pila_o, pila_type
+	global op_stack, type_stack
+	
 	var_name = p[-1]
 	parent_func = ''
 
 	# checa si la variable es recibida como parámetro
 	if var_name in symbol_table[func_name]['params']:
 		parent_func = func_name
-		pila_o.append(var_name)
-		pila_type.append(symbol_table[parent_func]['params'][var_name]['type'])
+		op_stack.append(var_name)
+		type_stack.append(symbol_table[parent_func]['params'][var_name]['type'])
 	# checa si la variable está definida dentro de la función
 	elif var_name in symbol_table[func_name]['vars']:
 		parent_func = func_name
-		pila_o.append(var_name)
-		pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+		op_stack.append(var_name)
+		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
 	# checa si es una variable global
 	elif var_name in symbol_table['global']['vars']:
 		parent_func = 'global'
-		pila_o.append(var_name)
-		pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+		op_stack.append(var_name)
+		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
 	# si la variable no existe, manda error
 	else:
 		print(func_name, var_name)
 		error(p, 'variable no declarada')
 
-	# pila_o.append(var_name)
-	# pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+	# op_stack.append(var_name)
+	# type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
 
 	# aux = pila.pop()
-
 
 # declarar unao varias variables
 def p_variables(p):
@@ -265,9 +287,10 @@ def p_create_func_table(p):
 		'vars' : {
 
 		},
-		'next_int': '1002',
-		'next_float': '2000',
-		'next_char': '3000'
+		'next_int' : 10000,
+		'next_float' : 13000,
+		'next_char' : 16000,
+		'next_temp' : 19000
 	}
 
 # declarar o no parametros en una funcion
@@ -309,11 +332,12 @@ def p_save_params_list(p):
 
 	#checa si el parámetro ya existe en la lista de parámetros 
 	if param_name in list_params:
-		error(p, 'dos parámentros con el mismo nombre')
+		error(p, 'parámetro ya existe')
 
 	# guarda los parametros en la lista de parametros
 	list_params[param_name] = {
-			'type' : current_type
+			'type' : current_type,
+			'address' : get_address(func_name, current_type)
 		}
 
 # declarar o no estatutos
@@ -397,11 +421,10 @@ def p_termino(p):
 	| factor POR r_push_oper termino
 	| factor DIV r_push_oper termino
 	'''
-
 def p_r_push_oper(p):
 	'''r_push_oper : '''
-	global pila_oper
-	pila_oper.append(p[-1])
+	global op_stack
+	op_stack.append(p[-1])
 
 
 def p_r_generate_quad_masmen(p):
@@ -415,7 +438,7 @@ def p_r_generate_quad_muldiv(p):
 
 def generate_quadruple(operations):
 	# ...
-	if pila_oper.top() in operations:
+	if op_stack.top() in operations:
 		pass
 	#...
 	quadruples.append([])
@@ -491,6 +514,37 @@ def error(p, message):
 	print("Error: ", message)
 	p_error(p)
 
+
+# función para obtener el valor de la dirección de memoria
+def get_address(func, type_value):
+
+	global symbol_table
+
+	if(type_value == 'int'):
+		# guarda la dirección
+		address = symbol_table[func]['next_int']
+		# actualiza el valor de la siguiente dirección
+		symbol_table[func]['next_int'] += 1
+	elif(type_value == 'float'):
+		# guarda la dirección
+		address = symbol_table[func]['next_float']
+		# actualiza el valor de la siguiente dirección
+		symbol_table[func]['next_float'] += 1
+	elif(type_value == 'char'):
+		# guarda la dirección
+		address = symbol_table[func]['next_char']
+		# actualiza el valor de la siguiente dirección
+		symbol_table[func]['next_char'] += 1
+	else:
+		error('.')
+
+	# regresa la dirección
+	return address
+
+
+
+
+
 # Build the parser
 yacc.yacc()
 
@@ -505,6 +559,6 @@ yacc.parse(data)
 # 	print("Invalid input")
 
 # print(symbol_table)
-# for key, val in symbol_table.items():
-# 	print(key, ':', val)
-# 	print('\n')
+for key, val in symbol_table.items():
+	print(key, ':', val)
+	print('\n')

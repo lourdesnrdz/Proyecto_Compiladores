@@ -24,181 +24,181 @@ Rule 18    save_vars_name -> <empty>
 Rule 19    dimension -> CORCHETE_A CTE_I CORCHETE_C
 Rule 20    variable -> ID r_push_id
 Rule 21    variable -> ID r_push_id dim
-Rule 22    r_push_id -> <empty>
-Rule 23    variables -> variable
-Rule 24    variables -> variable COMA variables
-Rule 25    dim -> CORCHETE_A expresion CORCHETE_C
-Rule 26    dec_funciones -> funcion
-Rule 27    dec_funciones -> funcion dec_funciones
-Rule 28    funcion -> FUNCION tipo_simple ID create_func_table func_dos
-Rule 29    funcion -> FUNCION VOID func_type_void ID create_func_table func_dos
-Rule 30    func_type_void -> <empty>
-Rule 31    create_func_table -> <empty>
-Rule 32    func_dos -> PARENT_A PARENT_C var_funcs
-Rule 33    func_dos -> PARENT_A parametros PARENT_C save_params var_funcs
-Rule 34    save_params -> <empty>
-Rule 35    var_funcs -> dec_est
-Rule 36    var_funcs -> dec_vars dec_est
-Rule 37    parametros -> tipo_simple ID save_params_list
-Rule 38    parametros -> tipo_simple ID save_params_list COMA parametros
-Rule 39    save_params_list -> <empty>
-Rule 40    dec_est -> LLAVE_A LLAVE_C
-Rule 41    dec_est -> LLAVE_A estatutos_dos LLAVE_C
-Rule 42    estatutos -> asignacion PUNTOCOMA
-Rule 43    estatutos -> llamada PUNTOCOMA
-Rule 44    estatutos -> retorno PUNTOCOMA
-Rule 45    estatutos -> lectura PUNTOCOMA
-Rule 46    estatutos -> escritura PUNTOCOMA
-Rule 47    estatutos -> decision
-Rule 48    estatutos -> ciclo_for
-Rule 49    estatutos -> ciclo_while
-Rule 50    estatutos_dos -> estatutos
-Rule 51    estatutos_dos -> estatutos estatutos_dos
-Rule 52    asignacion -> variable IGUAL expresion
-Rule 53    llamada -> ID PARENT_A PARENT_C
-Rule 54    llamada -> ID PARENT_A expresiones PARENT_C
-Rule 55    expresiones -> expresion
-Rule 56    expresiones -> expresion COMA expresion
-Rule 57    expresion -> t_expresion
-Rule 58    expresion -> t_expresion OR expresion
-Rule 59    t_expresion -> g_expresion
-Rule 60    t_expresion -> g_expresion AND t_expresion
-Rule 61    g_expresion -> m_expresion
-Rule 62    g_expresion -> m_expresion op_logicos m_expresion
-Rule 63    op_logicos -> MAYORQUE
-Rule 64    op_logicos -> MENORQUE
-Rule 65    op_logicos -> MAYORIGUAL
-Rule 66    op_logicos -> MENORIGUAL
-Rule 67    op_logicos -> IGUALIGUAL
-Rule 68    op_logicos -> DIFERENTE
-Rule 69    m_expresion -> termino
-Rule 70    m_expresion -> termino MAS r_push_oper m_expresion
-Rule 71    m_expresion -> termino MENOS r_push_oper m_expresion
-Rule 72    termino -> factor
-Rule 73    termino -> factor POR r_push_oper termino
-Rule 74    termino -> factor DIV r_push_oper termino
-Rule 75    r_push_oper -> <empty>
-Rule 76    r_generate_quad_masmen -> <empty>
-Rule 77    r_generate_quad_muldiv -> <empty>
-Rule 78    factor -> PARENT_A expresion PARENT_C
-Rule 79    factor -> CTE_I
-Rule 80    factor -> CTE_F
-Rule 81    factor -> CTE_CH
-Rule 82    factor -> variable
-Rule 83    factor -> llamada
-Rule 84    retorno -> REGRESA PARENT_A expresion PARENT_C
-Rule 85    lectura -> LEER PARENT_A variables PARENT_C
-Rule 86    escritura -> ESCRIBIR PARENT_A escr PARENT_C
-Rule 87    escritura_dos -> CTE_STR
-Rule 88    escritura_dos -> expresion
-Rule 89    escr -> escritura_dos
-Rule 90    escr -> escritura_dos COMA escr
-Rule 91    decision -> if
-Rule 92    decision -> if else
-Rule 93    if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
-Rule 94    else -> SINO LLAVE_A estatutos_dos LLAVE_C
-Rule 95    ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
-Rule 96    ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+Rule 22    variables -> variable
+Rule 23    variables -> variable COMA variables
+Rule 24    dim -> CORCHETE_A expresion CORCHETE_C
+Rule 25    dec_funciones -> funcion
+Rule 26    dec_funciones -> funcion dec_funciones
+Rule 27    funcion -> FUNCION tipo_simple ID create_func_table func_dos
+Rule 28    funcion -> FUNCION VOID func_type_void ID create_func_table func_dos
+Rule 29    func_type_void -> <empty>
+Rule 30    create_func_table -> <empty>
+Rule 31    func_dos -> PARENT_A PARENT_C var_funcs
+Rule 32    func_dos -> PARENT_A parametros PARENT_C save_params var_funcs
+Rule 33    save_params -> <empty>
+Rule 34    var_funcs -> dec_est
+Rule 35    var_funcs -> dec_vars dec_est
+Rule 36    parametros -> tipo_simple ID save_params_list
+Rule 37    parametros -> tipo_simple ID save_params_list COMA parametros
+Rule 38    save_params_list -> <empty>
+Rule 39    dec_est -> LLAVE_A LLAVE_C
+Rule 40    dec_est -> LLAVE_A estatutos_dos LLAVE_C
+Rule 41    estatutos -> asignacion PUNTOCOMA
+Rule 42    estatutos -> llamada PUNTOCOMA
+Rule 43    estatutos -> retorno PUNTOCOMA
+Rule 44    estatutos -> lectura PUNTOCOMA
+Rule 45    estatutos -> escritura PUNTOCOMA
+Rule 46    estatutos -> decision
+Rule 47    estatutos -> ciclo_for
+Rule 48    estatutos -> ciclo_while
+Rule 49    estatutos_dos -> estatutos
+Rule 50    estatutos_dos -> estatutos estatutos_dos
+Rule 51    asignacion -> variable IGUAL expresion
+Rule 52    llamada -> ID PARENT_A PARENT_C
+Rule 53    llamada -> ID PARENT_A expresiones PARENT_C
+Rule 54    expresiones -> expresion
+Rule 55    expresiones -> expresion COMA expresion
+Rule 56    expresion -> t_expresion
+Rule 57    expresion -> t_expresion OR expresion
+Rule 58    t_expresion -> g_expresion
+Rule 59    t_expresion -> g_expresion AND t_expresion
+Rule 60    g_expresion -> m_expresion
+Rule 61    g_expresion -> m_expresion op_logicos m_expresion
+Rule 62    op_logicos -> MAYORQUE
+Rule 63    op_logicos -> MENORQUE
+Rule 64    op_logicos -> MAYORIGUAL
+Rule 65    op_logicos -> MENORIGUAL
+Rule 66    op_logicos -> IGUALIGUAL
+Rule 67    op_logicos -> DIFERENTE
+Rule 68    m_expresion -> termino
+Rule 69    m_expresion -> termino MAS r_push_oper m_expresion
+Rule 70    m_expresion -> termino MENOS r_push_oper m_expresion
+Rule 71    termino -> factor
+Rule 72    termino -> factor POR r_push_oper termino
+Rule 73    termino -> factor DIV r_push_oper termino
+Rule 74    r_push_oper -> <empty>
+Rule 75    r_generate_quad_masmen -> <empty>
+Rule 76    r_generate_quad_muldiv -> <empty>
+Rule 77    factor -> PARENT_A expresion PARENT_C
+Rule 78    factor -> CTE_I
+Rule 79    factor -> CTE_F
+Rule 80    factor -> CTE_CH
+Rule 81    factor -> variable
+Rule 82    factor -> llamada
+Rule 83    retorno -> REGRESA PARENT_A expresion PARENT_C
+Rule 84    lectura -> LEER PARENT_A variables PARENT_C
+Rule 85    escritura -> ESCRIBIR PARENT_A escr PARENT_C
+Rule 86    escritura_dos -> CTE_STR
+Rule 87    escritura_dos -> expresion
+Rule 88    escr -> escritura_dos
+Rule 89    escr -> escritura_dos COMA escr
+Rule 90    decision -> if
+Rule 91    decision -> if else
+Rule 92    if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+Rule 93    else -> SINO LLAVE_A estatutos_dos LLAVE_C
+Rule 94    ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+Rule 95    ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+Rule 96    r_push_id -> <empty>
 
 Terminals, with rules where they appear
 
-AND                  : 60
+AND                  : 59
 CHAR                 : 13
-COMA                 : 16 17 24 38 56 90
-CORCHETE_A           : 19 25
-CORCHETE_C           : 19 25
-CTE_CH               : 81
-CTE_F                : 80
-CTE_I                : 19 79
-CTE_STR              : 87
-DESDE                : 96
-DIFERENTE            : 68
-DIV                  : 74
-ENTONCES             : 93
-ESCRIBIR             : 86
+COMA                 : 16 17 23 37 55 89
+CORCHETE_A           : 19 24
+CORCHETE_C           : 19 24
+CTE_CH               : 80
+CTE_F                : 79
+CTE_I                : 19 78
+CTE_STR              : 86
+DESDE                : 95
+DIFERENTE            : 67
+DIV                  : 73
+ENTONCES             : 92
+ESCRIBIR             : 85
 FLOAT                : 12
-FUNCION              : 28 29
-HACER                : 96
-HASTA                : 96
-HAZ                  : 95
-ID                   : 1 14 15 16 17 20 21 28 29 37 38 53 54
-IGUAL                : 52 96
-IGUALIGUAL           : 67
+FUNCION              : 27 28
+HACER                : 95
+HASTA                : 95
+HAZ                  : 94
+ID                   : 1 14 15 16 17 20 21 27 28 36 37 52 53
+IGUAL                : 51 95
+IGUALIGUAL           : 66
 INT                  : 11
-LEER                 : 85
-LLAVE_A              : 40 41 93 94 95 96
-LLAVE_C              : 40 41 93 94 95 96
-MAS                  : 70
-MAYORIGUAL           : 65
-MAYORQUE             : 63
-MENORIGUAL           : 66
-MENORQUE             : 64
-MENOS                : 71
-MIENTRAS             : 95
-OR                   : 58
-PARENT_A             : 6 32 33 53 54 78 84 85 86 93 95
-PARENT_C             : 6 32 33 53 54 78 84 85 86 93 95
-POR                  : 73
+LEER                 : 84
+LLAVE_A              : 39 40 92 93 94 95
+LLAVE_C              : 39 40 92 93 94 95
+MAS                  : 69
+MAYORIGUAL           : 64
+MAYORQUE             : 62
+MENORIGUAL           : 65
+MENORQUE             : 63
+MENOS                : 70
+MIENTRAS             : 94
+OR                   : 57
+PARENT_A             : 6 31 32 52 53 77 83 84 85 92 94
+PARENT_C             : 6 31 32 52 53 77 83 84 85 92 94
+POR                  : 72
 PRINCIPAL            : 6
 PROGRAMA             : 1
-PUNTOCOMA            : 1 8 9 42 43 44 45 46
-REGRESA              : 84
-SI                   : 93
-SINO                 : 94
+PUNTOCOMA            : 1 8 9 41 42 43 44 45
+REGRESA              : 83
+SI                   : 92
+SINO                 : 93
 VAR                  : 7
-VOID                 : 29
+VOID                 : 28
 error                : 
 
 Nonterminals, with rules where they appear
 
-asignacion           : 42
-ciclo_for            : 48
-ciclo_while          : 49
-create_func_table    : 28 29
-dec_est              : 6 35 36
-dec_funciones        : 3 5 27
-dec_vars             : 3 4 36
-decision             : 47
+asignacion           : 41
+ciclo_for            : 47
+ciclo_while          : 48
+create_func_table    : 27 28
+dec_est              : 6 34 35
+dec_funciones        : 3 5 26
+dec_vars             : 3 4 35
+decision             : 46
 dim                  : 21
 dimension            : 15 17
-else                 : 92
-escr                 : 86 90
-escritura            : 46
-escritura_dos        : 89 90
-estatutos            : 50 51
-estatutos_dos        : 41 51 93 94 95 96
-expresion            : 25 52 55 56 56 58 78 84 88 93 95 96 96
-expresiones          : 54
-factor               : 72 73 74
-func_dos             : 28 29
-func_type_void       : 29
-funcion              : 26 27
-g_expresion          : 59 60
+else                 : 91
+escr                 : 85 89
+escritura            : 45
+escritura_dos        : 88 89
+estatutos            : 49 50
+estatutos_dos        : 40 50 92 93 94 95
+expresion            : 24 51 54 55 55 57 77 83 87 92 94 95 95
+expresiones          : 53
+factor               : 71 72 73
+func_dos             : 27 28
+func_type_void       : 28
+funcion              : 25 26
+g_expresion          : 58 59
 ids_simple           : 8 9 16 17
-if                   : 91 92
-lectura              : 45
-llamada              : 43 83
-m_expresion          : 61 62 62 70 71
+if                   : 90 91
+lectura              : 44
+llamada              : 42 82
+m_expresion          : 60 61 61 69 70
 main                 : 2 3 4 5
-op_logicos           : 62
-parametros           : 33 38
+op_logicos           : 61
+parametros           : 32 37
 prog                 : 1
 programa             : 0
 r_generate_quad_masmen : 
 r_generate_quad_muldiv : 
 r_push_id            : 20 21
-r_push_oper          : 70 71 73 74
-retorno              : 44
-save_params          : 33
-save_params_list     : 37 38
+r_push_oper          : 69 70 72 73
+retorno              : 43
+save_params          : 32
+save_params_list     : 36 37
 save_vars            : 7
 save_vars_name       : 14 15 16 17
-t_expresion          : 57 58 60
-termino              : 69 70 71 73 74
-tipo_simple          : 8 9 28 37 38
-var_funcs            : 32 33
-variable             : 23 24 52 82 96
-variables            : 24 85
+t_expresion          : 56 57 59
+termino              : 68 69 70 72 73
+tipo_simple          : 8 9 27 36 37
+var_funcs            : 31 32
+variable             : 22 23 51 81 95
+variables            : 23 84
 vars                 : 7 9
 
 Parsing method: LALR
@@ -241,10 +241,10 @@ state 4
     (5) prog -> . dec_funciones main
     (6) main -> . PRINCIPAL PARENT_A PARENT_C dec_est
     (7) dec_vars -> . VAR vars save_vars
-    (26) dec_funciones -> . funcion
-    (27) dec_funciones -> . funcion dec_funciones
-    (28) funcion -> . FUNCION tipo_simple ID create_func_table func_dos
-    (29) funcion -> . FUNCION VOID func_type_void ID create_func_table func_dos
+    (25) dec_funciones -> . funcion
+    (26) dec_funciones -> . funcion dec_funciones
+    (27) funcion -> . FUNCION tipo_simple ID create_func_table func_dos
+    (28) funcion -> . FUNCION VOID func_type_void ID create_func_table func_dos
 
     PRINCIPAL       shift and go to state 9
     VAR             shift and go to state 10
@@ -274,11 +274,11 @@ state 7
 
     (3) prog -> dec_vars . dec_funciones main
     (4) prog -> dec_vars . main
-    (26) dec_funciones -> . funcion
-    (27) dec_funciones -> . funcion dec_funciones
+    (25) dec_funciones -> . funcion
+    (26) dec_funciones -> . funcion dec_funciones
     (6) main -> . PRINCIPAL PARENT_A PARENT_C dec_est
-    (28) funcion -> . FUNCION tipo_simple ID create_func_table func_dos
-    (29) funcion -> . FUNCION VOID func_type_void ID create_func_table func_dos
+    (27) funcion -> . FUNCION tipo_simple ID create_func_table func_dos
+    (28) funcion -> . FUNCION VOID func_type_void ID create_func_table func_dos
 
     PRINCIPAL       shift and go to state 9
     FUNCION         shift and go to state 12
@@ -321,14 +321,14 @@ state 10
 
 state 11
 
-    (26) dec_funciones -> funcion .
-    (27) dec_funciones -> funcion . dec_funciones
-    (26) dec_funciones -> . funcion
-    (27) dec_funciones -> . funcion dec_funciones
-    (28) funcion -> . FUNCION tipo_simple ID create_func_table func_dos
-    (29) funcion -> . FUNCION VOID func_type_void ID create_func_table func_dos
+    (25) dec_funciones -> funcion .
+    (26) dec_funciones -> funcion . dec_funciones
+    (25) dec_funciones -> . funcion
+    (26) dec_funciones -> . funcion dec_funciones
+    (27) funcion -> . FUNCION tipo_simple ID create_func_table func_dos
+    (28) funcion -> . FUNCION VOID func_type_void ID create_func_table func_dos
 
-    PRINCIPAL       reduce using rule 26 (dec_funciones -> funcion .)
+    PRINCIPAL       reduce using rule 25 (dec_funciones -> funcion .)
     FUNCION         shift and go to state 12
 
     funcion                        shift and go to state 11
@@ -336,8 +336,8 @@ state 11
 
 state 12
 
-    (28) funcion -> FUNCION . tipo_simple ID create_func_table func_dos
-    (29) funcion -> FUNCION . VOID func_type_void ID create_func_table func_dos
+    (27) funcion -> FUNCION . tipo_simple ID create_func_table func_dos
+    (28) funcion -> FUNCION . VOID func_type_void ID create_func_table func_dos
     (11) tipo_simple -> . INT
     (12) tipo_simple -> . FLOAT
     (13) tipo_simple -> . CHAR
@@ -426,24 +426,24 @@ state 21
 
 state 22
 
-    (27) dec_funciones -> funcion dec_funciones .
+    (26) dec_funciones -> funcion dec_funciones .
 
-    PRINCIPAL       reduce using rule 27 (dec_funciones -> funcion dec_funciones .)
+    PRINCIPAL       reduce using rule 26 (dec_funciones -> funcion dec_funciones .)
 
 
 state 23
 
-    (28) funcion -> FUNCION tipo_simple . ID create_func_table func_dos
+    (27) funcion -> FUNCION tipo_simple . ID create_func_table func_dos
 
     ID              shift and go to state 30
 
 
 state 24
 
-    (29) funcion -> FUNCION VOID . func_type_void ID create_func_table func_dos
-    (30) func_type_void -> .
+    (28) funcion -> FUNCION VOID . func_type_void ID create_func_table func_dos
+    (29) func_type_void -> .
 
-    ID              reduce using rule 30 (func_type_void -> .)
+    ID              reduce using rule 29 (func_type_void -> .)
 
     func_type_void                 shift and go to state 31
 
@@ -457,8 +457,8 @@ state 25
 state 26
 
     (6) main -> PRINCIPAL PARENT_A PARENT_C . dec_est
-    (40) dec_est -> . LLAVE_A LLAVE_C
-    (41) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
+    (39) dec_est -> . LLAVE_A LLAVE_C
+    (40) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 33
 
@@ -497,16 +497,16 @@ state 29
 
 state 30
 
-    (28) funcion -> FUNCION tipo_simple ID . create_func_table func_dos
-    (31) create_func_table -> .
+    (27) funcion -> FUNCION tipo_simple ID . create_func_table func_dos
+    (30) create_func_table -> .
 
-    PARENT_A        reduce using rule 31 (create_func_table -> .)
+    PARENT_A        reduce using rule 30 (create_func_table -> .)
 
     create_func_table              shift and go to state 36
 
 state 31
 
-    (29) funcion -> FUNCION VOID func_type_void . ID create_func_table func_dos
+    (28) funcion -> FUNCION VOID func_type_void . ID create_func_table func_dos
 
     ID              shift and go to state 37
 
@@ -520,31 +520,31 @@ state 32
 
 state 33
 
-    (40) dec_est -> LLAVE_A . LLAVE_C
-    (41) dec_est -> LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (84) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (85) lectura -> . LEER PARENT_A variables PARENT_C
-    (86) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (91) decision -> . if
-    (92) decision -> . if else
-    (96) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (95) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (39) dec_est -> LLAVE_A . LLAVE_C
+    (40) dec_est -> LLAVE_A . estatutos_dos LLAVE_C
+    (49) estatutos_dos -> . estatutos
+    (50) estatutos_dos -> . estatutos estatutos_dos
+    (41) estatutos -> . asignacion PUNTOCOMA
+    (42) estatutos -> . llamada PUNTOCOMA
+    (43) estatutos -> . retorno PUNTOCOMA
+    (44) estatutos -> . lectura PUNTOCOMA
+    (45) estatutos -> . escritura PUNTOCOMA
+    (46) estatutos -> . decision
+    (47) estatutos -> . ciclo_for
+    (48) estatutos -> . ciclo_while
+    (51) asignacion -> . variable IGUAL expresion
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
+    (83) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (84) lectura -> . LEER PARENT_A variables PARENT_C
+    (85) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (90) decision -> . if
+    (91) decision -> . if else
+    (95) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (93) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_C         shift and go to state 38
     ID              shift and go to state 50
@@ -604,9 +604,9 @@ state 35
 
 state 36
 
-    (28) funcion -> FUNCION tipo_simple ID create_func_table . func_dos
-    (32) func_dos -> . PARENT_A PARENT_C var_funcs
-    (33) func_dos -> . PARENT_A parametros PARENT_C save_params var_funcs
+    (27) funcion -> FUNCION tipo_simple ID create_func_table . func_dos
+    (31) func_dos -> . PARENT_A PARENT_C var_funcs
+    (32) func_dos -> . PARENT_A parametros PARENT_C save_params var_funcs
 
     PARENT_A        shift and go to state 63
 
@@ -614,58 +614,58 @@ state 36
 
 state 37
 
-    (29) funcion -> FUNCION VOID func_type_void ID . create_func_table func_dos
-    (31) create_func_table -> .
+    (28) funcion -> FUNCION VOID func_type_void ID . create_func_table func_dos
+    (30) create_func_table -> .
 
-    PARENT_A        reduce using rule 31 (create_func_table -> .)
+    PARENT_A        reduce using rule 30 (create_func_table -> .)
 
     create_func_table              shift and go to state 64
 
 state 38
 
-    (40) dec_est -> LLAVE_A LLAVE_C .
+    (39) dec_est -> LLAVE_A LLAVE_C .
 
-    $end            reduce using rule 40 (dec_est -> LLAVE_A LLAVE_C .)
-    FUNCION         reduce using rule 40 (dec_est -> LLAVE_A LLAVE_C .)
-    PRINCIPAL       reduce using rule 40 (dec_est -> LLAVE_A LLAVE_C .)
+    $end            reduce using rule 39 (dec_est -> LLAVE_A LLAVE_C .)
+    FUNCION         reduce using rule 39 (dec_est -> LLAVE_A LLAVE_C .)
+    PRINCIPAL       reduce using rule 39 (dec_est -> LLAVE_A LLAVE_C .)
 
 
 state 39
 
-    (41) dec_est -> LLAVE_A estatutos_dos . LLAVE_C
+    (40) dec_est -> LLAVE_A estatutos_dos . LLAVE_C
 
     LLAVE_C         shift and go to state 65
 
 
 state 40
 
-    (50) estatutos_dos -> estatutos .
-    (51) estatutos_dos -> estatutos . estatutos_dos
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (84) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (85) lectura -> . LEER PARENT_A variables PARENT_C
-    (86) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (91) decision -> . if
-    (92) decision -> . if else
-    (96) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (95) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (49) estatutos_dos -> estatutos .
+    (50) estatutos_dos -> estatutos . estatutos_dos
+    (49) estatutos_dos -> . estatutos
+    (50) estatutos_dos -> . estatutos estatutos_dos
+    (41) estatutos -> . asignacion PUNTOCOMA
+    (42) estatutos -> . llamada PUNTOCOMA
+    (43) estatutos -> . retorno PUNTOCOMA
+    (44) estatutos -> . lectura PUNTOCOMA
+    (45) estatutos -> . escritura PUNTOCOMA
+    (46) estatutos -> . decision
+    (47) estatutos -> . ciclo_for
+    (48) estatutos -> . ciclo_while
+    (51) asignacion -> . variable IGUAL expresion
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
+    (83) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (84) lectura -> . LEER PARENT_A variables PARENT_C
+    (85) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (90) decision -> . if
+    (91) decision -> . if else
+    (95) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (93) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
-    LLAVE_C         reduce using rule 50 (estatutos_dos -> estatutos .)
+    LLAVE_C         reduce using rule 49 (estatutos_dos -> estatutos .)
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
     LEER            shift and go to state 52
@@ -689,144 +689,144 @@ state 40
 
 state 41
 
-    (42) estatutos -> asignacion . PUNTOCOMA
+    (41) estatutos -> asignacion . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 67
 
 
 state 42
 
-    (43) estatutos -> llamada . PUNTOCOMA
+    (42) estatutos -> llamada . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 68
 
 
 state 43
 
-    (44) estatutos -> retorno . PUNTOCOMA
+    (43) estatutos -> retorno . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 69
 
 
 state 44
 
-    (45) estatutos -> lectura . PUNTOCOMA
+    (44) estatutos -> lectura . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 70
 
 
 state 45
 
-    (46) estatutos -> escritura . PUNTOCOMA
+    (45) estatutos -> escritura . PUNTOCOMA
 
     PUNTOCOMA       shift and go to state 71
 
 
 state 46
 
-    (47) estatutos -> decision .
+    (46) estatutos -> decision .
 
-    ID              reduce using rule 47 (estatutos -> decision .)
-    REGRESA         reduce using rule 47 (estatutos -> decision .)
-    LEER            reduce using rule 47 (estatutos -> decision .)
-    ESCRIBIR        reduce using rule 47 (estatutos -> decision .)
-    DESDE           reduce using rule 47 (estatutos -> decision .)
-    MIENTRAS        reduce using rule 47 (estatutos -> decision .)
-    SI              reduce using rule 47 (estatutos -> decision .)
-    LLAVE_C         reduce using rule 47 (estatutos -> decision .)
+    ID              reduce using rule 46 (estatutos -> decision .)
+    REGRESA         reduce using rule 46 (estatutos -> decision .)
+    LEER            reduce using rule 46 (estatutos -> decision .)
+    ESCRIBIR        reduce using rule 46 (estatutos -> decision .)
+    DESDE           reduce using rule 46 (estatutos -> decision .)
+    MIENTRAS        reduce using rule 46 (estatutos -> decision .)
+    SI              reduce using rule 46 (estatutos -> decision .)
+    LLAVE_C         reduce using rule 46 (estatutos -> decision .)
 
 
 state 47
 
-    (48) estatutos -> ciclo_for .
+    (47) estatutos -> ciclo_for .
 
-    ID              reduce using rule 48 (estatutos -> ciclo_for .)
-    REGRESA         reduce using rule 48 (estatutos -> ciclo_for .)
-    LEER            reduce using rule 48 (estatutos -> ciclo_for .)
-    ESCRIBIR        reduce using rule 48 (estatutos -> ciclo_for .)
-    DESDE           reduce using rule 48 (estatutos -> ciclo_for .)
-    MIENTRAS        reduce using rule 48 (estatutos -> ciclo_for .)
-    SI              reduce using rule 48 (estatutos -> ciclo_for .)
-    LLAVE_C         reduce using rule 48 (estatutos -> ciclo_for .)
+    ID              reduce using rule 47 (estatutos -> ciclo_for .)
+    REGRESA         reduce using rule 47 (estatutos -> ciclo_for .)
+    LEER            reduce using rule 47 (estatutos -> ciclo_for .)
+    ESCRIBIR        reduce using rule 47 (estatutos -> ciclo_for .)
+    DESDE           reduce using rule 47 (estatutos -> ciclo_for .)
+    MIENTRAS        reduce using rule 47 (estatutos -> ciclo_for .)
+    SI              reduce using rule 47 (estatutos -> ciclo_for .)
+    LLAVE_C         reduce using rule 47 (estatutos -> ciclo_for .)
 
 
 state 48
 
-    (49) estatutos -> ciclo_while .
+    (48) estatutos -> ciclo_while .
 
-    ID              reduce using rule 49 (estatutos -> ciclo_while .)
-    REGRESA         reduce using rule 49 (estatutos -> ciclo_while .)
-    LEER            reduce using rule 49 (estatutos -> ciclo_while .)
-    ESCRIBIR        reduce using rule 49 (estatutos -> ciclo_while .)
-    DESDE           reduce using rule 49 (estatutos -> ciclo_while .)
-    MIENTRAS        reduce using rule 49 (estatutos -> ciclo_while .)
-    SI              reduce using rule 49 (estatutos -> ciclo_while .)
-    LLAVE_C         reduce using rule 49 (estatutos -> ciclo_while .)
+    ID              reduce using rule 48 (estatutos -> ciclo_while .)
+    REGRESA         reduce using rule 48 (estatutos -> ciclo_while .)
+    LEER            reduce using rule 48 (estatutos -> ciclo_while .)
+    ESCRIBIR        reduce using rule 48 (estatutos -> ciclo_while .)
+    DESDE           reduce using rule 48 (estatutos -> ciclo_while .)
+    MIENTRAS        reduce using rule 48 (estatutos -> ciclo_while .)
+    SI              reduce using rule 48 (estatutos -> ciclo_while .)
+    LLAVE_C         reduce using rule 48 (estatutos -> ciclo_while .)
 
 
 state 49
 
-    (52) asignacion -> variable . IGUAL expresion
+    (51) asignacion -> variable . IGUAL expresion
 
     IGUAL           shift and go to state 72
 
 
 state 50
 
-    (53) llamada -> ID . PARENT_A PARENT_C
-    (54) llamada -> ID . PARENT_A expresiones PARENT_C
+    (52) llamada -> ID . PARENT_A PARENT_C
+    (53) llamada -> ID . PARENT_A expresiones PARENT_C
     (20) variable -> ID . r_push_id
     (21) variable -> ID . r_push_id dim
-    (22) r_push_id -> .
+    (96) r_push_id -> .
 
     PARENT_A        shift and go to state 73
-    CORCHETE_A      reduce using rule 22 (r_push_id -> .)
-    IGUAL           reduce using rule 22 (r_push_id -> .)
+    CORCHETE_A      reduce using rule 96 (r_push_id -> .)
+    IGUAL           reduce using rule 96 (r_push_id -> .)
 
     r_push_id                      shift and go to state 74
 
 state 51
 
-    (84) retorno -> REGRESA . PARENT_A expresion PARENT_C
+    (83) retorno -> REGRESA . PARENT_A expresion PARENT_C
 
     PARENT_A        shift and go to state 75
 
 
 state 52
 
-    (85) lectura -> LEER . PARENT_A variables PARENT_C
+    (84) lectura -> LEER . PARENT_A variables PARENT_C
 
     PARENT_A        shift and go to state 76
 
 
 state 53
 
-    (86) escritura -> ESCRIBIR . PARENT_A escr PARENT_C
+    (85) escritura -> ESCRIBIR . PARENT_A escr PARENT_C
 
     PARENT_A        shift and go to state 77
 
 
 state 54
 
-    (91) decision -> if .
-    (92) decision -> if . else
-    (94) else -> . SINO LLAVE_A estatutos_dos LLAVE_C
+    (90) decision -> if .
+    (91) decision -> if . else
+    (93) else -> . SINO LLAVE_A estatutos_dos LLAVE_C
 
-    ID              reduce using rule 91 (decision -> if .)
-    REGRESA         reduce using rule 91 (decision -> if .)
-    LEER            reduce using rule 91 (decision -> if .)
-    ESCRIBIR        reduce using rule 91 (decision -> if .)
-    DESDE           reduce using rule 91 (decision -> if .)
-    MIENTRAS        reduce using rule 91 (decision -> if .)
-    SI              reduce using rule 91 (decision -> if .)
-    LLAVE_C         reduce using rule 91 (decision -> if .)
+    ID              reduce using rule 90 (decision -> if .)
+    REGRESA         reduce using rule 90 (decision -> if .)
+    LEER            reduce using rule 90 (decision -> if .)
+    ESCRIBIR        reduce using rule 90 (decision -> if .)
+    DESDE           reduce using rule 90 (decision -> if .)
+    MIENTRAS        reduce using rule 90 (decision -> if .)
+    SI              reduce using rule 90 (decision -> if .)
+    LLAVE_C         reduce using rule 90 (decision -> if .)
     SINO            shift and go to state 79
 
     else                           shift and go to state 78
 
 state 55
 
-    (96) ciclo_for -> DESDE . variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (95) ciclo_for -> DESDE . variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
 
@@ -836,14 +836,14 @@ state 55
 
 state 56
 
-    (95) ciclo_while -> MIENTRAS . PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> MIENTRAS . PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_A        shift and go to state 82
 
 
 state 57
 
-    (93) if -> SI . PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> SI . PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_A        shift and go to state 83
 
@@ -887,18 +887,18 @@ state 61
 
 state 62
 
-    (28) funcion -> FUNCION tipo_simple ID create_func_table func_dos .
+    (27) funcion -> FUNCION tipo_simple ID create_func_table func_dos .
 
-    FUNCION         reduce using rule 28 (funcion -> FUNCION tipo_simple ID create_func_table func_dos .)
-    PRINCIPAL       reduce using rule 28 (funcion -> FUNCION tipo_simple ID create_func_table func_dos .)
+    FUNCION         reduce using rule 27 (funcion -> FUNCION tipo_simple ID create_func_table func_dos .)
+    PRINCIPAL       reduce using rule 27 (funcion -> FUNCION tipo_simple ID create_func_table func_dos .)
 
 
 state 63
 
-    (32) func_dos -> PARENT_A . PARENT_C var_funcs
-    (33) func_dos -> PARENT_A . parametros PARENT_C save_params var_funcs
-    (37) parametros -> . tipo_simple ID save_params_list
-    (38) parametros -> . tipo_simple ID save_params_list COMA parametros
+    (31) func_dos -> PARENT_A . PARENT_C var_funcs
+    (32) func_dos -> PARENT_A . parametros PARENT_C save_params var_funcs
+    (36) parametros -> . tipo_simple ID save_params_list
+    (37) parametros -> . tipo_simple ID save_params_list COMA parametros
     (11) tipo_simple -> . INT
     (12) tipo_simple -> . FLOAT
     (13) tipo_simple -> . CHAR
@@ -913,9 +913,9 @@ state 63
 
 state 64
 
-    (29) funcion -> FUNCION VOID func_type_void ID create_func_table . func_dos
-    (32) func_dos -> . PARENT_A PARENT_C var_funcs
-    (33) func_dos -> . PARENT_A parametros PARENT_C save_params var_funcs
+    (28) funcion -> FUNCION VOID func_type_void ID create_func_table . func_dos
+    (31) func_dos -> . PARENT_A PARENT_C var_funcs
+    (32) func_dos -> . PARENT_A parametros PARENT_C save_params var_funcs
 
     PARENT_A        shift and go to state 63
 
@@ -923,115 +923,115 @@ state 64
 
 state 65
 
-    (41) dec_est -> LLAVE_A estatutos_dos LLAVE_C .
+    (40) dec_est -> LLAVE_A estatutos_dos LLAVE_C .
 
-    $end            reduce using rule 41 (dec_est -> LLAVE_A estatutos_dos LLAVE_C .)
-    FUNCION         reduce using rule 41 (dec_est -> LLAVE_A estatutos_dos LLAVE_C .)
-    PRINCIPAL       reduce using rule 41 (dec_est -> LLAVE_A estatutos_dos LLAVE_C .)
+    $end            reduce using rule 40 (dec_est -> LLAVE_A estatutos_dos LLAVE_C .)
+    FUNCION         reduce using rule 40 (dec_est -> LLAVE_A estatutos_dos LLAVE_C .)
+    PRINCIPAL       reduce using rule 40 (dec_est -> LLAVE_A estatutos_dos LLAVE_C .)
 
 
 state 66
 
-    (51) estatutos_dos -> estatutos estatutos_dos .
+    (50) estatutos_dos -> estatutos estatutos_dos .
 
-    LLAVE_C         reduce using rule 51 (estatutos_dos -> estatutos estatutos_dos .)
+    LLAVE_C         reduce using rule 50 (estatutos_dos -> estatutos estatutos_dos .)
 
 
 state 67
 
-    (42) estatutos -> asignacion PUNTOCOMA .
+    (41) estatutos -> asignacion PUNTOCOMA .
 
-    ID              reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
-    REGRESA         reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
-    LEER            reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
-    ESCRIBIR        reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
-    DESDE           reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
-    MIENTRAS        reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
-    SI              reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
-    LLAVE_C         reduce using rule 42 (estatutos -> asignacion PUNTOCOMA .)
+    ID              reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
+    REGRESA         reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
+    LEER            reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
+    ESCRIBIR        reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
+    DESDE           reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
+    MIENTRAS        reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
+    SI              reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
+    LLAVE_C         reduce using rule 41 (estatutos -> asignacion PUNTOCOMA .)
 
 
 state 68
 
-    (43) estatutos -> llamada PUNTOCOMA .
+    (42) estatutos -> llamada PUNTOCOMA .
 
-    ID              reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
-    REGRESA         reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
-    LEER            reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
-    ESCRIBIR        reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
-    DESDE           reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
-    MIENTRAS        reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
-    SI              reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
-    LLAVE_C         reduce using rule 43 (estatutos -> llamada PUNTOCOMA .)
+    ID              reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
+    REGRESA         reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
+    LEER            reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
+    ESCRIBIR        reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
+    DESDE           reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
+    MIENTRAS        reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
+    SI              reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
+    LLAVE_C         reduce using rule 42 (estatutos -> llamada PUNTOCOMA .)
 
 
 state 69
 
-    (44) estatutos -> retorno PUNTOCOMA .
+    (43) estatutos -> retorno PUNTOCOMA .
 
-    ID              reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
-    REGRESA         reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
-    LEER            reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
-    ESCRIBIR        reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
-    DESDE           reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
-    MIENTRAS        reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
-    SI              reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
-    LLAVE_C         reduce using rule 44 (estatutos -> retorno PUNTOCOMA .)
+    ID              reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
+    REGRESA         reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
+    LEER            reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
+    ESCRIBIR        reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
+    DESDE           reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
+    MIENTRAS        reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
+    SI              reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
+    LLAVE_C         reduce using rule 43 (estatutos -> retorno PUNTOCOMA .)
 
 
 state 70
 
-    (45) estatutos -> lectura PUNTOCOMA .
+    (44) estatutos -> lectura PUNTOCOMA .
 
-    ID              reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
-    REGRESA         reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
-    LEER            reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
-    ESCRIBIR        reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
-    DESDE           reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
-    MIENTRAS        reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
-    SI              reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
-    LLAVE_C         reduce using rule 45 (estatutos -> lectura PUNTOCOMA .)
+    ID              reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
+    REGRESA         reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
+    LEER            reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
+    ESCRIBIR        reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
+    DESDE           reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
+    MIENTRAS        reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
+    SI              reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
+    LLAVE_C         reduce using rule 44 (estatutos -> lectura PUNTOCOMA .)
 
 
 state 71
 
-    (46) estatutos -> escritura PUNTOCOMA .
+    (45) estatutos -> escritura PUNTOCOMA .
 
-    ID              reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
-    REGRESA         reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
-    LEER            reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
-    ESCRIBIR        reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
-    DESDE           reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
-    MIENTRAS        reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
-    SI              reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
-    LLAVE_C         reduce using rule 46 (estatutos -> escritura PUNTOCOMA .)
+    ID              reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
+    REGRESA         reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
+    LEER            reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
+    ESCRIBIR        reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
+    DESDE           reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
+    MIENTRAS        reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
+    SI              reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
+    LLAVE_C         reduce using rule 45 (estatutos -> escritura PUNTOCOMA .)
 
 
 state 72
 
-    (52) asignacion -> variable IGUAL . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (51) asignacion -> variable IGUAL . expresion
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -1050,32 +1050,32 @@ state 72
 
 state 73
 
-    (53) llamada -> ID PARENT_A . PARENT_C
-    (54) llamada -> ID PARENT_A . expresiones PARENT_C
-    (55) expresiones -> . expresion
-    (56) expresiones -> . expresion COMA expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (52) llamada -> ID PARENT_A . PARENT_C
+    (53) llamada -> ID PARENT_A . expresiones PARENT_C
+    (54) expresiones -> . expresion
+    (55) expresiones -> . expresion COMA expresion
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_C        shift and go to state 104
     PARENT_A        shift and go to state 98
@@ -1098,7 +1098,7 @@ state 74
 
     (20) variable -> ID r_push_id .
     (21) variable -> ID r_push_id . dim
-    (25) dim -> . CORCHETE_A expresion CORCHETE_C
+    (24) dim -> . CORCHETE_A expresion CORCHETE_C
 
     IGUAL           reduce using rule 20 (variable -> ID r_push_id .)
     POR             reduce using rule 20 (variable -> ID r_push_id .)
@@ -1125,29 +1125,29 @@ state 74
 
 state 75
 
-    (84) retorno -> REGRESA PARENT_A . expresion PARENT_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (83) retorno -> REGRESA PARENT_A . expresion PARENT_C
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -1166,9 +1166,9 @@ state 75
 
 state 76
 
-    (85) lectura -> LEER PARENT_A . variables PARENT_C
-    (23) variables -> . variable
-    (24) variables -> . variable COMA variables
+    (84) lectura -> LEER PARENT_A . variables PARENT_C
+    (22) variables -> . variable
+    (23) variables -> . variable COMA variables
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
 
@@ -1179,33 +1179,33 @@ state 76
 
 state 77
 
-    (86) escritura -> ESCRIBIR PARENT_A . escr PARENT_C
-    (89) escr -> . escritura_dos
-    (90) escr -> . escritura_dos COMA escr
-    (87) escritura_dos -> . CTE_STR
-    (88) escritura_dos -> . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (85) escritura -> ESCRIBIR PARENT_A . escr PARENT_C
+    (88) escr -> . escritura_dos
+    (89) escr -> . escritura_dos COMA escr
+    (86) escritura_dos -> . CTE_STR
+    (87) escritura_dos -> . expresion
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     CTE_STR         shift and go to state 114
     PARENT_A        shift and go to state 98
@@ -1227,28 +1227,28 @@ state 77
 
 state 78
 
-    (92) decision -> if else .
+    (91) decision -> if else .
 
-    ID              reduce using rule 92 (decision -> if else .)
-    REGRESA         reduce using rule 92 (decision -> if else .)
-    LEER            reduce using rule 92 (decision -> if else .)
-    ESCRIBIR        reduce using rule 92 (decision -> if else .)
-    DESDE           reduce using rule 92 (decision -> if else .)
-    MIENTRAS        reduce using rule 92 (decision -> if else .)
-    SI              reduce using rule 92 (decision -> if else .)
-    LLAVE_C         reduce using rule 92 (decision -> if else .)
+    ID              reduce using rule 91 (decision -> if else .)
+    REGRESA         reduce using rule 91 (decision -> if else .)
+    LEER            reduce using rule 91 (decision -> if else .)
+    ESCRIBIR        reduce using rule 91 (decision -> if else .)
+    DESDE           reduce using rule 91 (decision -> if else .)
+    MIENTRAS        reduce using rule 91 (decision -> if else .)
+    SI              reduce using rule 91 (decision -> if else .)
+    LLAVE_C         reduce using rule 91 (decision -> if else .)
 
 
 state 79
 
-    (94) else -> SINO . LLAVE_A estatutos_dos LLAVE_C
+    (93) else -> SINO . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 116
 
 
 state 80
 
-    (96) ciclo_for -> DESDE variable . IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (95) ciclo_for -> DESDE variable . IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
     IGUAL           shift and go to state 117
 
@@ -1257,40 +1257,40 @@ state 81
 
     (20) variable -> ID . r_push_id
     (21) variable -> ID . r_push_id dim
-    (22) r_push_id -> .
+    (96) r_push_id -> .
 
-    CORCHETE_A      reduce using rule 22 (r_push_id -> .)
-    IGUAL           reduce using rule 22 (r_push_id -> .)
-    COMA            reduce using rule 22 (r_push_id -> .)
-    PARENT_C        reduce using rule 22 (r_push_id -> .)
+    CORCHETE_A      reduce using rule 96 (r_push_id -> .)
+    IGUAL           reduce using rule 96 (r_push_id -> .)
+    COMA            reduce using rule 96 (r_push_id -> .)
+    PARENT_C        reduce using rule 96 (r_push_id -> .)
 
     r_push_id                      shift and go to state 74
 
 state 82
 
-    (95) ciclo_while -> MIENTRAS PARENT_A . expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (94) ciclo_while -> MIENTRAS PARENT_A . expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -1309,29 +1309,29 @@ state 82
 
 state 83
 
-    (93) if -> SI PARENT_A . expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (92) if -> SI PARENT_A . expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -1376,11 +1376,11 @@ state 86
 
 state 87
 
-    (32) func_dos -> PARENT_A PARENT_C . var_funcs
-    (35) var_funcs -> . dec_est
-    (36) var_funcs -> . dec_vars dec_est
-    (40) dec_est -> . LLAVE_A LLAVE_C
-    (41) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
+    (31) func_dos -> PARENT_A PARENT_C . var_funcs
+    (34) var_funcs -> . dec_est
+    (35) var_funcs -> . dec_vars dec_est
+    (39) dec_est -> . LLAVE_A LLAVE_C
+    (40) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
     (7) dec_vars -> . VAR vars save_vars
 
     LLAVE_A         shift and go to state 33
@@ -1392,106 +1392,106 @@ state 87
 
 state 88
 
-    (33) func_dos -> PARENT_A parametros . PARENT_C save_params var_funcs
+    (32) func_dos -> PARENT_A parametros . PARENT_C save_params var_funcs
 
     PARENT_C        shift and go to state 125
 
 
 state 89
 
-    (37) parametros -> tipo_simple . ID save_params_list
-    (38) parametros -> tipo_simple . ID save_params_list COMA parametros
+    (36) parametros -> tipo_simple . ID save_params_list
+    (37) parametros -> tipo_simple . ID save_params_list COMA parametros
 
     ID              shift and go to state 126
 
 
 state 90
 
-    (29) funcion -> FUNCION VOID func_type_void ID create_func_table func_dos .
+    (28) funcion -> FUNCION VOID func_type_void ID create_func_table func_dos .
 
-    FUNCION         reduce using rule 29 (funcion -> FUNCION VOID func_type_void ID create_func_table func_dos .)
-    PRINCIPAL       reduce using rule 29 (funcion -> FUNCION VOID func_type_void ID create_func_table func_dos .)
+    FUNCION         reduce using rule 28 (funcion -> FUNCION VOID func_type_void ID create_func_table func_dos .)
+    PRINCIPAL       reduce using rule 28 (funcion -> FUNCION VOID func_type_void ID create_func_table func_dos .)
 
 
 state 91
 
-    (82) factor -> variable .
+    (81) factor -> variable .
 
-    POR             reduce using rule 82 (factor -> variable .)
-    DIV             reduce using rule 82 (factor -> variable .)
-    MAS             reduce using rule 82 (factor -> variable .)
-    MENOS           reduce using rule 82 (factor -> variable .)
-    MAYORQUE        reduce using rule 82 (factor -> variable .)
-    MENORQUE        reduce using rule 82 (factor -> variable .)
-    MAYORIGUAL      reduce using rule 82 (factor -> variable .)
-    MENORIGUAL      reduce using rule 82 (factor -> variable .)
-    IGUALIGUAL      reduce using rule 82 (factor -> variable .)
-    DIFERENTE       reduce using rule 82 (factor -> variable .)
-    AND             reduce using rule 82 (factor -> variable .)
-    OR              reduce using rule 82 (factor -> variable .)
-    PUNTOCOMA       reduce using rule 82 (factor -> variable .)
-    COMA            reduce using rule 82 (factor -> variable .)
-    PARENT_C        reduce using rule 82 (factor -> variable .)
-    CORCHETE_C      reduce using rule 82 (factor -> variable .)
-    HASTA           reduce using rule 82 (factor -> variable .)
-    HACER           reduce using rule 82 (factor -> variable .)
+    POR             reduce using rule 81 (factor -> variable .)
+    DIV             reduce using rule 81 (factor -> variable .)
+    MAS             reduce using rule 81 (factor -> variable .)
+    MENOS           reduce using rule 81 (factor -> variable .)
+    MAYORQUE        reduce using rule 81 (factor -> variable .)
+    MENORQUE        reduce using rule 81 (factor -> variable .)
+    MAYORIGUAL      reduce using rule 81 (factor -> variable .)
+    MENORIGUAL      reduce using rule 81 (factor -> variable .)
+    IGUALIGUAL      reduce using rule 81 (factor -> variable .)
+    DIFERENTE       reduce using rule 81 (factor -> variable .)
+    AND             reduce using rule 81 (factor -> variable .)
+    OR              reduce using rule 81 (factor -> variable .)
+    PUNTOCOMA       reduce using rule 81 (factor -> variable .)
+    COMA            reduce using rule 81 (factor -> variable .)
+    PARENT_C        reduce using rule 81 (factor -> variable .)
+    CORCHETE_C      reduce using rule 81 (factor -> variable .)
+    HASTA           reduce using rule 81 (factor -> variable .)
+    HACER           reduce using rule 81 (factor -> variable .)
 
 
 state 92
 
-    (52) asignacion -> variable IGUAL expresion .
+    (51) asignacion -> variable IGUAL expresion .
 
-    PUNTOCOMA       reduce using rule 52 (asignacion -> variable IGUAL expresion .)
+    PUNTOCOMA       reduce using rule 51 (asignacion -> variable IGUAL expresion .)
 
 
 state 93
 
-    (57) expresion -> t_expresion .
-    (58) expresion -> t_expresion . OR expresion
+    (56) expresion -> t_expresion .
+    (57) expresion -> t_expresion . OR expresion
 
-    PUNTOCOMA       reduce using rule 57 (expresion -> t_expresion .)
-    COMA            reduce using rule 57 (expresion -> t_expresion .)
-    PARENT_C        reduce using rule 57 (expresion -> t_expresion .)
-    CORCHETE_C      reduce using rule 57 (expresion -> t_expresion .)
-    HASTA           reduce using rule 57 (expresion -> t_expresion .)
-    HACER           reduce using rule 57 (expresion -> t_expresion .)
+    PUNTOCOMA       reduce using rule 56 (expresion -> t_expresion .)
+    COMA            reduce using rule 56 (expresion -> t_expresion .)
+    PARENT_C        reduce using rule 56 (expresion -> t_expresion .)
+    CORCHETE_C      reduce using rule 56 (expresion -> t_expresion .)
+    HASTA           reduce using rule 56 (expresion -> t_expresion .)
+    HACER           reduce using rule 56 (expresion -> t_expresion .)
     OR              shift and go to state 127
 
 
 state 94
 
-    (59) t_expresion -> g_expresion .
-    (60) t_expresion -> g_expresion . AND t_expresion
+    (58) t_expresion -> g_expresion .
+    (59) t_expresion -> g_expresion . AND t_expresion
 
-    OR              reduce using rule 59 (t_expresion -> g_expresion .)
-    PUNTOCOMA       reduce using rule 59 (t_expresion -> g_expresion .)
-    COMA            reduce using rule 59 (t_expresion -> g_expresion .)
-    PARENT_C        reduce using rule 59 (t_expresion -> g_expresion .)
-    CORCHETE_C      reduce using rule 59 (t_expresion -> g_expresion .)
-    HASTA           reduce using rule 59 (t_expresion -> g_expresion .)
-    HACER           reduce using rule 59 (t_expresion -> g_expresion .)
+    OR              reduce using rule 58 (t_expresion -> g_expresion .)
+    PUNTOCOMA       reduce using rule 58 (t_expresion -> g_expresion .)
+    COMA            reduce using rule 58 (t_expresion -> g_expresion .)
+    PARENT_C        reduce using rule 58 (t_expresion -> g_expresion .)
+    CORCHETE_C      reduce using rule 58 (t_expresion -> g_expresion .)
+    HASTA           reduce using rule 58 (t_expresion -> g_expresion .)
+    HACER           reduce using rule 58 (t_expresion -> g_expresion .)
     AND             shift and go to state 128
 
 
 state 95
 
-    (61) g_expresion -> m_expresion .
-    (62) g_expresion -> m_expresion . op_logicos m_expresion
-    (63) op_logicos -> . MAYORQUE
-    (64) op_logicos -> . MENORQUE
-    (65) op_logicos -> . MAYORIGUAL
-    (66) op_logicos -> . MENORIGUAL
-    (67) op_logicos -> . IGUALIGUAL
-    (68) op_logicos -> . DIFERENTE
+    (60) g_expresion -> m_expresion .
+    (61) g_expresion -> m_expresion . op_logicos m_expresion
+    (62) op_logicos -> . MAYORQUE
+    (63) op_logicos -> . MENORQUE
+    (64) op_logicos -> . MAYORIGUAL
+    (65) op_logicos -> . MENORIGUAL
+    (66) op_logicos -> . IGUALIGUAL
+    (67) op_logicos -> . DIFERENTE
 
-    AND             reduce using rule 61 (g_expresion -> m_expresion .)
-    OR              reduce using rule 61 (g_expresion -> m_expresion .)
-    PUNTOCOMA       reduce using rule 61 (g_expresion -> m_expresion .)
-    COMA            reduce using rule 61 (g_expresion -> m_expresion .)
-    PARENT_C        reduce using rule 61 (g_expresion -> m_expresion .)
-    CORCHETE_C      reduce using rule 61 (g_expresion -> m_expresion .)
-    HASTA           reduce using rule 61 (g_expresion -> m_expresion .)
-    HACER           reduce using rule 61 (g_expresion -> m_expresion .)
+    AND             reduce using rule 60 (g_expresion -> m_expresion .)
+    OR              reduce using rule 60 (g_expresion -> m_expresion .)
+    PUNTOCOMA       reduce using rule 60 (g_expresion -> m_expresion .)
+    COMA            reduce using rule 60 (g_expresion -> m_expresion .)
+    PARENT_C        reduce using rule 60 (g_expresion -> m_expresion .)
+    CORCHETE_C      reduce using rule 60 (g_expresion -> m_expresion .)
+    HASTA           reduce using rule 60 (g_expresion -> m_expresion .)
+    HACER           reduce using rule 60 (g_expresion -> m_expresion .)
     MAYORQUE        shift and go to state 130
     MENORQUE        shift and go to state 131
     MAYORIGUAL      shift and go to state 132
@@ -1503,79 +1503,79 @@ state 95
 
 state 96
 
-    (69) m_expresion -> termino .
-    (70) m_expresion -> termino . MAS r_push_oper m_expresion
-    (71) m_expresion -> termino . MENOS r_push_oper m_expresion
+    (68) m_expresion -> termino .
+    (69) m_expresion -> termino . MAS r_push_oper m_expresion
+    (70) m_expresion -> termino . MENOS r_push_oper m_expresion
 
-    MAYORQUE        reduce using rule 69 (m_expresion -> termino .)
-    MENORQUE        reduce using rule 69 (m_expresion -> termino .)
-    MAYORIGUAL      reduce using rule 69 (m_expresion -> termino .)
-    MENORIGUAL      reduce using rule 69 (m_expresion -> termino .)
-    IGUALIGUAL      reduce using rule 69 (m_expresion -> termino .)
-    DIFERENTE       reduce using rule 69 (m_expresion -> termino .)
-    AND             reduce using rule 69 (m_expresion -> termino .)
-    OR              reduce using rule 69 (m_expresion -> termino .)
-    PUNTOCOMA       reduce using rule 69 (m_expresion -> termino .)
-    COMA            reduce using rule 69 (m_expresion -> termino .)
-    PARENT_C        reduce using rule 69 (m_expresion -> termino .)
-    CORCHETE_C      reduce using rule 69 (m_expresion -> termino .)
-    HASTA           reduce using rule 69 (m_expresion -> termino .)
-    HACER           reduce using rule 69 (m_expresion -> termino .)
+    MAYORQUE        reduce using rule 68 (m_expresion -> termino .)
+    MENORQUE        reduce using rule 68 (m_expresion -> termino .)
+    MAYORIGUAL      reduce using rule 68 (m_expresion -> termino .)
+    MENORIGUAL      reduce using rule 68 (m_expresion -> termino .)
+    IGUALIGUAL      reduce using rule 68 (m_expresion -> termino .)
+    DIFERENTE       reduce using rule 68 (m_expresion -> termino .)
+    AND             reduce using rule 68 (m_expresion -> termino .)
+    OR              reduce using rule 68 (m_expresion -> termino .)
+    PUNTOCOMA       reduce using rule 68 (m_expresion -> termino .)
+    COMA            reduce using rule 68 (m_expresion -> termino .)
+    PARENT_C        reduce using rule 68 (m_expresion -> termino .)
+    CORCHETE_C      reduce using rule 68 (m_expresion -> termino .)
+    HASTA           reduce using rule 68 (m_expresion -> termino .)
+    HACER           reduce using rule 68 (m_expresion -> termino .)
     MAS             shift and go to state 136
     MENOS           shift and go to state 137
 
 
 state 97
 
-    (72) termino -> factor .
-    (73) termino -> factor . POR r_push_oper termino
-    (74) termino -> factor . DIV r_push_oper termino
+    (71) termino -> factor .
+    (72) termino -> factor . POR r_push_oper termino
+    (73) termino -> factor . DIV r_push_oper termino
 
-    MAS             reduce using rule 72 (termino -> factor .)
-    MENOS           reduce using rule 72 (termino -> factor .)
-    MAYORQUE        reduce using rule 72 (termino -> factor .)
-    MENORQUE        reduce using rule 72 (termino -> factor .)
-    MAYORIGUAL      reduce using rule 72 (termino -> factor .)
-    MENORIGUAL      reduce using rule 72 (termino -> factor .)
-    IGUALIGUAL      reduce using rule 72 (termino -> factor .)
-    DIFERENTE       reduce using rule 72 (termino -> factor .)
-    AND             reduce using rule 72 (termino -> factor .)
-    OR              reduce using rule 72 (termino -> factor .)
-    PUNTOCOMA       reduce using rule 72 (termino -> factor .)
-    COMA            reduce using rule 72 (termino -> factor .)
-    PARENT_C        reduce using rule 72 (termino -> factor .)
-    CORCHETE_C      reduce using rule 72 (termino -> factor .)
-    HASTA           reduce using rule 72 (termino -> factor .)
-    HACER           reduce using rule 72 (termino -> factor .)
+    MAS             reduce using rule 71 (termino -> factor .)
+    MENOS           reduce using rule 71 (termino -> factor .)
+    MAYORQUE        reduce using rule 71 (termino -> factor .)
+    MENORQUE        reduce using rule 71 (termino -> factor .)
+    MAYORIGUAL      reduce using rule 71 (termino -> factor .)
+    MENORIGUAL      reduce using rule 71 (termino -> factor .)
+    IGUALIGUAL      reduce using rule 71 (termino -> factor .)
+    DIFERENTE       reduce using rule 71 (termino -> factor .)
+    AND             reduce using rule 71 (termino -> factor .)
+    OR              reduce using rule 71 (termino -> factor .)
+    PUNTOCOMA       reduce using rule 71 (termino -> factor .)
+    COMA            reduce using rule 71 (termino -> factor .)
+    PARENT_C        reduce using rule 71 (termino -> factor .)
+    CORCHETE_C      reduce using rule 71 (termino -> factor .)
+    HASTA           reduce using rule 71 (termino -> factor .)
+    HACER           reduce using rule 71 (termino -> factor .)
     POR             shift and go to state 138
     DIV             shift and go to state 139
 
 
 state 98
 
-    (78) factor -> PARENT_A . expresion PARENT_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (77) factor -> PARENT_A . expresion PARENT_C
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -1594,168 +1594,168 @@ state 98
 
 state 99
 
-    (79) factor -> CTE_I .
+    (78) factor -> CTE_I .
 
-    POR             reduce using rule 79 (factor -> CTE_I .)
-    DIV             reduce using rule 79 (factor -> CTE_I .)
-    MAS             reduce using rule 79 (factor -> CTE_I .)
-    MENOS           reduce using rule 79 (factor -> CTE_I .)
-    MAYORQUE        reduce using rule 79 (factor -> CTE_I .)
-    MENORQUE        reduce using rule 79 (factor -> CTE_I .)
-    MAYORIGUAL      reduce using rule 79 (factor -> CTE_I .)
-    MENORIGUAL      reduce using rule 79 (factor -> CTE_I .)
-    IGUALIGUAL      reduce using rule 79 (factor -> CTE_I .)
-    DIFERENTE       reduce using rule 79 (factor -> CTE_I .)
-    AND             reduce using rule 79 (factor -> CTE_I .)
-    OR              reduce using rule 79 (factor -> CTE_I .)
-    PUNTOCOMA       reduce using rule 79 (factor -> CTE_I .)
-    COMA            reduce using rule 79 (factor -> CTE_I .)
-    PARENT_C        reduce using rule 79 (factor -> CTE_I .)
-    CORCHETE_C      reduce using rule 79 (factor -> CTE_I .)
-    HASTA           reduce using rule 79 (factor -> CTE_I .)
-    HACER           reduce using rule 79 (factor -> CTE_I .)
+    POR             reduce using rule 78 (factor -> CTE_I .)
+    DIV             reduce using rule 78 (factor -> CTE_I .)
+    MAS             reduce using rule 78 (factor -> CTE_I .)
+    MENOS           reduce using rule 78 (factor -> CTE_I .)
+    MAYORQUE        reduce using rule 78 (factor -> CTE_I .)
+    MENORQUE        reduce using rule 78 (factor -> CTE_I .)
+    MAYORIGUAL      reduce using rule 78 (factor -> CTE_I .)
+    MENORIGUAL      reduce using rule 78 (factor -> CTE_I .)
+    IGUALIGUAL      reduce using rule 78 (factor -> CTE_I .)
+    DIFERENTE       reduce using rule 78 (factor -> CTE_I .)
+    AND             reduce using rule 78 (factor -> CTE_I .)
+    OR              reduce using rule 78 (factor -> CTE_I .)
+    PUNTOCOMA       reduce using rule 78 (factor -> CTE_I .)
+    COMA            reduce using rule 78 (factor -> CTE_I .)
+    PARENT_C        reduce using rule 78 (factor -> CTE_I .)
+    CORCHETE_C      reduce using rule 78 (factor -> CTE_I .)
+    HASTA           reduce using rule 78 (factor -> CTE_I .)
+    HACER           reduce using rule 78 (factor -> CTE_I .)
 
 
 state 100
 
-    (80) factor -> CTE_F .
+    (79) factor -> CTE_F .
 
-    POR             reduce using rule 80 (factor -> CTE_F .)
-    DIV             reduce using rule 80 (factor -> CTE_F .)
-    MAS             reduce using rule 80 (factor -> CTE_F .)
-    MENOS           reduce using rule 80 (factor -> CTE_F .)
-    MAYORQUE        reduce using rule 80 (factor -> CTE_F .)
-    MENORQUE        reduce using rule 80 (factor -> CTE_F .)
-    MAYORIGUAL      reduce using rule 80 (factor -> CTE_F .)
-    MENORIGUAL      reduce using rule 80 (factor -> CTE_F .)
-    IGUALIGUAL      reduce using rule 80 (factor -> CTE_F .)
-    DIFERENTE       reduce using rule 80 (factor -> CTE_F .)
-    AND             reduce using rule 80 (factor -> CTE_F .)
-    OR              reduce using rule 80 (factor -> CTE_F .)
-    PUNTOCOMA       reduce using rule 80 (factor -> CTE_F .)
-    COMA            reduce using rule 80 (factor -> CTE_F .)
-    PARENT_C        reduce using rule 80 (factor -> CTE_F .)
-    CORCHETE_C      reduce using rule 80 (factor -> CTE_F .)
-    HASTA           reduce using rule 80 (factor -> CTE_F .)
-    HACER           reduce using rule 80 (factor -> CTE_F .)
+    POR             reduce using rule 79 (factor -> CTE_F .)
+    DIV             reduce using rule 79 (factor -> CTE_F .)
+    MAS             reduce using rule 79 (factor -> CTE_F .)
+    MENOS           reduce using rule 79 (factor -> CTE_F .)
+    MAYORQUE        reduce using rule 79 (factor -> CTE_F .)
+    MENORQUE        reduce using rule 79 (factor -> CTE_F .)
+    MAYORIGUAL      reduce using rule 79 (factor -> CTE_F .)
+    MENORIGUAL      reduce using rule 79 (factor -> CTE_F .)
+    IGUALIGUAL      reduce using rule 79 (factor -> CTE_F .)
+    DIFERENTE       reduce using rule 79 (factor -> CTE_F .)
+    AND             reduce using rule 79 (factor -> CTE_F .)
+    OR              reduce using rule 79 (factor -> CTE_F .)
+    PUNTOCOMA       reduce using rule 79 (factor -> CTE_F .)
+    COMA            reduce using rule 79 (factor -> CTE_F .)
+    PARENT_C        reduce using rule 79 (factor -> CTE_F .)
+    CORCHETE_C      reduce using rule 79 (factor -> CTE_F .)
+    HASTA           reduce using rule 79 (factor -> CTE_F .)
+    HACER           reduce using rule 79 (factor -> CTE_F .)
 
 
 state 101
 
-    (81) factor -> CTE_CH .
+    (80) factor -> CTE_CH .
 
-    POR             reduce using rule 81 (factor -> CTE_CH .)
-    DIV             reduce using rule 81 (factor -> CTE_CH .)
-    MAS             reduce using rule 81 (factor -> CTE_CH .)
-    MENOS           reduce using rule 81 (factor -> CTE_CH .)
-    MAYORQUE        reduce using rule 81 (factor -> CTE_CH .)
-    MENORQUE        reduce using rule 81 (factor -> CTE_CH .)
-    MAYORIGUAL      reduce using rule 81 (factor -> CTE_CH .)
-    MENORIGUAL      reduce using rule 81 (factor -> CTE_CH .)
-    IGUALIGUAL      reduce using rule 81 (factor -> CTE_CH .)
-    DIFERENTE       reduce using rule 81 (factor -> CTE_CH .)
-    AND             reduce using rule 81 (factor -> CTE_CH .)
-    OR              reduce using rule 81 (factor -> CTE_CH .)
-    PUNTOCOMA       reduce using rule 81 (factor -> CTE_CH .)
-    COMA            reduce using rule 81 (factor -> CTE_CH .)
-    PARENT_C        reduce using rule 81 (factor -> CTE_CH .)
-    CORCHETE_C      reduce using rule 81 (factor -> CTE_CH .)
-    HASTA           reduce using rule 81 (factor -> CTE_CH .)
-    HACER           reduce using rule 81 (factor -> CTE_CH .)
+    POR             reduce using rule 80 (factor -> CTE_CH .)
+    DIV             reduce using rule 80 (factor -> CTE_CH .)
+    MAS             reduce using rule 80 (factor -> CTE_CH .)
+    MENOS           reduce using rule 80 (factor -> CTE_CH .)
+    MAYORQUE        reduce using rule 80 (factor -> CTE_CH .)
+    MENORQUE        reduce using rule 80 (factor -> CTE_CH .)
+    MAYORIGUAL      reduce using rule 80 (factor -> CTE_CH .)
+    MENORIGUAL      reduce using rule 80 (factor -> CTE_CH .)
+    IGUALIGUAL      reduce using rule 80 (factor -> CTE_CH .)
+    DIFERENTE       reduce using rule 80 (factor -> CTE_CH .)
+    AND             reduce using rule 80 (factor -> CTE_CH .)
+    OR              reduce using rule 80 (factor -> CTE_CH .)
+    PUNTOCOMA       reduce using rule 80 (factor -> CTE_CH .)
+    COMA            reduce using rule 80 (factor -> CTE_CH .)
+    PARENT_C        reduce using rule 80 (factor -> CTE_CH .)
+    CORCHETE_C      reduce using rule 80 (factor -> CTE_CH .)
+    HASTA           reduce using rule 80 (factor -> CTE_CH .)
+    HACER           reduce using rule 80 (factor -> CTE_CH .)
 
 
 state 102
 
-    (83) factor -> llamada .
+    (82) factor -> llamada .
 
-    POR             reduce using rule 83 (factor -> llamada .)
-    DIV             reduce using rule 83 (factor -> llamada .)
-    MAS             reduce using rule 83 (factor -> llamada .)
-    MENOS           reduce using rule 83 (factor -> llamada .)
-    MAYORQUE        reduce using rule 83 (factor -> llamada .)
-    MENORQUE        reduce using rule 83 (factor -> llamada .)
-    MAYORIGUAL      reduce using rule 83 (factor -> llamada .)
-    MENORIGUAL      reduce using rule 83 (factor -> llamada .)
-    IGUALIGUAL      reduce using rule 83 (factor -> llamada .)
-    DIFERENTE       reduce using rule 83 (factor -> llamada .)
-    AND             reduce using rule 83 (factor -> llamada .)
-    OR              reduce using rule 83 (factor -> llamada .)
-    PUNTOCOMA       reduce using rule 83 (factor -> llamada .)
-    COMA            reduce using rule 83 (factor -> llamada .)
-    PARENT_C        reduce using rule 83 (factor -> llamada .)
-    CORCHETE_C      reduce using rule 83 (factor -> llamada .)
-    HASTA           reduce using rule 83 (factor -> llamada .)
-    HACER           reduce using rule 83 (factor -> llamada .)
+    POR             reduce using rule 82 (factor -> llamada .)
+    DIV             reduce using rule 82 (factor -> llamada .)
+    MAS             reduce using rule 82 (factor -> llamada .)
+    MENOS           reduce using rule 82 (factor -> llamada .)
+    MAYORQUE        reduce using rule 82 (factor -> llamada .)
+    MENORQUE        reduce using rule 82 (factor -> llamada .)
+    MAYORIGUAL      reduce using rule 82 (factor -> llamada .)
+    MENORIGUAL      reduce using rule 82 (factor -> llamada .)
+    IGUALIGUAL      reduce using rule 82 (factor -> llamada .)
+    DIFERENTE       reduce using rule 82 (factor -> llamada .)
+    AND             reduce using rule 82 (factor -> llamada .)
+    OR              reduce using rule 82 (factor -> llamada .)
+    PUNTOCOMA       reduce using rule 82 (factor -> llamada .)
+    COMA            reduce using rule 82 (factor -> llamada .)
+    PARENT_C        reduce using rule 82 (factor -> llamada .)
+    CORCHETE_C      reduce using rule 82 (factor -> llamada .)
+    HASTA           reduce using rule 82 (factor -> llamada .)
+    HACER           reduce using rule 82 (factor -> llamada .)
 
 
 state 103
 
     (20) variable -> ID . r_push_id
     (21) variable -> ID . r_push_id dim
-    (53) llamada -> ID . PARENT_A PARENT_C
-    (54) llamada -> ID . PARENT_A expresiones PARENT_C
-    (22) r_push_id -> .
+    (52) llamada -> ID . PARENT_A PARENT_C
+    (53) llamada -> ID . PARENT_A expresiones PARENT_C
+    (96) r_push_id -> .
 
     PARENT_A        shift and go to state 73
-    CORCHETE_A      reduce using rule 22 (r_push_id -> .)
-    POR             reduce using rule 22 (r_push_id -> .)
-    DIV             reduce using rule 22 (r_push_id -> .)
-    MAS             reduce using rule 22 (r_push_id -> .)
-    MENOS           reduce using rule 22 (r_push_id -> .)
-    MAYORQUE        reduce using rule 22 (r_push_id -> .)
-    MENORQUE        reduce using rule 22 (r_push_id -> .)
-    MAYORIGUAL      reduce using rule 22 (r_push_id -> .)
-    MENORIGUAL      reduce using rule 22 (r_push_id -> .)
-    IGUALIGUAL      reduce using rule 22 (r_push_id -> .)
-    DIFERENTE       reduce using rule 22 (r_push_id -> .)
-    AND             reduce using rule 22 (r_push_id -> .)
-    OR              reduce using rule 22 (r_push_id -> .)
-    PUNTOCOMA       reduce using rule 22 (r_push_id -> .)
-    COMA            reduce using rule 22 (r_push_id -> .)
-    PARENT_C        reduce using rule 22 (r_push_id -> .)
-    CORCHETE_C      reduce using rule 22 (r_push_id -> .)
-    HASTA           reduce using rule 22 (r_push_id -> .)
-    HACER           reduce using rule 22 (r_push_id -> .)
+    CORCHETE_A      reduce using rule 96 (r_push_id -> .)
+    POR             reduce using rule 96 (r_push_id -> .)
+    DIV             reduce using rule 96 (r_push_id -> .)
+    MAS             reduce using rule 96 (r_push_id -> .)
+    MENOS           reduce using rule 96 (r_push_id -> .)
+    MAYORQUE        reduce using rule 96 (r_push_id -> .)
+    MENORQUE        reduce using rule 96 (r_push_id -> .)
+    MAYORIGUAL      reduce using rule 96 (r_push_id -> .)
+    MENORIGUAL      reduce using rule 96 (r_push_id -> .)
+    IGUALIGUAL      reduce using rule 96 (r_push_id -> .)
+    DIFERENTE       reduce using rule 96 (r_push_id -> .)
+    AND             reduce using rule 96 (r_push_id -> .)
+    OR              reduce using rule 96 (r_push_id -> .)
+    PUNTOCOMA       reduce using rule 96 (r_push_id -> .)
+    COMA            reduce using rule 96 (r_push_id -> .)
+    PARENT_C        reduce using rule 96 (r_push_id -> .)
+    CORCHETE_C      reduce using rule 96 (r_push_id -> .)
+    HASTA           reduce using rule 96 (r_push_id -> .)
+    HACER           reduce using rule 96 (r_push_id -> .)
 
     r_push_id                      shift and go to state 74
 
 state 104
 
-    (53) llamada -> ID PARENT_A PARENT_C .
+    (52) llamada -> ID PARENT_A PARENT_C .
 
-    PUNTOCOMA       reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    POR             reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    DIV             reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    MAS             reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    MENOS           reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    MAYORQUE        reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    MENORQUE        reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    MAYORIGUAL      reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    MENORIGUAL      reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    IGUALIGUAL      reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    DIFERENTE       reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    AND             reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    OR              reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    COMA            reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    PARENT_C        reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    CORCHETE_C      reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    HASTA           reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
-    HACER           reduce using rule 53 (llamada -> ID PARENT_A PARENT_C .)
+    PUNTOCOMA       reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    POR             reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    DIV             reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    MAS             reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    MENOS           reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    MAYORQUE        reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    MENORQUE        reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    MAYORIGUAL      reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    MENORIGUAL      reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    IGUALIGUAL      reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    DIFERENTE       reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    AND             reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    OR              reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    COMA            reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    PARENT_C        reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    CORCHETE_C      reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    HASTA           reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
+    HACER           reduce using rule 52 (llamada -> ID PARENT_A PARENT_C .)
 
 
 state 105
 
-    (54) llamada -> ID PARENT_A expresiones . PARENT_C
+    (53) llamada -> ID PARENT_A expresiones . PARENT_C
 
     PARENT_C        shift and go to state 141
 
 
 state 106
 
-    (55) expresiones -> expresion .
-    (56) expresiones -> expresion . COMA expresion
+    (54) expresiones -> expresion .
+    (55) expresiones -> expresion . COMA expresion
 
-    PARENT_C        reduce using rule 55 (expresiones -> expresion .)
+    PARENT_C        reduce using rule 54 (expresiones -> expresion .)
     COMA            shift and go to state 142
 
 
@@ -1786,29 +1786,29 @@ state 107
 
 state 108
 
-    (25) dim -> CORCHETE_A . expresion CORCHETE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (24) dim -> CORCHETE_A . expresion CORCHETE_C
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -1827,85 +1827,85 @@ state 108
 
 state 109
 
-    (84) retorno -> REGRESA PARENT_A expresion . PARENT_C
+    (83) retorno -> REGRESA PARENT_A expresion . PARENT_C
 
     PARENT_C        shift and go to state 144
 
 
 state 110
 
-    (85) lectura -> LEER PARENT_A variables . PARENT_C
+    (84) lectura -> LEER PARENT_A variables . PARENT_C
 
     PARENT_C        shift and go to state 145
 
 
 state 111
 
-    (23) variables -> variable .
-    (24) variables -> variable . COMA variables
+    (22) variables -> variable .
+    (23) variables -> variable . COMA variables
 
-    PARENT_C        reduce using rule 23 (variables -> variable .)
+    PARENT_C        reduce using rule 22 (variables -> variable .)
     COMA            shift and go to state 146
 
 
 state 112
 
-    (86) escritura -> ESCRIBIR PARENT_A escr . PARENT_C
+    (85) escritura -> ESCRIBIR PARENT_A escr . PARENT_C
 
     PARENT_C        shift and go to state 147
 
 
 state 113
 
-    (89) escr -> escritura_dos .
-    (90) escr -> escritura_dos . COMA escr
+    (88) escr -> escritura_dos .
+    (89) escr -> escritura_dos . COMA escr
 
-    PARENT_C        reduce using rule 89 (escr -> escritura_dos .)
+    PARENT_C        reduce using rule 88 (escr -> escritura_dos .)
     COMA            shift and go to state 148
 
 
 state 114
 
-    (87) escritura_dos -> CTE_STR .
+    (86) escritura_dos -> CTE_STR .
 
-    COMA            reduce using rule 87 (escritura_dos -> CTE_STR .)
-    PARENT_C        reduce using rule 87 (escritura_dos -> CTE_STR .)
+    COMA            reduce using rule 86 (escritura_dos -> CTE_STR .)
+    PARENT_C        reduce using rule 86 (escritura_dos -> CTE_STR .)
 
 
 state 115
 
-    (88) escritura_dos -> expresion .
+    (87) escritura_dos -> expresion .
 
-    COMA            reduce using rule 88 (escritura_dos -> expresion .)
-    PARENT_C        reduce using rule 88 (escritura_dos -> expresion .)
+    COMA            reduce using rule 87 (escritura_dos -> expresion .)
+    PARENT_C        reduce using rule 87 (escritura_dos -> expresion .)
 
 
 state 116
 
-    (94) else -> SINO LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (84) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (85) lectura -> . LEER PARENT_A variables PARENT_C
-    (86) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (91) decision -> . if
-    (92) decision -> . if else
-    (96) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (95) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (93) else -> SINO LLAVE_A . estatutos_dos LLAVE_C
+    (49) estatutos_dos -> . estatutos
+    (50) estatutos_dos -> . estatutos estatutos_dos
+    (41) estatutos -> . asignacion PUNTOCOMA
+    (42) estatutos -> . llamada PUNTOCOMA
+    (43) estatutos -> . retorno PUNTOCOMA
+    (44) estatutos -> . lectura PUNTOCOMA
+    (45) estatutos -> . escritura PUNTOCOMA
+    (46) estatutos -> . decision
+    (47) estatutos -> . ciclo_for
+    (48) estatutos -> . ciclo_while
+    (51) asignacion -> . variable IGUAL expresion
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
+    (83) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (84) lectura -> . LEER PARENT_A variables PARENT_C
+    (85) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (90) decision -> . if
+    (91) decision -> . if else
+    (95) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (93) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -1930,29 +1930,29 @@ state 116
 
 state 117
 
-    (96) ciclo_for -> DESDE variable IGUAL . expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (95) ciclo_for -> DESDE variable IGUAL . expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -1971,14 +1971,14 @@ state 117
 
 state 118
 
-    (95) ciclo_while -> MIENTRAS PARENT_A expresion . PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> MIENTRAS PARENT_A expresion . PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_C        shift and go to state 151
 
 
 state 119
 
-    (93) if -> SI PARENT_A expresion . PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> SI PARENT_A expresion . PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_C        shift and go to state 152
 
@@ -2000,25 +2000,25 @@ state 121
 
 state 122
 
-    (32) func_dos -> PARENT_A PARENT_C var_funcs .
+    (31) func_dos -> PARENT_A PARENT_C var_funcs .
 
-    FUNCION         reduce using rule 32 (func_dos -> PARENT_A PARENT_C var_funcs .)
-    PRINCIPAL       reduce using rule 32 (func_dos -> PARENT_A PARENT_C var_funcs .)
+    FUNCION         reduce using rule 31 (func_dos -> PARENT_A PARENT_C var_funcs .)
+    PRINCIPAL       reduce using rule 31 (func_dos -> PARENT_A PARENT_C var_funcs .)
 
 
 state 123
 
-    (35) var_funcs -> dec_est .
+    (34) var_funcs -> dec_est .
 
-    FUNCION         reduce using rule 35 (var_funcs -> dec_est .)
-    PRINCIPAL       reduce using rule 35 (var_funcs -> dec_est .)
+    FUNCION         reduce using rule 34 (var_funcs -> dec_est .)
+    PRINCIPAL       reduce using rule 34 (var_funcs -> dec_est .)
 
 
 state 124
 
-    (36) var_funcs -> dec_vars . dec_est
-    (40) dec_est -> . LLAVE_A LLAVE_C
-    (41) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
+    (35) var_funcs -> dec_vars . dec_est
+    (39) dec_est -> . LLAVE_A LLAVE_C
+    (40) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 33
 
@@ -2026,50 +2026,50 @@ state 124
 
 state 125
 
-    (33) func_dos -> PARENT_A parametros PARENT_C . save_params var_funcs
-    (34) save_params -> .
+    (32) func_dos -> PARENT_A parametros PARENT_C . save_params var_funcs
+    (33) save_params -> .
 
-    LLAVE_A         reduce using rule 34 (save_params -> .)
-    VAR             reduce using rule 34 (save_params -> .)
+    LLAVE_A         reduce using rule 33 (save_params -> .)
+    VAR             reduce using rule 33 (save_params -> .)
 
     save_params                    shift and go to state 154
 
 state 126
 
-    (37) parametros -> tipo_simple ID . save_params_list
-    (38) parametros -> tipo_simple ID . save_params_list COMA parametros
-    (39) save_params_list -> .
+    (36) parametros -> tipo_simple ID . save_params_list
+    (37) parametros -> tipo_simple ID . save_params_list COMA parametros
+    (38) save_params_list -> .
 
-    COMA            reduce using rule 39 (save_params_list -> .)
-    PARENT_C        reduce using rule 39 (save_params_list -> .)
+    COMA            reduce using rule 38 (save_params_list -> .)
+    PARENT_C        reduce using rule 38 (save_params_list -> .)
 
     save_params_list               shift and go to state 155
 
 state 127
 
-    (58) expresion -> t_expresion OR . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (57) expresion -> t_expresion OR . expresion
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2088,27 +2088,27 @@ state 127
 
 state 128
 
-    (60) t_expresion -> g_expresion AND . t_expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (59) t_expresion -> g_expresion AND . t_expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2126,23 +2126,23 @@ state 128
 
 state 129
 
-    (62) g_expresion -> m_expresion op_logicos . m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (61) g_expresion -> m_expresion op_logicos . m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2158,178 +2158,178 @@ state 129
 
 state 130
 
-    (63) op_logicos -> MAYORQUE .
+    (62) op_logicos -> MAYORQUE .
 
-    PARENT_A        reduce using rule 63 (op_logicos -> MAYORQUE .)
-    CTE_I           reduce using rule 63 (op_logicos -> MAYORQUE .)
-    CTE_F           reduce using rule 63 (op_logicos -> MAYORQUE .)
-    CTE_CH          reduce using rule 63 (op_logicos -> MAYORQUE .)
-    ID              reduce using rule 63 (op_logicos -> MAYORQUE .)
+    PARENT_A        reduce using rule 62 (op_logicos -> MAYORQUE .)
+    CTE_I           reduce using rule 62 (op_logicos -> MAYORQUE .)
+    CTE_F           reduce using rule 62 (op_logicos -> MAYORQUE .)
+    CTE_CH          reduce using rule 62 (op_logicos -> MAYORQUE .)
+    ID              reduce using rule 62 (op_logicos -> MAYORQUE .)
 
 
 state 131
 
-    (64) op_logicos -> MENORQUE .
+    (63) op_logicos -> MENORQUE .
 
-    PARENT_A        reduce using rule 64 (op_logicos -> MENORQUE .)
-    CTE_I           reduce using rule 64 (op_logicos -> MENORQUE .)
-    CTE_F           reduce using rule 64 (op_logicos -> MENORQUE .)
-    CTE_CH          reduce using rule 64 (op_logicos -> MENORQUE .)
-    ID              reduce using rule 64 (op_logicos -> MENORQUE .)
+    PARENT_A        reduce using rule 63 (op_logicos -> MENORQUE .)
+    CTE_I           reduce using rule 63 (op_logicos -> MENORQUE .)
+    CTE_F           reduce using rule 63 (op_logicos -> MENORQUE .)
+    CTE_CH          reduce using rule 63 (op_logicos -> MENORQUE .)
+    ID              reduce using rule 63 (op_logicos -> MENORQUE .)
 
 
 state 132
 
-    (65) op_logicos -> MAYORIGUAL .
+    (64) op_logicos -> MAYORIGUAL .
 
-    PARENT_A        reduce using rule 65 (op_logicos -> MAYORIGUAL .)
-    CTE_I           reduce using rule 65 (op_logicos -> MAYORIGUAL .)
-    CTE_F           reduce using rule 65 (op_logicos -> MAYORIGUAL .)
-    CTE_CH          reduce using rule 65 (op_logicos -> MAYORIGUAL .)
-    ID              reduce using rule 65 (op_logicos -> MAYORIGUAL .)
+    PARENT_A        reduce using rule 64 (op_logicos -> MAYORIGUAL .)
+    CTE_I           reduce using rule 64 (op_logicos -> MAYORIGUAL .)
+    CTE_F           reduce using rule 64 (op_logicos -> MAYORIGUAL .)
+    CTE_CH          reduce using rule 64 (op_logicos -> MAYORIGUAL .)
+    ID              reduce using rule 64 (op_logicos -> MAYORIGUAL .)
 
 
 state 133
 
-    (66) op_logicos -> MENORIGUAL .
+    (65) op_logicos -> MENORIGUAL .
 
-    PARENT_A        reduce using rule 66 (op_logicos -> MENORIGUAL .)
-    CTE_I           reduce using rule 66 (op_logicos -> MENORIGUAL .)
-    CTE_F           reduce using rule 66 (op_logicos -> MENORIGUAL .)
-    CTE_CH          reduce using rule 66 (op_logicos -> MENORIGUAL .)
-    ID              reduce using rule 66 (op_logicos -> MENORIGUAL .)
+    PARENT_A        reduce using rule 65 (op_logicos -> MENORIGUAL .)
+    CTE_I           reduce using rule 65 (op_logicos -> MENORIGUAL .)
+    CTE_F           reduce using rule 65 (op_logicos -> MENORIGUAL .)
+    CTE_CH          reduce using rule 65 (op_logicos -> MENORIGUAL .)
+    ID              reduce using rule 65 (op_logicos -> MENORIGUAL .)
 
 
 state 134
 
-    (67) op_logicos -> IGUALIGUAL .
+    (66) op_logicos -> IGUALIGUAL .
 
-    PARENT_A        reduce using rule 67 (op_logicos -> IGUALIGUAL .)
-    CTE_I           reduce using rule 67 (op_logicos -> IGUALIGUAL .)
-    CTE_F           reduce using rule 67 (op_logicos -> IGUALIGUAL .)
-    CTE_CH          reduce using rule 67 (op_logicos -> IGUALIGUAL .)
-    ID              reduce using rule 67 (op_logicos -> IGUALIGUAL .)
+    PARENT_A        reduce using rule 66 (op_logicos -> IGUALIGUAL .)
+    CTE_I           reduce using rule 66 (op_logicos -> IGUALIGUAL .)
+    CTE_F           reduce using rule 66 (op_logicos -> IGUALIGUAL .)
+    CTE_CH          reduce using rule 66 (op_logicos -> IGUALIGUAL .)
+    ID              reduce using rule 66 (op_logicos -> IGUALIGUAL .)
 
 
 state 135
 
-    (68) op_logicos -> DIFERENTE .
+    (67) op_logicos -> DIFERENTE .
 
-    PARENT_A        reduce using rule 68 (op_logicos -> DIFERENTE .)
-    CTE_I           reduce using rule 68 (op_logicos -> DIFERENTE .)
-    CTE_F           reduce using rule 68 (op_logicos -> DIFERENTE .)
-    CTE_CH          reduce using rule 68 (op_logicos -> DIFERENTE .)
-    ID              reduce using rule 68 (op_logicos -> DIFERENTE .)
+    PARENT_A        reduce using rule 67 (op_logicos -> DIFERENTE .)
+    CTE_I           reduce using rule 67 (op_logicos -> DIFERENTE .)
+    CTE_F           reduce using rule 67 (op_logicos -> DIFERENTE .)
+    CTE_CH          reduce using rule 67 (op_logicos -> DIFERENTE .)
+    ID              reduce using rule 67 (op_logicos -> DIFERENTE .)
 
 
 state 136
 
-    (70) m_expresion -> termino MAS . r_push_oper m_expresion
-    (75) r_push_oper -> .
+    (69) m_expresion -> termino MAS . r_push_oper m_expresion
+    (74) r_push_oper -> .
 
-    PARENT_A        reduce using rule 75 (r_push_oper -> .)
-    CTE_I           reduce using rule 75 (r_push_oper -> .)
-    CTE_F           reduce using rule 75 (r_push_oper -> .)
-    CTE_CH          reduce using rule 75 (r_push_oper -> .)
-    ID              reduce using rule 75 (r_push_oper -> .)
+    PARENT_A        reduce using rule 74 (r_push_oper -> .)
+    CTE_I           reduce using rule 74 (r_push_oper -> .)
+    CTE_F           reduce using rule 74 (r_push_oper -> .)
+    CTE_CH          reduce using rule 74 (r_push_oper -> .)
+    ID              reduce using rule 74 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 159
 
 state 137
 
-    (71) m_expresion -> termino MENOS . r_push_oper m_expresion
-    (75) r_push_oper -> .
+    (70) m_expresion -> termino MENOS . r_push_oper m_expresion
+    (74) r_push_oper -> .
 
-    PARENT_A        reduce using rule 75 (r_push_oper -> .)
-    CTE_I           reduce using rule 75 (r_push_oper -> .)
-    CTE_F           reduce using rule 75 (r_push_oper -> .)
-    CTE_CH          reduce using rule 75 (r_push_oper -> .)
-    ID              reduce using rule 75 (r_push_oper -> .)
+    PARENT_A        reduce using rule 74 (r_push_oper -> .)
+    CTE_I           reduce using rule 74 (r_push_oper -> .)
+    CTE_F           reduce using rule 74 (r_push_oper -> .)
+    CTE_CH          reduce using rule 74 (r_push_oper -> .)
+    ID              reduce using rule 74 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 160
 
 state 138
 
-    (73) termino -> factor POR . r_push_oper termino
-    (75) r_push_oper -> .
+    (72) termino -> factor POR . r_push_oper termino
+    (74) r_push_oper -> .
 
-    PARENT_A        reduce using rule 75 (r_push_oper -> .)
-    CTE_I           reduce using rule 75 (r_push_oper -> .)
-    CTE_F           reduce using rule 75 (r_push_oper -> .)
-    CTE_CH          reduce using rule 75 (r_push_oper -> .)
-    ID              reduce using rule 75 (r_push_oper -> .)
+    PARENT_A        reduce using rule 74 (r_push_oper -> .)
+    CTE_I           reduce using rule 74 (r_push_oper -> .)
+    CTE_F           reduce using rule 74 (r_push_oper -> .)
+    CTE_CH          reduce using rule 74 (r_push_oper -> .)
+    ID              reduce using rule 74 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 161
 
 state 139
 
-    (74) termino -> factor DIV . r_push_oper termino
-    (75) r_push_oper -> .
+    (73) termino -> factor DIV . r_push_oper termino
+    (74) r_push_oper -> .
 
-    PARENT_A        reduce using rule 75 (r_push_oper -> .)
-    CTE_I           reduce using rule 75 (r_push_oper -> .)
-    CTE_F           reduce using rule 75 (r_push_oper -> .)
-    CTE_CH          reduce using rule 75 (r_push_oper -> .)
-    ID              reduce using rule 75 (r_push_oper -> .)
+    PARENT_A        reduce using rule 74 (r_push_oper -> .)
+    CTE_I           reduce using rule 74 (r_push_oper -> .)
+    CTE_F           reduce using rule 74 (r_push_oper -> .)
+    CTE_CH          reduce using rule 74 (r_push_oper -> .)
+    ID              reduce using rule 74 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 162
 
 state 140
 
-    (78) factor -> PARENT_A expresion . PARENT_C
+    (77) factor -> PARENT_A expresion . PARENT_C
 
     PARENT_C        shift and go to state 163
 
 
 state 141
 
-    (54) llamada -> ID PARENT_A expresiones PARENT_C .
+    (53) llamada -> ID PARENT_A expresiones PARENT_C .
 
-    PUNTOCOMA       reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    POR             reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    DIV             reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    MAS             reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    MENOS           reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    MAYORQUE        reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    MENORQUE        reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    MAYORIGUAL      reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    MENORIGUAL      reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    IGUALIGUAL      reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    DIFERENTE       reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    AND             reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    OR              reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    COMA            reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    PARENT_C        reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    CORCHETE_C      reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    HASTA           reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
-    HACER           reduce using rule 54 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    PUNTOCOMA       reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    POR             reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    DIV             reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    MAS             reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    MENOS           reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    MAYORQUE        reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    MENORQUE        reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    MAYORIGUAL      reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    MENORIGUAL      reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    IGUALIGUAL      reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    DIFERENTE       reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    AND             reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    OR              reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    COMA            reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    PARENT_C        reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    CORCHETE_C      reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    HASTA           reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
+    HACER           reduce using rule 53 (llamada -> ID PARENT_A expresiones PARENT_C .)
 
 
 state 142
 
-    (56) expresiones -> expresion COMA . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (55) expresiones -> expresion COMA . expresion
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2348,30 +2348,30 @@ state 142
 
 state 143
 
-    (25) dim -> CORCHETE_A expresion . CORCHETE_C
+    (24) dim -> CORCHETE_A expresion . CORCHETE_C
 
     CORCHETE_C      shift and go to state 165
 
 
 state 144
 
-    (84) retorno -> REGRESA PARENT_A expresion PARENT_C .
+    (83) retorno -> REGRESA PARENT_A expresion PARENT_C .
 
-    PUNTOCOMA       reduce using rule 84 (retorno -> REGRESA PARENT_A expresion PARENT_C .)
+    PUNTOCOMA       reduce using rule 83 (retorno -> REGRESA PARENT_A expresion PARENT_C .)
 
 
 state 145
 
-    (85) lectura -> LEER PARENT_A variables PARENT_C .
+    (84) lectura -> LEER PARENT_A variables PARENT_C .
 
-    PUNTOCOMA       reduce using rule 85 (lectura -> LEER PARENT_A variables PARENT_C .)
+    PUNTOCOMA       reduce using rule 84 (lectura -> LEER PARENT_A variables PARENT_C .)
 
 
 state 146
 
-    (24) variables -> variable COMA . variables
-    (23) variables -> . variable
-    (24) variables -> . variable COMA variables
+    (23) variables -> variable COMA . variables
+    (22) variables -> . variable
+    (23) variables -> . variable COMA variables
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
 
@@ -2382,40 +2382,40 @@ state 146
 
 state 147
 
-    (86) escritura -> ESCRIBIR PARENT_A escr PARENT_C .
+    (85) escritura -> ESCRIBIR PARENT_A escr PARENT_C .
 
-    PUNTOCOMA       reduce using rule 86 (escritura -> ESCRIBIR PARENT_A escr PARENT_C .)
+    PUNTOCOMA       reduce using rule 85 (escritura -> ESCRIBIR PARENT_A escr PARENT_C .)
 
 
 state 148
 
-    (90) escr -> escritura_dos COMA . escr
-    (89) escr -> . escritura_dos
-    (90) escr -> . escritura_dos COMA escr
-    (87) escritura_dos -> . CTE_STR
-    (88) escritura_dos -> . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (89) escr -> escritura_dos COMA . escr
+    (88) escr -> . escritura_dos
+    (89) escr -> . escritura_dos COMA escr
+    (86) escritura_dos -> . CTE_STR
+    (87) escritura_dos -> . expresion
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     CTE_STR         shift and go to state 114
     PARENT_A        shift and go to state 98
@@ -2437,47 +2437,47 @@ state 148
 
 state 149
 
-    (94) else -> SINO LLAVE_A estatutos_dos . LLAVE_C
+    (93) else -> SINO LLAVE_A estatutos_dos . LLAVE_C
 
     LLAVE_C         shift and go to state 168
 
 
 state 150
 
-    (96) ciclo_for -> DESDE variable IGUAL expresion . HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (95) ciclo_for -> DESDE variable IGUAL expresion . HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
     HASTA           shift and go to state 169
 
 
 state 151
 
-    (95) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C . HAZ LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C . HAZ LLAVE_A estatutos_dos LLAVE_C
 
     HAZ             shift and go to state 170
 
 
 state 152
 
-    (93) if -> SI PARENT_A expresion PARENT_C . ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> SI PARENT_A expresion PARENT_C . ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ENTONCES        shift and go to state 171
 
 
 state 153
 
-    (36) var_funcs -> dec_vars dec_est .
+    (35) var_funcs -> dec_vars dec_est .
 
-    FUNCION         reduce using rule 36 (var_funcs -> dec_vars dec_est .)
-    PRINCIPAL       reduce using rule 36 (var_funcs -> dec_vars dec_est .)
+    FUNCION         reduce using rule 35 (var_funcs -> dec_vars dec_est .)
+    PRINCIPAL       reduce using rule 35 (var_funcs -> dec_vars dec_est .)
 
 
 state 154
 
-    (33) func_dos -> PARENT_A parametros PARENT_C save_params . var_funcs
-    (35) var_funcs -> . dec_est
-    (36) var_funcs -> . dec_vars dec_est
-    (40) dec_est -> . LLAVE_A LLAVE_C
-    (41) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
+    (32) func_dos -> PARENT_A parametros PARENT_C save_params . var_funcs
+    (34) var_funcs -> . dec_est
+    (35) var_funcs -> . dec_vars dec_est
+    (39) dec_est -> . LLAVE_A LLAVE_C
+    (40) dec_est -> . LLAVE_A estatutos_dos LLAVE_C
     (7) dec_vars -> . VAR vars save_vars
 
     LLAVE_A         shift and go to state 33
@@ -2489,71 +2489,71 @@ state 154
 
 state 155
 
-    (37) parametros -> tipo_simple ID save_params_list .
-    (38) parametros -> tipo_simple ID save_params_list . COMA parametros
+    (36) parametros -> tipo_simple ID save_params_list .
+    (37) parametros -> tipo_simple ID save_params_list . COMA parametros
 
-    PARENT_C        reduce using rule 37 (parametros -> tipo_simple ID save_params_list .)
+    PARENT_C        reduce using rule 36 (parametros -> tipo_simple ID save_params_list .)
     COMA            shift and go to state 173
 
 
 state 156
 
-    (58) expresion -> t_expresion OR expresion .
+    (57) expresion -> t_expresion OR expresion .
 
-    PUNTOCOMA       reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    COMA            reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    PARENT_C        reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    CORCHETE_C      reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    HASTA           reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    HACER           reduce using rule 58 (expresion -> t_expresion OR expresion .)
+    PUNTOCOMA       reduce using rule 57 (expresion -> t_expresion OR expresion .)
+    COMA            reduce using rule 57 (expresion -> t_expresion OR expresion .)
+    PARENT_C        reduce using rule 57 (expresion -> t_expresion OR expresion .)
+    CORCHETE_C      reduce using rule 57 (expresion -> t_expresion OR expresion .)
+    HASTA           reduce using rule 57 (expresion -> t_expresion OR expresion .)
+    HACER           reduce using rule 57 (expresion -> t_expresion OR expresion .)
 
 
 state 157
 
-    (60) t_expresion -> g_expresion AND t_expresion .
+    (59) t_expresion -> g_expresion AND t_expresion .
 
-    OR              reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    PUNTOCOMA       reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    COMA            reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    PARENT_C        reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    CORCHETE_C      reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    HASTA           reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    HACER           reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
+    OR              reduce using rule 59 (t_expresion -> g_expresion AND t_expresion .)
+    PUNTOCOMA       reduce using rule 59 (t_expresion -> g_expresion AND t_expresion .)
+    COMA            reduce using rule 59 (t_expresion -> g_expresion AND t_expresion .)
+    PARENT_C        reduce using rule 59 (t_expresion -> g_expresion AND t_expresion .)
+    CORCHETE_C      reduce using rule 59 (t_expresion -> g_expresion AND t_expresion .)
+    HASTA           reduce using rule 59 (t_expresion -> g_expresion AND t_expresion .)
+    HACER           reduce using rule 59 (t_expresion -> g_expresion AND t_expresion .)
 
 
 state 158
 
-    (62) g_expresion -> m_expresion op_logicos m_expresion .
+    (61) g_expresion -> m_expresion op_logicos m_expresion .
 
-    AND             reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
-    OR              reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
-    PUNTOCOMA       reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
-    COMA            reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
-    PARENT_C        reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
-    CORCHETE_C      reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
-    HASTA           reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
-    HACER           reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion .)
+    AND             reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
+    OR              reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
+    PUNTOCOMA       reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
+    COMA            reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
+    PARENT_C        reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
+    CORCHETE_C      reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
+    HASTA           reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
+    HACER           reduce using rule 61 (g_expresion -> m_expresion op_logicos m_expresion .)
 
 
 state 159
 
-    (70) m_expresion -> termino MAS r_push_oper . m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (69) m_expresion -> termino MAS r_push_oper . m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2569,23 +2569,23 @@ state 159
 
 state 160
 
-    (71) m_expresion -> termino MENOS r_push_oper . m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (70) m_expresion -> termino MENOS r_push_oper . m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2601,20 +2601,20 @@ state 160
 
 state 161
 
-    (73) termino -> factor POR r_push_oper . termino
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (72) termino -> factor POR r_push_oper . termino
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2629,20 +2629,20 @@ state 161
 
 state 162
 
-    (74) termino -> factor DIV r_push_oper . termino
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (73) termino -> factor DIV r_push_oper . termino
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2657,113 +2657,113 @@ state 162
 
 state 163
 
-    (78) factor -> PARENT_A expresion PARENT_C .
+    (77) factor -> PARENT_A expresion PARENT_C .
 
-    POR             reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    DIV             reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    MAS             reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    MENOS           reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    MAYORQUE        reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    MENORQUE        reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    MAYORIGUAL      reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    MENORIGUAL      reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    IGUALIGUAL      reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    DIFERENTE       reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    AND             reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    OR              reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    PUNTOCOMA       reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    COMA            reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    PARENT_C        reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    CORCHETE_C      reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    HASTA           reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
-    HACER           reduce using rule 78 (factor -> PARENT_A expresion PARENT_C .)
+    POR             reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    DIV             reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    MAS             reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    MENOS           reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    MAYORQUE        reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    MENORQUE        reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    MAYORIGUAL      reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    MENORIGUAL      reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    IGUALIGUAL      reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    DIFERENTE       reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    AND             reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    OR              reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    PUNTOCOMA       reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    COMA            reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    PARENT_C        reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    CORCHETE_C      reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    HASTA           reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
+    HACER           reduce using rule 77 (factor -> PARENT_A expresion PARENT_C .)
 
 
 state 164
 
-    (56) expresiones -> expresion COMA expresion .
+    (55) expresiones -> expresion COMA expresion .
 
-    PARENT_C        reduce using rule 56 (expresiones -> expresion COMA expresion .)
+    PARENT_C        reduce using rule 55 (expresiones -> expresion COMA expresion .)
 
 
 state 165
 
-    (25) dim -> CORCHETE_A expresion CORCHETE_C .
+    (24) dim -> CORCHETE_A expresion CORCHETE_C .
 
-    IGUAL           reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    POR             reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    DIV             reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    MAS             reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    MENOS           reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    MAYORQUE        reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    MENORQUE        reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    MAYORIGUAL      reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    MENORIGUAL      reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    IGUALIGUAL      reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    DIFERENTE       reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    AND             reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    OR              reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    PUNTOCOMA       reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    COMA            reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    PARENT_C        reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    CORCHETE_C      reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    HASTA           reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
-    HACER           reduce using rule 25 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    IGUAL           reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    POR             reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    DIV             reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    MAS             reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    MENOS           reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    MAYORQUE        reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    MENORQUE        reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    MAYORIGUAL      reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    MENORIGUAL      reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    IGUALIGUAL      reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    DIFERENTE       reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    AND             reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    OR              reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    PUNTOCOMA       reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    COMA            reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    PARENT_C        reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    CORCHETE_C      reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    HASTA           reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
+    HACER           reduce using rule 24 (dim -> CORCHETE_A expresion CORCHETE_C .)
 
 
 state 166
 
-    (24) variables -> variable COMA variables .
+    (23) variables -> variable COMA variables .
 
-    PARENT_C        reduce using rule 24 (variables -> variable COMA variables .)
+    PARENT_C        reduce using rule 23 (variables -> variable COMA variables .)
 
 
 state 167
 
-    (90) escr -> escritura_dos COMA escr .
+    (89) escr -> escritura_dos COMA escr .
 
-    PARENT_C        reduce using rule 90 (escr -> escritura_dos COMA escr .)
+    PARENT_C        reduce using rule 89 (escr -> escritura_dos COMA escr .)
 
 
 state 168
 
-    (94) else -> SINO LLAVE_A estatutos_dos LLAVE_C .
+    (93) else -> SINO LLAVE_A estatutos_dos LLAVE_C .
 
-    ID              reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 94 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    ID              reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 93 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
 
 
 state 169
 
-    (96) ciclo_for -> DESDE variable IGUAL expresion HASTA . expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion
-    (62) g_expresion -> . m_expresion op_logicos m_expresion
-    (69) m_expresion -> . termino
-    (70) m_expresion -> . termino MAS r_push_oper m_expresion
-    (71) m_expresion -> . termino MENOS r_push_oper m_expresion
-    (72) termino -> . factor
-    (73) termino -> . factor POR r_push_oper termino
-    (74) termino -> . factor DIV r_push_oper termino
-    (78) factor -> . PARENT_A expresion PARENT_C
-    (79) factor -> . CTE_I
-    (80) factor -> . CTE_F
-    (81) factor -> . CTE_CH
-    (82) factor -> . variable
-    (83) factor -> . llamada
+    (95) ciclo_for -> DESDE variable IGUAL expresion HASTA . expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (56) expresion -> . t_expresion
+    (57) expresion -> . t_expresion OR expresion
+    (58) t_expresion -> . g_expresion
+    (59) t_expresion -> . g_expresion AND t_expresion
+    (60) g_expresion -> . m_expresion
+    (61) g_expresion -> . m_expresion op_logicos m_expresion
+    (68) m_expresion -> . termino
+    (69) m_expresion -> . termino MAS r_push_oper m_expresion
+    (70) m_expresion -> . termino MENOS r_push_oper m_expresion
+    (71) termino -> . factor
+    (72) termino -> . factor POR r_push_oper termino
+    (73) termino -> . factor DIV r_push_oper termino
+    (77) factor -> . PARENT_A expresion PARENT_C
+    (78) factor -> . CTE_I
+    (79) factor -> . CTE_F
+    (80) factor -> . CTE_CH
+    (81) factor -> . variable
+    (82) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
 
     PARENT_A        shift and go to state 98
     CTE_I           shift and go to state 99
@@ -2782,31 +2782,31 @@ state 169
 
 state 170
 
-    (95) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ . LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 179
 
 
 state 171
 
-    (93) if -> SI PARENT_A expresion PARENT_C ENTONCES . LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> SI PARENT_A expresion PARENT_C ENTONCES . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 180
 
 
 state 172
 
-    (33) func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .
+    (32) func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .
 
-    FUNCION         reduce using rule 33 (func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .)
-    PRINCIPAL       reduce using rule 33 (func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .)
+    FUNCION         reduce using rule 32 (func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .)
+    PRINCIPAL       reduce using rule 32 (func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .)
 
 
 state 173
 
-    (38) parametros -> tipo_simple ID save_params_list COMA . parametros
-    (37) parametros -> . tipo_simple ID save_params_list
-    (38) parametros -> . tipo_simple ID save_params_list COMA parametros
+    (37) parametros -> tipo_simple ID save_params_list COMA . parametros
+    (36) parametros -> . tipo_simple ID save_params_list
+    (37) parametros -> . tipo_simple ID save_params_list COMA parametros
     (11) tipo_simple -> . INT
     (12) tipo_simple -> . FLOAT
     (13) tipo_simple -> . CHAR
@@ -2820,121 +2820,121 @@ state 173
 
 state 174
 
-    (70) m_expresion -> termino MAS r_push_oper m_expresion .
+    (69) m_expresion -> termino MAS r_push_oper m_expresion .
 
-    MAYORQUE        reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    MENORQUE        reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    MAYORIGUAL      reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    MENORIGUAL      reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    IGUALIGUAL      reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    DIFERENTE       reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    AND             reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    OR              reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    PUNTOCOMA       reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    COMA            reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    PARENT_C        reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    CORCHETE_C      reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    HASTA           reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
-    HACER           reduce using rule 70 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    MAYORQUE        reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    MENORQUE        reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    MAYORIGUAL      reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    MENORIGUAL      reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    IGUALIGUAL      reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    DIFERENTE       reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    AND             reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    OR              reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    PUNTOCOMA       reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    COMA            reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    PARENT_C        reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    CORCHETE_C      reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    HASTA           reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
+    HACER           reduce using rule 69 (m_expresion -> termino MAS r_push_oper m_expresion .)
 
 
 state 175
 
-    (71) m_expresion -> termino MENOS r_push_oper m_expresion .
+    (70) m_expresion -> termino MENOS r_push_oper m_expresion .
 
-    MAYORQUE        reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    MENORQUE        reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    MAYORIGUAL      reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    MENORIGUAL      reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    IGUALIGUAL      reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    DIFERENTE       reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    AND             reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    OR              reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    PUNTOCOMA       reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    COMA            reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    PARENT_C        reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    CORCHETE_C      reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    HASTA           reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
-    HACER           reduce using rule 71 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    MAYORQUE        reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    MENORQUE        reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    MAYORIGUAL      reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    MENORIGUAL      reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    IGUALIGUAL      reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    DIFERENTE       reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    AND             reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    OR              reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    PUNTOCOMA       reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    COMA            reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    PARENT_C        reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    CORCHETE_C      reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    HASTA           reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
+    HACER           reduce using rule 70 (m_expresion -> termino MENOS r_push_oper m_expresion .)
 
 
 state 176
 
-    (73) termino -> factor POR r_push_oper termino .
+    (72) termino -> factor POR r_push_oper termino .
 
-    MAS             reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    MENOS           reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    MAYORQUE        reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    MENORQUE        reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    MAYORIGUAL      reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    MENORIGUAL      reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    IGUALIGUAL      reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    DIFERENTE       reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    AND             reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    OR              reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    PUNTOCOMA       reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    COMA            reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    PARENT_C        reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    CORCHETE_C      reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    HASTA           reduce using rule 73 (termino -> factor POR r_push_oper termino .)
-    HACER           reduce using rule 73 (termino -> factor POR r_push_oper termino .)
+    MAS             reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    MENOS           reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    MAYORQUE        reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    MENORQUE        reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    MAYORIGUAL      reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    MENORIGUAL      reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    IGUALIGUAL      reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    DIFERENTE       reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    AND             reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    OR              reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    PUNTOCOMA       reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    COMA            reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    PARENT_C        reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    CORCHETE_C      reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    HASTA           reduce using rule 72 (termino -> factor POR r_push_oper termino .)
+    HACER           reduce using rule 72 (termino -> factor POR r_push_oper termino .)
 
 
 state 177
 
-    (74) termino -> factor DIV r_push_oper termino .
+    (73) termino -> factor DIV r_push_oper termino .
 
-    MAS             reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    MENOS           reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    MAYORQUE        reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    MENORQUE        reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    MAYORIGUAL      reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    MENORIGUAL      reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    IGUALIGUAL      reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    DIFERENTE       reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    AND             reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    OR              reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    PUNTOCOMA       reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    COMA            reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    PARENT_C        reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    CORCHETE_C      reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    HASTA           reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
-    HACER           reduce using rule 74 (termino -> factor DIV r_push_oper termino .)
+    MAS             reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    MENOS           reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    MAYORQUE        reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    MENORQUE        reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    MAYORIGUAL      reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    MENORIGUAL      reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    IGUALIGUAL      reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    DIFERENTE       reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    AND             reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    OR              reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    PUNTOCOMA       reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    COMA            reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    PARENT_C        reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    CORCHETE_C      reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    HASTA           reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
+    HACER           reduce using rule 73 (termino -> factor DIV r_push_oper termino .)
 
 
 state 178
 
-    (96) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion . HACER LLAVE_A estatutos_dos LLAVE_C
+    (95) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion . HACER LLAVE_A estatutos_dos LLAVE_C
 
     HACER           shift and go to state 182
 
 
 state 179
 
-    (95) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (84) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (85) lectura -> . LEER PARENT_A variables PARENT_C
-    (86) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (91) decision -> . if
-    (92) decision -> . if else
-    (96) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (95) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A . estatutos_dos LLAVE_C
+    (49) estatutos_dos -> . estatutos
+    (50) estatutos_dos -> . estatutos estatutos_dos
+    (41) estatutos -> . asignacion PUNTOCOMA
+    (42) estatutos -> . llamada PUNTOCOMA
+    (43) estatutos -> . retorno PUNTOCOMA
+    (44) estatutos -> . lectura PUNTOCOMA
+    (45) estatutos -> . escritura PUNTOCOMA
+    (46) estatutos -> . decision
+    (47) estatutos -> . ciclo_for
+    (48) estatutos -> . ciclo_while
+    (51) asignacion -> . variable IGUAL expresion
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
+    (83) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (84) lectura -> . LEER PARENT_A variables PARENT_C
+    (85) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (90) decision -> . if
+    (91) decision -> . if else
+    (95) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (93) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -2959,30 +2959,30 @@ state 179
 
 state 180
 
-    (93) if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (84) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (85) lectura -> . LEER PARENT_A variables PARENT_C
-    (86) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (91) decision -> . if
-    (92) decision -> . if else
-    (96) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (95) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A . estatutos_dos LLAVE_C
+    (49) estatutos_dos -> . estatutos
+    (50) estatutos_dos -> . estatutos estatutos_dos
+    (41) estatutos -> . asignacion PUNTOCOMA
+    (42) estatutos -> . llamada PUNTOCOMA
+    (43) estatutos -> . retorno PUNTOCOMA
+    (44) estatutos -> . lectura PUNTOCOMA
+    (45) estatutos -> . escritura PUNTOCOMA
+    (46) estatutos -> . decision
+    (47) estatutos -> . ciclo_for
+    (48) estatutos -> . ciclo_while
+    (51) asignacion -> . variable IGUAL expresion
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
+    (83) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (84) lectura -> . LEER PARENT_A variables PARENT_C
+    (85) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (90) decision -> . if
+    (91) decision -> . if else
+    (95) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (93) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -3007,58 +3007,58 @@ state 180
 
 state 181
 
-    (38) parametros -> tipo_simple ID save_params_list COMA parametros .
+    (37) parametros -> tipo_simple ID save_params_list COMA parametros .
 
-    PARENT_C        reduce using rule 38 (parametros -> tipo_simple ID save_params_list COMA parametros .)
+    PARENT_C        reduce using rule 37 (parametros -> tipo_simple ID save_params_list COMA parametros .)
 
 
 state 182
 
-    (96) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER . LLAVE_A estatutos_dos LLAVE_C
+    (95) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 185
 
 
 state 183
 
-    (95) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos . LLAVE_C
+    (94) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos . LLAVE_C
 
     LLAVE_C         shift and go to state 186
 
 
 state 184
 
-    (93) if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos . LLAVE_C
+    (92) if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos . LLAVE_C
 
     LLAVE_C         shift and go to state 187
 
 
 state 185
 
-    (96) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (84) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (85) lectura -> . LEER PARENT_A variables PARENT_C
-    (86) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (91) decision -> . if
-    (92) decision -> . if else
-    (96) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (95) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (95) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A . estatutos_dos LLAVE_C
+    (49) estatutos_dos -> . estatutos
+    (50) estatutos_dos -> . estatutos estatutos_dos
+    (41) estatutos -> . asignacion PUNTOCOMA
+    (42) estatutos -> . llamada PUNTOCOMA
+    (43) estatutos -> . retorno PUNTOCOMA
+    (44) estatutos -> . lectura PUNTOCOMA
+    (45) estatutos -> . escritura PUNTOCOMA
+    (46) estatutos -> . decision
+    (47) estatutos -> . ciclo_for
+    (48) estatutos -> . ciclo_while
+    (51) asignacion -> . variable IGUAL expresion
+    (52) llamada -> . ID PARENT_A PARENT_C
+    (53) llamada -> . ID PARENT_A expresiones PARENT_C
+    (83) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (84) lectura -> . LEER PARENT_A variables PARENT_C
+    (85) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (90) decision -> . if
+    (91) decision -> . if else
+    (95) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (94) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (93) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (92) if -> . SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -3083,50 +3083,50 @@ state 185
 
 state 186
 
-    (95) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .
+    (94) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .
 
-    ID              reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 95 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    ID              reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 94 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
 
 
 state 187
 
-    (93) if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .
+    (92) if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .
 
-    SINO            reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    ID              reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 93 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    SINO            reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    ID              reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 92 (if -> SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
 
 
 state 188
 
-    (96) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos . LLAVE_C
+    (95) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos . LLAVE_C
 
     LLAVE_C         shift and go to state 189
 
 
 state 189
 
-    (96) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .
+    (95) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .
 
-    ID              reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 96 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    ID              reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 95 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
 
