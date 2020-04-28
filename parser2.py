@@ -217,6 +217,7 @@ def p_r_push_id(p):
 	# checa si la variable es recibida como parámetro
 	if var_name in symbol_table[func_name]['params']:
 		parent_func = func_name
+<<<<<<< HEAD
 		op_stack.append(var_name)
 		type_stack.append(symbol_table[parent_func]['params'][var_name]['type'])
 	# checa si la variable está definida dentro de la función
@@ -229,13 +230,35 @@ def p_r_push_id(p):
 		parent_func = 'global'
 		op_stack.append(var_name)
 		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
+=======
+		pila_o.append(var_name)
+		pila_type.append(symbol_table[parent_func]['params'][var_name]['type'])
+	# checa si la variable está definida dentro de la función
+	elif var_name in symbol_table[func_name]['vars']:
+		parent_func = func_name
+		pila_o.append(var_name)
+		pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+	# checa si es una variable global
+	elif var_name in symbol_table['global']['vars']:
+		parent_func = 'global'
+		pila_o.append(var_name)
+		pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+>>>>>>> a62abec0e33b11d67f6a008c4ee1536456e21b55
 	# si la variable no existe, manda error
 	else:
 		print(func_name, var_name)
 		error(p, 'variable no declarada')
+<<<<<<< HEAD
 
 	# op_stack.append(var_name)
 	# type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
+=======
+
+	# pila_o.append(var_name)
+	# pila_type.append(symbol_table[parent_func]['vars'][var_name]['type'])
+
+	# aux = pila.pop()
+>>>>>>> a62abec0e33b11d67f6a008c4ee1536456e21b55
 
 	# aux = pila.pop()
 
@@ -287,10 +310,16 @@ def p_create_func_table(p):
 		'vars' : {
 
 		},
+<<<<<<< HEAD
 		'next_int' : 10000,
 		'next_float' : 13000,
 		'next_char' : 16000,
 		'next_temp' : 19000
+=======
+		'next_int': '1002',
+		'next_float': '2000',
+		'next_char': '3000'
+>>>>>>> a62abec0e33b11d67f6a008c4ee1536456e21b55
 	}
 
 # declarar o no parametros en una funcion
@@ -332,7 +361,11 @@ def p_save_params_list(p):
 
 	#checa si el parámetro ya existe en la lista de parámetros 
 	if param_name in list_params:
+<<<<<<< HEAD
 		error(p, 'parámetro ya existe')
+=======
+		error(p, 'dos parámentros con el mismo nombre')
+>>>>>>> a62abec0e33b11d67f6a008c4ee1536456e21b55
 
 	# guarda los parametros en la lista de parametros
 	list_params[param_name] = {
