@@ -178,4 +178,4 @@ semantic_cube['char']['!=']['bool'] = semantic_cube['bool']['!=']['char'] = 'boo
 # semantic_cube['bool']['=']['char'] = 'char'
 
 
-print(semantic_cube)
+# print(semantic_cube)

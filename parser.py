@@ -3,8 +3,8 @@
 
 import sys
 import ply.yacc as yacc
-
 from scanner import tokens
+from semantics_cube import semantic_cube
 
 # variable para guardar el tipo
 current_type = ''
@@ -25,8 +25,17 @@ list_vars = {}
 list_params = {}
 
 # tabla de simbolos
-symbol_table = {}
+symbol_table = {
+	'global': {
+		'vars': {
 
+		},
+		'next_int' : 1,
+		'next_float' : 3000,
+		'next_char' : 6000,
+		'next_temp' : 9000
+	}
+}
 
 # precedencia de operadores en caso de conflicto
 precedence = (
@@ -38,6 +47,34 @@ precedence = (
    ("left", 'POR', 'DIV')
 )
 
+# DIRECCIONES DE MEMORIA
+# GLOBAL
+# Global int : 1 - 2999
+# Global float : 3000 - 5999
+# GLOBAL char : 6000 - 8999
+# Global temporales : 9000 - 9999
+
+# LOCAL
+# Local int : 10000 - 12999
+# Local float : 13000 - 15999
+# Local char : 16000 - 18999
+# Local temporales : 19000 - 19999
+
+# CONSTANTES
+# Constantes : 20000 - 22999
+
+
+# pila de operandos
+op_stack = [] 
+# pila de tipos
+type_stack = []
+# pila de operadores
+oper_stack = []
+#arreglo de cuadruplos
+quadruples = []
+
+
+
 
 # funcion principal del programa
 def p_programa(p) :
@@ -45,8 +82,12 @@ def p_programa(p) :
 	
 	global symbol_table
 
+	program_name = p[2]
+
 	# guardo el nombre del programa
-	symbol_table['programa'] =  p[2]
+	symbol_table[program_name] =  {
+		'type' : 'program'
+	}
 
 
 # declarar o no variables y/o funciones
@@ -61,13 +102,13 @@ def p_prog(p):
 def p_main(p):
 	'main : PRINCIPAL PARENT_A PARENT_C dec_est'
 
-	global func_name, symbol_table
+	# global func_name, symbol_table
 
-	func_name = 'principal'
+	# func_name = 'principal'
 
-	symbol_table[func_name] = {
+	# symbol_table[func_name] = {
 	
-	}
+	# }
 
 
 # # funcion main
@@ -78,20 +119,20 @@ def p_main(p):
 
 # declaración de variables
 def p_dec_vars(p):
-	'dec_vars : VAR create_vars_table vars save_vars'
+	'dec_vars : VAR vars save_vars'
 
-def p_create_vars_table(p):
-	'''create_vars_table : '''
-	global symbol_table
+# def p_create_vars_table(p):
+# 	'''create_vars_table : '''
+# 	global symbol_table
 
-	# si se están definiento las variables globales
-	# crea la tabla de variables globales
-	if(func_name == 'global'):
-		symbol_table['global'] = {
-			'vars' : {
+# 	# si se están definiento las variables globales
+# 	# crea la tabla de variables globales
+# 	# if(func_name == 'global'):
+# 	# 	symbol_table['global'] = {
+# 	# 		'vars' : {
 
-			}
-		}
+# 	# 		}
+# 	# 	}
 
 # declarar una o más variables
 def p_vars(p):
@@ -136,10 +177,15 @@ def p_save_vars_name(p):
 
 	var_name = p[-1]
 
-	list_vars[var_name] = {
-		'type' : current_type
-	}
+	# checar si la variable ya existe dentro de la función
+	if var_name in list_vars:
+		error(p, 'variable ya declarada')
 
+	# si no existe, la agrega a la lista de variables
+	list_vars[var_name] = {
+		'type' : current_type,
+		'address': get_address(func_name, current_type)
+	}
 
 
 # establecer las dimensiones para vectores o matrices
@@ -157,9 +203,42 @@ def p_dimension(p):
 
 # declaracion de variables
 def p_variable(p):
-	'''variable : ID
-	| ID dim
+	'''variable : ID r_push_id
+	| ID r_push_id dim
 	'''
+
+# regla para guardar el id en la pila
+def p_r_push_id(p):
+	'''r_push_id : '''
+	global op_stack, type_stack
+	
+	var_name = p[-1]
+	parent_func = ''
+
+	# checa si la variable está definida como parámetro
+	if var_name in symbol_table[func_name]['params']:
+		parent_func = func_name
+		op_stack.append(var_name)
+		type_stack.append(symbol_table[parent_func]['params'][var_name]['type'])
+	# checa si la variable está definida dentro de la función
+	elif var_name in symbol_table[func_name]['vars']:
+		parent_func = func_name
+		op_stack.append(var_name)
+		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
+	# checa si es una variable global
+	elif var_name in symbol_table['global']['vars']:
+		parent_func = 'global'
+		op_stack.append(var_name)
+		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
+	# si la variable no existe, manda error
+	else:
+		# print(func_name, var_name)
+		error(p, 'variable no declarada')
+
+	# op_stack.append(var_name)
+	# type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
+
+	# aux = pila.pop()
 
 # declarar unao varias variables
 def p_variables(p):
@@ -198,14 +277,21 @@ def p_create_func_table(p):
 
 	func_name = p[-1]
 
+	# checa si la función ya está declarada
+	# para que no haya dos funciones con el mismo nombre
+	if func_name in symbol_table:
+		error(p, 'funcion ya declarada')
+
+	# sino existe, la guarda en la tabla de funciones
 	symbol_table[func_name] = {
 		'func_type' : current_type,
 		'vars' : {
 
 		},
-		'params' : {
-		
-		}
+		'next_int' : 10000,
+		'next_float' : 13000,
+		'next_char' : 16000,
+		'next_temp' : 19000
 	}
 
 # declarar o no parametros en una funcion
@@ -219,6 +305,7 @@ def p_save_params(p):
 	'''save_params : '''
 
 	global symbol_table, list_params
+
 	# guarda los parametros en la tabla de la funcion
 	symbol_table[func_name]['params'] = list_params
 
@@ -243,9 +330,15 @@ def p_save_params_list(p):
 	global list_params
 
 	param_name = p[-1]
+
+	#checa si el parámetro ya existe en la lista de parámetros 
+	if param_name in list_params:
+		error(p, 'parámetro ya existe')
+
 	# guarda los parametros en la lista de parametros
 	list_params[param_name] = {
-			'type' : current_type
+			'type' : current_type,
+			'address' : get_address(func_name, current_type)
 		}
 
 # declarar o no estatutos
@@ -318,27 +411,73 @@ def p_op_logicos(p):
 
 # sumas o restas
 def p_m_expresion(p):
-	'''m_expresion : termino
-	| termino MAS m_expresion
-	| termino MENOS m_expresion
+	'''m_expresion : termino r_generate_quad_masmen
+	| termino r_generate_quad_masmen MAS r_push_oper m_expresion
+	| termino r_generate_quad_masmen MENOS r_push_oper m_expresion
 	'''
 
 # multiplicacion y division
 def p_termino(p):
-	'''termino : factor
-	| factor POR termino
-	| factor DIV termino
+	'''termino : factor r_generate_quad_muldiv
+	| factor r_generate_quad_muldiv POR r_push_oper termino
+	| factor r_generate_quad_muldiv DIV r_push_oper termino
 	'''
+def p_r_push_oper(p):
+	'''r_push_oper : '''
+	global oper_stack
+	oper_stack.append(p[-1])
+
+
+def p_r_generate_quad_masmen(p):
+	'''r_generate_quad_masmen : '''
+	generate_quadruple(['+', '-'])
+
+def p_r_generate_quad_muldiv(p):
+	'''r_generate_quad_muldiv : '''
+	generate_quadruple(['*', '/'])
+
+
+def generate_quadruple(operations):
+	# ...
+	global oper_stack, op_stack, type_stack
+
+	# print(oper_stack)
+	# if oper_stack:
+	# 	aux = oper_stack.pop()
+	# 	oper_stack.append(aux)
+
+	# 	if aux in operations:
+	# 		right_op = op_stack.pop()
+	# 		right_type = type_stack.pop()
+	# 		left_op = op_stack.pop()
+	# 		left_type = type_stack.pop()
+	# 		operator = oper_stack.pop()
+
+	# 		result_type = semantic_cube[left_type][operator][right_type]
+	# 		print(result_type)
+	# 	#...
+		# quadruples.append([])
+
 
 # factores
 def p_factor(p):
 	''' factor : PARENT_A expresion PARENT_C
-	| CTE_I
-	| CTE_F
-	| CTE_CH
+	| CTE_I r_push_cte
+	| CTE_F r_push_cte
+	| CTE_CH r_push_cte
 	| variable
 	| llamada
 	'''
+
+def p_r_push_cte(p):
+	'''r_push_cte : '''
+	global op_stack, type_stack
+	
+	cte = p[-1]
+
+	op_stack.append(cte)
+	type_stack.append('int')
+
 
 # retorno de una funcion
 def p_retorno(p):
@@ -393,8 +532,42 @@ def p_ciclo_for(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!", p)
-    # p[0] = "Invalid"
+    sys.exit()
+
+def error(p, message):
+	print("Error: ", message)
+	p_error(p)
+
+
+# función para obtener el valor de la dirección de memoria
+def get_address(func, type_value):
+
+	global symbol_table
+
+	if(type_value == 'int'):
+		# guarda la dirección
+		address = symbol_table[func]['next_int']
+		# actualiza el valor de la siguiente dirección
+		symbol_table[func]['next_int'] += 1
+	elif(type_value == 'float'):
+		# guarda la dirección
+		address = symbol_table[func]['next_float']
+		# actualiza el valor de la siguiente dirección
+		symbol_table[func]['next_float'] += 1
+	elif(type_value == 'char'):
+		# guarda la dirección
+		address = symbol_table[func]['next_char']
+		# actualiza el valor de la siguiente dirección
+		symbol_table[func]['next_char'] += 1
+	else:
+		error('.')
+
+	# regresa la dirección
+	return address
+
+
+
+
 
 # Build the parser
 yacc.yacc()
@@ -409,7 +582,7 @@ yacc.parse(data)
 # else:
 # 	print("Invalid input")
 
-print(symbol_table)
-for key, val in symbol_table.items():
-	print(key, ':', val)
-	print('\n')
+# print(symbol_table)
+# for key, val in symbol_table.items():
+# 	print(key, ':', val)
+# 	print('\n')
