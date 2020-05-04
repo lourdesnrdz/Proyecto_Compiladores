@@ -72,6 +72,10 @@ type_stack = []
 oper_stack = []
 #arreglo de cuadruplos
 quadruples = []
+# pila de saltos
+jump_stack = []
+# contador que apunta al siguiente cuadruplo
+q_count = 1
 
 
 
@@ -439,44 +443,100 @@ def p_r_generate_quad_muldiv(p):
 
 def generate_quadruple(operations):
 	# ...
-	global oper_stack, op_stack, type_stack
+	global oper_stack, op_stack, type_stack, quadruples, q_count
 
 	# print(oper_stack)
-	# if oper_stack:
-	# 	aux = oper_stack.pop()
-	# 	oper_stack.append(aux)
+	# print(op_stack)
+	if oper_stack:
+		aux = oper_stack.pop()
+		oper_stack.append(aux)
 
-	# 	if aux in operations:
-	# 		right_op = op_stack.pop()
-	# 		right_type = type_stack.pop()
-	# 		left_op = op_stack.pop()
-	# 		left_type = type_stack.pop()
-	# 		operator = oper_stack.pop()
+		if aux in operations:
+			right_op = op_stack.pop()
+			right_type = type_stack.pop()
+			left_op = op_stack.pop()
+			left_type = type_stack.pop()
+			operator = oper_stack.pop()
 
-	# 		result_type = semantic_cube[left_type][operator][right_type]
-	# 		print(result_type)
+			# obtiene el tipo del resultado del cubo semántico
+			result_type = semantic_cube[left_type][operator][right_type]
+			# print(result_type)
+
+			# checa que el tipo del resultado sea válido
+			if(result_type != None):
+				# print(func_name)
+				# obtiene la direccion temporal para el resultado
+				result = get_address(func_name, 'temp')
+
+				# result = gen_quad(left_op, operator, right_op)
+
+				# guarda el cuadruplo en el stack
+				quadruples.append([operator, left_op, right_op, result])
+				q_count += 1
+
+				# print(result)
+				# guarda el resultado en el stack de operandos
+				op_stack.append(result)
+				# guarda el tipo del resultado
+				type_stack.append(result_type)
+			else:
+				error('Type mismatch: los tipos no coinciden')
+
+
 	# 	#...
 		# quadruples.append([])
+
+# def gen_quad(left_op, operator, right_op):
+# 	if(operator == '+'):
+# 		result = left_op + right_op
+# 	elif(operator == '-'):
+# 		result = left_op - right_op
+# 	elif(operator == '*'):
+# 		result = left_op * right_op
+# 	elif(operator == '/'):
+# 		result = left_op / right_op
+# 	else:
+# 		error('operación no válida')
+
+# 	return result
 
 
 # factores
 def p_factor(p):
 	''' factor : PARENT_A expresion PARENT_C
-	| CTE_I r_push_cte
-	| CTE_F r_push_cte
-	| CTE_CH r_push_cte
+	| CTE_I r_push_cte_i
+	| CTE_F r_push_cte_f
+	| CTE_CH r_push_cte_c
 	| variable
 	| llamada
 	'''
 
-def p_r_push_cte(p):
-	'''r_push_cte : '''
+def p_r_push_cte_i(p):
+	'''r_push_cte_i : '''
 	global op_stack, type_stack
 	
 	cte = p[-1]
 
 	op_stack.append(cte)
 	type_stack.append('int')
+
+def p_r_push_cte_f(p):
+	'''r_push_cte_f : '''
+	global op_stack, type_stack
+	
+	cte = p[-1]
+
+	op_stack.append(cte)
+	type_stack.append('float')
+
+def p_r_push_cte_c(p):
+	'''r_push_cte_c : '''
+	global op_stack, type_stack
+	
+	cte = p[-1]
+
+	op_stack.append(cte)
+	type_stack.append('char')
 
 
 # retorno de una funcion
@@ -539,6 +599,23 @@ def error(p, message):
 	p_error(p)
 
 
+# DIRECCIONES DE MEMORIA
+# GLOBAL
+# Global int : 1 - 2999
+# Global float : 3000 - 5999
+# GLOBAL char : 6000 - 8999
+# Global temporales : 9000 - 9999
+
+# LOCAL
+# Local int : 10000 - 12999
+# Local float : 13000 - 15999
+# Local char : 16000 - 18999
+# Local temporales : 19000 - 19999
+
+# CONSTANTES
+# Constantes : 20000 - 22999
+
+
 # función para obtener el valor de la dirección de memoria
 def get_address(func, type_value):
 
@@ -559,8 +636,15 @@ def get_address(func, type_value):
 		address = symbol_table[func]['next_char']
 		# actualiza el valor de la siguiente dirección
 		symbol_table[func]['next_char'] += 1
+	elif(type_value == 'temp'):
+		# guarda la dirección
+		address = symbol_table[func]['next_temp']
+		# actualiza el valor de la siguiente dirección
+		symbol_table[func]['next_temp'] += 1
 	else:
 		error('.')
+
+		# falta checar que no haya overflow
 
 	# regresa la dirección
 	return address
@@ -583,6 +667,6 @@ yacc.parse(data)
 # 	print("Invalid input")
 
 # print(symbol_table)
-# for key, val in symbol_table.items():
-# 	print(key, ':', val)
-# 	print('\n')
+for key, val in symbol_table.items():
+	print(key, ':', val)
+	print('\n')
