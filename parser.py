@@ -590,7 +590,7 @@ def p_r_check_exp_type(p):
 	# obtiene el resultado
 	result = op_stack.pop()
 	# genera el cuatruplo GotoF
-	quad = ['GotoF', result, None, '']
+	quad = ['GotoF', result, None, None]
 	quadruples.append(quad)
 	# guarda el contador en la pila de saltos
 	jump_stack.append(q_count-1)
@@ -609,10 +609,17 @@ def p_r_end_if(p):
 def p_r_goto_ifelse(p):
 	'r_goto_ifelse : '
 
-	global jump_stack, q_count
+	global jump_stack, q_count, quadruples
 
+	quadruples['Goto', None, None, None]
+
+	# obtiene el número del cuadruplo pendiente
+	# de la pila de saltos
 	false = jump_stack.pop()
+	# guarda el contador del goto
 	jump_stack.append(q_count-1)
+	# asigna el contador al cuadruplo pendiente
+	# si el if es false, brinca al else
 	fill(false, q_count)
 
 
