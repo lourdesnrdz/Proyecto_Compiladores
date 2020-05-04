@@ -611,7 +611,7 @@ def p_r_goto_ifelse(p):
 
 	global jump_stack, q_count, quadruples
 
-	quadruples['Goto', None, None, None]
+	quadruples.append(['Goto', None, None, None])
 
 	# obtiene el número del cuadruplo pendiente
 	# de la pila de saltos
