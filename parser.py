@@ -222,21 +222,23 @@ def p_r_push_id(p):
 	# checa si la variable está definida como parámetro
 	if var_name in symbol_table[func_name]['params']:
 		parent_func = func_name
-		op_stack.append(var_name)
+		# op_stack.append(var_name)
+		op_stack.append(symbol_table[func_name]['params'][var_name]['address'])
 		type_stack.append(symbol_table[parent_func]['params'][var_name]['type'])
 	# checa si la variable está definida dentro de la función
 	elif var_name in symbol_table[func_name]['vars']:
 		parent_func = func_name
-		op_stack.append(var_name)
+		# op_stack.append(var_name)
+		op_stack.append(symbol_table[parent_func]['vars'][var_name]['address'])
 		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
 	# checa si es una variable global
 	elif var_name in symbol_table['global']['vars']:
 		parent_func = 'global'
-		op_stack.append(var_name)
+		# op_stack.append(var_name)
+		op_stack.append(symbol_table[parent_func]['vars'][var_name]['address'])
 		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
 	# si la variable no existe, manda error
 	else:
-		# print(func_name, var_name)
 		error(p, 'variable no declarada')
 
 	# op_stack.append(var_name)
@@ -567,12 +569,60 @@ def p_escr(p):
 
 # ESTATUTOS IF
 def p_decision(p):
-	'''decision : if 
-	| if else'''
+	'''decision : if r_end_if 
+	| if r_goto_ifelse else r_end_if'''
 
 # condicion if
 def p_if(p):
-	'if : SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C'
+	'if : SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C'
+
+def p_r_check_exp_type(p):
+	'r_check_exp_type : '
+
+	global type_stack, op_stack, quadruples
+
+	#obtiene el tipo del resultado de la expresión del if 
+	exp_type = type_stack.pop()
+	# si el tipo no es bool -> error
+	# if(exp_type != 'bool'):
+	# 	error('Type-mismatch')
+	# else:
+	# obtiene el resultado
+	result = op_stack.pop()
+	# genera el cuatruplo GotoF
+	quad = ['GotoF', result, None, '']
+	quadruples.append(quad)
+	# guarda el contador en la pila de saltos
+	jump_stack.append(q_count-1)
+
+def p_r_end_if(p):
+	'r_end_if : '
+
+	global jump_stack
+
+	# obtiene el número del cuadruplo pendiente
+	# de la pila de saltos
+	end = jump_stack.pop()
+	# asigna el contador al cuadruplo pendiente
+	fill(end, q_count)
+
+def p_r_goto_ifelse(p):
+	'r_goto_ifelse : '
+
+	global jump_stack, q_count
+
+	false = jump_stack.pop()
+	jump_stack.append(q_count-1)
+	fill(false, q_count)
+
+
+
+def fill(val, cont):
+
+	global quadruples
+	# asigna al cuadruplo a dónde va a saltar
+	quadruples[val][3] = cont
+
 
 # condicion else
 def p_else(p):
