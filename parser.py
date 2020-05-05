@@ -21,8 +21,8 @@ dim_size = 0
 # diccionario para guardar lista de variables
 list_vars = {}
 
-# diccionario para guardar lista de parametros
-list_params = {}
+# lista para guardar los tipos de parametros
+list_params = []
 
 # tabla de simbolos
 symbol_table = {
@@ -251,12 +251,6 @@ def p_r_push_id(p):
 		# op_stack.append(var_name)
 		op_stack.append(symbol_table[parent_func]['vars'][var_name]['address'])
 		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
-		# checa si la variable está definida como parámetro
-	elif var_name in symbol_table[func_name]['params']:
-		parent_func = func_name
-		# op_stack.append(var_name)
-		op_stack.append(symbol_table[func_name]['params'][var_name]['address'])
-		type_stack.append(symbol_table[parent_func]['params'][var_name]['type'])
 	# checa si es una variable global
 	elif var_name in symbol_table['global']['vars']:
 		parent_func = 'global'
@@ -340,12 +334,15 @@ def p_func_dos(p):
 def p_save_params(p):
 	'''save_params : '''
 
-	global symbol_table, list_params
+	global symbol_table, list_vars, list_params
 
-	# guarda los parametros en la tabla de la funcion
+	# guarda los parametros en la tabla de variables de la funcion
+	# symbol_table[func_name]['vars'] = list_vars
+	# guarda los tipos de los parámetros en la tabla de la funcion
 	symbol_table[func_name]['params'] = list_params
 
-	list_params = {}
+	# list_vars = {}
+	list_params = []
 
 # declarar o no variables dentro de una funcion
 def p_var_funcs(p):
@@ -363,19 +360,21 @@ def p_parametros(p):
 def p_save_params_list(p):
 	'''save_params_list : '''
 
-	global list_params
+	global list_vars, list_params
 
 	param_name = p[-1]
 
 	#checa si el parámetro ya existe en la lista de parámetros 
-	if param_name in list_params:
+	if param_name in list_vars:
 		error(p, 'parámetro ya existe')
 
 	# guarda los parametros en la lista de parametros
-	list_params[param_name] = {
+	list_vars[param_name] = {
 			'type' : current_type,
 			'address' : assign_address(func_name, current_type)
 		}
+
+	list_params.append(current_type)
 
 # declarar o no estatutos
 def p_dec_est(p):
