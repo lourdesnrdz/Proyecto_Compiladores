@@ -762,6 +762,7 @@ def p_r_check_exp_type(p):
 		result = op_stack.pop()
 		# genera el cuatruplo GotoF
 		quad = ['GotoF', result, None, None]
+		print(quad)
 		quadruples.append(quad)
 		# guarda el contador en la pila de saltos
 		jump_stack.append(q_count-1)
@@ -783,6 +784,7 @@ def p_r_goto_ifelse(p):
 	global jump_stack, q_count, quadruples
 
 	quadruples.append(['Goto', None, None, None])
+	q_count += 1
 
 	# obtiene el número del cuadruplo pendiente
 	# de la pila de saltos
@@ -809,7 +811,33 @@ def p_else(p):
 
 # ciclo while
 def p_ciclo_while(p):
-	'ciclo_while : MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C'
+	'ciclo_while : MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while'
+
+# 
+def p_r_goto_while(p):
+	'''r_goto_while : '''
+	global jump_stack, quadruples, q_count
+
+	end = jump_stack.pop()
+
+	_return = jump_stack.pop()
+
+	quad = ['GOTO', None, None, _return]
+	print(quad)
+
+	quadruples.append(quad)
+	q_count += 1
+
+	fill(end, q_count)
+
+# función para agregar el contador de cuadruplos a la pila de saltos
+def p_save_jump(p):
+	'''r_save_jump : '''
+
+	global jump_stack
+
+	jump_stack.append(q_count)
+
 
 # ciclo for
 def p_ciclo_for(p):
