@@ -419,7 +419,46 @@ def p_asignacion(p):
 ## llama a la funcion de generar cuadriplo para asignación
 def p_r_generate_quad_asig(p):
 	'''r_generate_quad_asig : '''
-	generate_quadruple(['='])
+	generate_quadruple_asig(['='])
+
+def generate_quadruple_asig(operations):
+	# ...
+	global oper_stack, op_stack, type_stack, quadruples, q_count
+
+	# print(oper_stack)
+	# print(op_stack)
+	if oper_stack:
+		aux = oper_stack.pop()
+		oper_stack.append(aux)
+
+		if aux in operations:
+			right_op = op_stack.pop()
+			right_type = type_stack.pop()
+			left_op = op_stack.pop()
+			left_type = type_stack.pop()
+			operator = oper_stack.pop()
+
+			# obtiene el tipo del resultado del cubo semántico
+			result_type = semantic_cube[left_type][operator][right_type]
+			# print(left_type, operator, right_type, result_type)
+
+			# checa que el tipo del resultado sea válido
+			if(result_type != None):
+				# print(func_name)
+				# obtiene la direccion temporal para el resultado
+				result = assign_address(func_name, 'temp_' + result_type)
+
+				# result = gen_quad(left_op, operator, right_op)
+
+				# genera el cuadruplo
+				quad = [operator, right_op, None, left_op]
+				print(quad)
+
+				# guarda el cuadruplo en el stack
+				# quadruples.append(quad)
+				q_count += 1
+			else:
+				error('Type mismatch: los tipos no coinciden')
 
 
 # llamada de una funcion
