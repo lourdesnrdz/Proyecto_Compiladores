@@ -430,18 +430,21 @@ def p_t_expresion(p):
 
 # expresiones logicas
 def p_g_expresion(p):
-	'''g_expresion : m_expresion
-	| m_expresion op_logicos m_expresion
+	'''g_expresion : m_expresion r_generate_quad_logicos
+	| m_expresion op_logicos m_expresion r_generate_quad_logicos
 	'''
+def p_r_generate_quad_logicos(p):
+	'''r_generate_quad_logicos : '''
+	generate_quadruple(['>', '<', '>=', '<=', '==', '!='])
 
 # operadores logicos
 def p_op_logicos(p):
-	'''op_logicos : MAYORQUE
-	| MENORQUE
-	| MAYORIGUAL
-	| MENORIGUAL
-	| IGUALIGUAL
-	| DIFERENTE
+	'''op_logicos : MAYORQUE r_push_oper
+	| MENORQUE r_push_oper
+	| MAYORIGUAL r_push_oper
+	| MENORIGUAL r_push_oper
+	| IGUALIGUAL r_push_oper
+	| DIFERENTE r_push_oper
 	'''
 
 # sumas o restas
@@ -491,7 +494,7 @@ def generate_quadruple(operations):
 
 			# obtiene el tipo del resultado del cubo semántico
 			result_type = semantic_cube[left_type][operator][right_type]
-			# print(result_type)
+			# print(left_type, operator, right_type, result_type)
 
 			# checa que el tipo del resultado sea válido
 			if(result_type != None):
@@ -628,16 +631,17 @@ def p_r_check_exp_type(p):
 	#obtiene el tipo del resultado de la expresión del if 
 	exp_type = type_stack.pop()
 	# si el tipo no es bool -> error
-	# if(exp_type != 'bool'):
-	# 	error('Type-mismatch')
-	# else:
-	# obtiene el resultado
-	result = op_stack.pop()
-	# genera el cuatruplo GotoF
-	quad = ['GotoF', result, None, None]
-	quadruples.append(quad)
-	# guarda el contador en la pila de saltos
-	jump_stack.append(q_count-1)
+	if(exp_type != 'bool'):
+		print(exp_type)
+		error(p, 'Type-mismatch')
+	else:
+		# obtiene el resultado
+		result = op_stack.pop()
+		# genera el cuatruplo GotoF
+		quad = ['GotoF', result, None, None]
+		quadruples.append(quad)
+		# guarda el contador en la pila de saltos
+		jump_stack.append(q_count-1)
 
 def p_r_end_if(p):
 	'r_end_if : '
@@ -672,6 +676,7 @@ def fill(val, cont):
 
 	global quadruples
 	# asigna al cuadruplo a dónde va a saltar
+	# print(quadruples)
 	quadruples[val][3] = cont
 
 
@@ -918,7 +923,7 @@ for key, val in symbol_table.items():
 	print(key, ':', val)
 	print('\n')
 
-print("---------------------- \n")
-for key, val in ctes_table.items():
-	print(key, ':', val)
-	print('\n')
+# print("---------------------- \n")
+# for key, val in ctes_table.items():
+# 	print(key, ':', val)
+# 	print('\n')
