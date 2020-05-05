@@ -59,99 +59,103 @@ Rule 53    llamada -> ID PARENT_A PARENT_C
 Rule 54    llamada -> ID PARENT_A expresiones PARENT_C
 Rule 55    expresiones -> expresion
 Rule 56    expresiones -> expresion COMA expresion
-Rule 57    expresion -> t_expresion
-Rule 58    expresion -> t_expresion OR expresion
-Rule 59    t_expresion -> g_expresion
-Rule 60    t_expresion -> g_expresion AND t_expresion
-Rule 61    g_expresion -> m_expresion r_generate_quad_logicos
-Rule 62    g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos
-Rule 63    r_generate_quad_logicos -> <empty>
-Rule 64    op_logicos -> MAYORQUE r_push_oper
-Rule 65    op_logicos -> MENORQUE r_push_oper
-Rule 66    op_logicos -> MAYORIGUAL r_push_oper
-Rule 67    op_logicos -> MENORIGUAL r_push_oper
-Rule 68    op_logicos -> IGUALIGUAL r_push_oper
-Rule 69    op_logicos -> DIFERENTE r_push_oper
-Rule 70    m_expresion -> termino r_generate_quad_masmen
-Rule 71    m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion
-Rule 72    m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-Rule 73    termino -> factor r_generate_quad_muldiv
-Rule 74    termino -> factor r_generate_quad_muldiv POR r_push_oper termino
-Rule 75    termino -> factor r_generate_quad_muldiv DIV r_push_oper termino
-Rule 76    r_push_oper -> <empty>
-Rule 77    r_generate_quad_masmen -> <empty>
-Rule 78    r_generate_quad_muldiv -> <empty>
-Rule 79    factor -> PARENT_A expresion PARENT_C
-Rule 80    factor -> CTE_I r_push_cte_i
-Rule 81    factor -> CTE_F r_push_cte_f
-Rule 82    factor -> CTE_CH r_push_cte_c
-Rule 83    factor -> variable
-Rule 84    factor -> llamada
-Rule 85    r_push_cte_i -> <empty>
-Rule 86    r_push_cte_f -> <empty>
-Rule 87    r_push_cte_c -> <empty>
-Rule 88    retorno -> REGRESA PARENT_A expresion PARENT_C
-Rule 89    lectura -> LEER PARENT_A variables PARENT_C
-Rule 90    escritura -> ESCRIBIR PARENT_A escr PARENT_C
-Rule 91    escritura_dos -> CTE_STR
-Rule 92    escritura_dos -> expresion
-Rule 93    escr -> escritura_dos
-Rule 94    escr -> escritura_dos COMA escr
-Rule 95    decision -> if r_end_if
-Rule 96    decision -> if r_goto_ifelse else r_end_if
-Rule 97    if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
-Rule 98    r_check_exp_type -> <empty>
-Rule 99    r_end_if -> <empty>
-Rule 100   r_goto_ifelse -> <empty>
-Rule 101   else -> SINO LLAVE_A estatutos_dos LLAVE_C
-Rule 102   ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
-Rule 103   ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+Rule 57    expresion -> t_expresion r_generate_quad_or
+Rule 58    expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion
+Rule 59    r_generate_quad_or -> <empty>
+Rule 60    t_expresion -> g_expresion r_generate_quad_and
+Rule 61    t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion
+Rule 62    r_generate_quad_and -> <empty>
+Rule 63    g_expresion -> m_expresion r_generate_quad_logicos
+Rule 64    g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos
+Rule 65    r_generate_quad_logicos -> <empty>
+Rule 66    op_logicos -> MAYORQUE r_push_oper
+Rule 67    op_logicos -> MENORQUE r_push_oper
+Rule 68    op_logicos -> MAYORIGUAL r_push_oper
+Rule 69    op_logicos -> MENORIGUAL r_push_oper
+Rule 70    op_logicos -> IGUALIGUAL r_push_oper
+Rule 71    op_logicos -> DIFERENTE r_push_oper
+Rule 72    m_expresion -> termino r_generate_quad_masmen
+Rule 73    m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion
+Rule 74    m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+Rule 75    termino -> factor r_generate_quad_muldiv
+Rule 76    termino -> factor r_generate_quad_muldiv POR r_push_oper termino
+Rule 77    termino -> factor r_generate_quad_muldiv DIV r_push_oper termino
+Rule 78    r_push_oper -> <empty>
+Rule 79    r_generate_quad_masmen -> <empty>
+Rule 80    r_generate_quad_muldiv -> <empty>
+Rule 81    factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+Rule 82    factor -> CTE_I r_push_cte_i
+Rule 83    factor -> CTE_F r_push_cte_f
+Rule 84    factor -> CTE_CH r_push_cte_c
+Rule 85    factor -> variable
+Rule 86    factor -> llamada
+Rule 87    r_push_cte_i -> <empty>
+Rule 88    r_push_cte_f -> <empty>
+Rule 89    r_push_cte_c -> <empty>
+Rule 90    r_push_ff -> <empty>
+Rule 91    r_pop_ff -> <empty>
+Rule 92    retorno -> REGRESA PARENT_A expresion PARENT_C
+Rule 93    lectura -> LEER PARENT_A variables PARENT_C
+Rule 94    escritura -> ESCRIBIR PARENT_A escr PARENT_C
+Rule 95    escritura_dos -> CTE_STR
+Rule 96    escritura_dos -> expresion
+Rule 97    escr -> escritura_dos
+Rule 98    escr -> escritura_dos COMA escr
+Rule 99    decision -> if r_end_if
+Rule 100   decision -> if r_goto_ifelse else r_end_if
+Rule 101   if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+Rule 102   r_check_exp_type -> <empty>
+Rule 103   r_end_if -> <empty>
+Rule 104   r_goto_ifelse -> <empty>
+Rule 105   else -> SINO LLAVE_A estatutos_dos LLAVE_C
+Rule 106   ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+Rule 107   ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
 Terminals, with rules where they appear
 
-AND                  : 60
+AND                  : 61
 CHAR                 : 13
-COMA                 : 16 17 24 38 56 94
+COMA                 : 16 17 24 38 56 98
 CORCHETE_A           : 19 25
 CORCHETE_C           : 19 25
-CTE_CH               : 82
-CTE_F                : 81
-CTE_I                : 19 80
-CTE_STR              : 91
-DESDE                : 103
-DIFERENTE            : 69
-DIV                  : 75
-ENTONCES             : 97
-ESCRIBIR             : 90
+CTE_CH               : 84
+CTE_F                : 83
+CTE_I                : 19 82
+CTE_STR              : 95
+DESDE                : 107
+DIFERENTE            : 71
+DIV                  : 77
+ENTONCES             : 101
+ESCRIBIR             : 94
 FLOAT                : 12
 FUNCION              : 28 29
-HACER                : 103
-HASTA                : 103
-HAZ                  : 102
+HACER                : 107
+HASTA                : 107
+HAZ                  : 106
 ID                   : 1 14 15 16 17 20 21 28 29 37 38 53 54
-IGUAL                : 52 103
-IGUALIGUAL           : 68
+IGUAL                : 52 107
+IGUALIGUAL           : 70
 INT                  : 11
-LEER                 : 89
-LLAVE_A              : 40 41 97 101 102 103
-LLAVE_C              : 40 41 97 101 102 103
-MAS                  : 71
-MAYORIGUAL           : 66
-MAYORQUE             : 64
-MENORIGUAL           : 67
-MENORQUE             : 65
-MENOS                : 72
-MIENTRAS             : 102
+LEER                 : 93
+LLAVE_A              : 40 41 101 105 106 107
+LLAVE_C              : 40 41 101 105 106 107
+MAS                  : 73
+MAYORIGUAL           : 68
+MAYORQUE             : 66
+MENORIGUAL           : 69
+MENORQUE             : 67
+MENOS                : 74
+MIENTRAS             : 106
 OR                   : 58
-PARENT_A             : 6 32 33 53 54 79 88 89 90 97 102
-PARENT_C             : 6 32 33 53 54 79 88 89 90 97 102
-POR                  : 74
+PARENT_A             : 6 32 33 53 54 81 92 93 94 101 106
+PARENT_C             : 6 32 33 53 54 81 92 93 94 101 106
+POR                  : 76
 PRINCIPAL            : 6
 PROGRAMA             : 1
 PUNTOCOMA            : 1 8 9 42 43 44 45 46
-REGRESA              : 88
-SI                   : 97
-SINO                 : 101
+REGRESA              : 92
+SI                   : 101
+SINO                 : 105
 VAR                  : 7
 VOID                 : 29
 error                : 
@@ -168,51 +172,55 @@ dec_vars             : 3 4 36
 decision             : 47
 dim                  : 21
 dimension            : 15 17
-else                 : 96
-escr                 : 90 94
+else                 : 100
+escr                 : 94 98
 escritura            : 46
-escritura_dos        : 93 94
+escritura_dos        : 97 98
 estatutos            : 50 51
-estatutos_dos        : 41 51 97 101 102 103
-expresion            : 25 52 55 56 56 58 79 88 92 97 102 103 103
+estatutos_dos        : 41 51 101 105 106 107
+expresion            : 25 52 55 56 56 58 81 92 96 101 106 107 107
 expresiones          : 54
-factor               : 73 74 75
+factor               : 75 76 77
 func_dos             : 28 29
 func_type_void       : 29
 funcion              : 26 27
-g_expresion          : 59 60
+g_expresion          : 60 61
 ids_simple           : 8 9 16 17
-if                   : 95 96
+if                   : 99 100
 lectura              : 45
-llamada              : 43 84
-m_expresion          : 61 62 62 71 72
+llamada              : 43 86
+m_expresion          : 63 64 64 73 74
 main                 : 2 3 4 5
-op_logicos           : 62
+op_logicos           : 64
 parametros           : 33 38
 prog                 : 1
 programa             : 0
-r_check_exp_type     : 97
-r_end_if             : 95 96
-r_generate_quad_logicos : 61 62
-r_generate_quad_masmen : 70 71 72
-r_generate_quad_muldiv : 73 74 75
-r_goto_ifelse        : 96
-r_push_cte_c         : 82
-r_push_cte_f         : 81
-r_push_cte_i         : 80
+r_check_exp_type     : 101
+r_end_if             : 99 100
+r_generate_quad_and  : 60 61
+r_generate_quad_logicos : 63 64
+r_generate_quad_masmen : 72 73 74
+r_generate_quad_muldiv : 75 76 77
+r_generate_quad_or   : 57 58
+r_goto_ifelse        : 100
+r_pop_ff             : 81
+r_push_cte_c         : 84
+r_push_cte_f         : 83
+r_push_cte_i         : 82
+r_push_ff            : 81
 r_push_id            : 20 21
-r_push_oper          : 64 65 66 67 68 69 71 72 74 75
+r_push_oper          : 58 61 66 67 68 69 70 71 73 74 76 77
 retorno              : 44
 save_params          : 33
 save_params_list     : 37 38
 save_vars            : 7
 save_vars_name       : 14 15 16 17
-t_expresion          : 57 58 60
-termino              : 70 71 72 74 75
+t_expresion          : 57 58 61
+termino              : 72 73 74 76 77
 tipo_simple          : 8 9 28 37 38
 var_funcs            : 32 33
-variable             : 23 24 52 83 103
-variables            : 24 89
+variable             : 23 24 52 85 107
+variables            : 24 93
 vars                 : 7 9
 
 Parsing method: LALR
@@ -549,16 +557,16 @@ state 33
     (52) asignacion -> . variable IGUAL expresion
     (53) llamada -> . ID PARENT_A PARENT_C
     (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (88) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (89) lectura -> . LEER PARENT_A variables PARENT_C
-    (90) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (95) decision -> . if r_end_if
-    (96) decision -> . if r_goto_ifelse else r_end_if
-    (103) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (102) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (92) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (93) lectura -> . LEER PARENT_A variables PARENT_C
+    (94) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (99) decision -> . if r_end_if
+    (100) decision -> . if r_goto_ifelse else r_end_if
+    (107) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (97) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_C         shift and go to state 38
     ID              shift and go to state 50
@@ -668,16 +676,16 @@ state 40
     (52) asignacion -> . variable IGUAL expresion
     (53) llamada -> . ID PARENT_A PARENT_C
     (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (88) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (89) lectura -> . LEER PARENT_A variables PARENT_C
-    (90) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (95) decision -> . if r_end_if
-    (96) decision -> . if r_goto_ifelse else r_end_if
-    (103) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (102) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (92) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (93) lectura -> . LEER PARENT_A variables PARENT_C
+    (94) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (99) decision -> . if r_end_if
+    (100) decision -> . if r_goto_ifelse else r_end_if
+    (107) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (97) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_C         reduce using rule 50 (estatutos_dos -> estatutos .)
     ID              shift and go to state 50
@@ -801,48 +809,48 @@ state 50
 
 state 51
 
-    (88) retorno -> REGRESA . PARENT_A expresion PARENT_C
+    (92) retorno -> REGRESA . PARENT_A expresion PARENT_C
 
     PARENT_A        shift and go to state 75
 
 
 state 52
 
-    (89) lectura -> LEER . PARENT_A variables PARENT_C
+    (93) lectura -> LEER . PARENT_A variables PARENT_C
 
     PARENT_A        shift and go to state 76
 
 
 state 53
 
-    (90) escritura -> ESCRIBIR . PARENT_A escr PARENT_C
+    (94) escritura -> ESCRIBIR . PARENT_A escr PARENT_C
 
     PARENT_A        shift and go to state 77
 
 
 state 54
 
-    (95) decision -> if . r_end_if
-    (96) decision -> if . r_goto_ifelse else r_end_if
-    (99) r_end_if -> .
-    (100) r_goto_ifelse -> .
+    (99) decision -> if . r_end_if
+    (100) decision -> if . r_goto_ifelse else r_end_if
+    (103) r_end_if -> .
+    (104) r_goto_ifelse -> .
 
-    ID              reduce using rule 99 (r_end_if -> .)
-    REGRESA         reduce using rule 99 (r_end_if -> .)
-    LEER            reduce using rule 99 (r_end_if -> .)
-    ESCRIBIR        reduce using rule 99 (r_end_if -> .)
-    DESDE           reduce using rule 99 (r_end_if -> .)
-    MIENTRAS        reduce using rule 99 (r_end_if -> .)
-    SI              reduce using rule 99 (r_end_if -> .)
-    LLAVE_C         reduce using rule 99 (r_end_if -> .)
-    SINO            reduce using rule 100 (r_goto_ifelse -> .)
+    ID              reduce using rule 103 (r_end_if -> .)
+    REGRESA         reduce using rule 103 (r_end_if -> .)
+    LEER            reduce using rule 103 (r_end_if -> .)
+    ESCRIBIR        reduce using rule 103 (r_end_if -> .)
+    DESDE           reduce using rule 103 (r_end_if -> .)
+    MIENTRAS        reduce using rule 103 (r_end_if -> .)
+    SI              reduce using rule 103 (r_end_if -> .)
+    LLAVE_C         reduce using rule 103 (r_end_if -> .)
+    SINO            reduce using rule 104 (r_goto_ifelse -> .)
 
     r_end_if                       shift and go to state 78
     r_goto_ifelse                  shift and go to state 79
 
 state 55
 
-    (103) ciclo_for -> DESDE . variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (107) ciclo_for -> DESDE . variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
 
@@ -852,14 +860,14 @@ state 55
 
 state 56
 
-    (102) ciclo_while -> MIENTRAS . PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> MIENTRAS . PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_A        shift and go to state 82
 
 
 state 57
 
-    (97) if -> SI . PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> SI . PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_A        shift and go to state 83
 
@@ -1026,24 +1034,24 @@ state 71
 state 72
 
     (52) asignacion -> variable IGUAL . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1070,24 +1078,24 @@ state 73
     (54) llamada -> ID PARENT_A . expresiones PARENT_C
     (55) expresiones -> . expresion
     (56) expresiones -> . expresion COMA expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1141,25 +1149,25 @@ state 74
 
 state 75
 
-    (88) retorno -> REGRESA PARENT_A . expresion PARENT_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (92) retorno -> REGRESA PARENT_A . expresion PARENT_C
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1182,7 +1190,7 @@ state 75
 
 state 76
 
-    (89) lectura -> LEER PARENT_A . variables PARENT_C
+    (93) lectura -> LEER PARENT_A . variables PARENT_C
     (23) variables -> . variable
     (24) variables -> . variable COMA variables
     (20) variable -> . ID r_push_id
@@ -1195,29 +1203,29 @@ state 76
 
 state 77
 
-    (90) escritura -> ESCRIBIR PARENT_A . escr PARENT_C
-    (93) escr -> . escritura_dos
-    (94) escr -> . escritura_dos COMA escr
-    (91) escritura_dos -> . CTE_STR
-    (92) escritura_dos -> . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (94) escritura -> ESCRIBIR PARENT_A . escr PARENT_C
+    (97) escr -> . escritura_dos
+    (98) escr -> . escritura_dos COMA escr
+    (95) escritura_dos -> . CTE_STR
+    (96) escritura_dos -> . expresion
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1243,22 +1251,22 @@ state 77
 
 state 78
 
-    (95) decision -> if r_end_if .
+    (99) decision -> if r_end_if .
 
-    ID              reduce using rule 95 (decision -> if r_end_if .)
-    REGRESA         reduce using rule 95 (decision -> if r_end_if .)
-    LEER            reduce using rule 95 (decision -> if r_end_if .)
-    ESCRIBIR        reduce using rule 95 (decision -> if r_end_if .)
-    DESDE           reduce using rule 95 (decision -> if r_end_if .)
-    MIENTRAS        reduce using rule 95 (decision -> if r_end_if .)
-    SI              reduce using rule 95 (decision -> if r_end_if .)
-    LLAVE_C         reduce using rule 95 (decision -> if r_end_if .)
+    ID              reduce using rule 99 (decision -> if r_end_if .)
+    REGRESA         reduce using rule 99 (decision -> if r_end_if .)
+    LEER            reduce using rule 99 (decision -> if r_end_if .)
+    ESCRIBIR        reduce using rule 99 (decision -> if r_end_if .)
+    DESDE           reduce using rule 99 (decision -> if r_end_if .)
+    MIENTRAS        reduce using rule 99 (decision -> if r_end_if .)
+    SI              reduce using rule 99 (decision -> if r_end_if .)
+    LLAVE_C         reduce using rule 99 (decision -> if r_end_if .)
 
 
 state 79
 
-    (96) decision -> if r_goto_ifelse . else r_end_if
-    (101) else -> . SINO LLAVE_A estatutos_dos LLAVE_C
+    (100) decision -> if r_goto_ifelse . else r_end_if
+    (105) else -> . SINO LLAVE_A estatutos_dos LLAVE_C
 
     SINO            shift and go to state 117
 
@@ -1266,7 +1274,7 @@ state 79
 
 state 80
 
-    (103) ciclo_for -> DESDE variable . IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (107) ciclo_for -> DESDE variable . IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
     IGUAL           shift and go to state 118
 
@@ -1286,25 +1294,25 @@ state 81
 
 state 82
 
-    (102) ciclo_while -> MIENTRAS PARENT_A . expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (106) ciclo_while -> MIENTRAS PARENT_A . expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1327,25 +1335,25 @@ state 82
 
 state 83
 
-    (97) if -> SI PARENT_A . expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (101) if -> SI PARENT_A . expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1433,26 +1441,26 @@ state 90
 
 state 91
 
-    (83) factor -> variable .
+    (85) factor -> variable .
 
-    POR             reduce using rule 83 (factor -> variable .)
-    DIV             reduce using rule 83 (factor -> variable .)
-    MAS             reduce using rule 83 (factor -> variable .)
-    MENOS           reduce using rule 83 (factor -> variable .)
-    MAYORQUE        reduce using rule 83 (factor -> variable .)
-    MENORQUE        reduce using rule 83 (factor -> variable .)
-    MAYORIGUAL      reduce using rule 83 (factor -> variable .)
-    MENORIGUAL      reduce using rule 83 (factor -> variable .)
-    IGUALIGUAL      reduce using rule 83 (factor -> variable .)
-    DIFERENTE       reduce using rule 83 (factor -> variable .)
-    AND             reduce using rule 83 (factor -> variable .)
-    OR              reduce using rule 83 (factor -> variable .)
-    PUNTOCOMA       reduce using rule 83 (factor -> variable .)
-    COMA            reduce using rule 83 (factor -> variable .)
-    PARENT_C        reduce using rule 83 (factor -> variable .)
-    CORCHETE_C      reduce using rule 83 (factor -> variable .)
-    HASTA           reduce using rule 83 (factor -> variable .)
-    HACER           reduce using rule 83 (factor -> variable .)
+    POR             reduce using rule 85 (factor -> variable .)
+    DIV             reduce using rule 85 (factor -> variable .)
+    MAS             reduce using rule 85 (factor -> variable .)
+    MENOS           reduce using rule 85 (factor -> variable .)
+    MAYORQUE        reduce using rule 85 (factor -> variable .)
+    MENORQUE        reduce using rule 85 (factor -> variable .)
+    MAYORIGUAL      reduce using rule 85 (factor -> variable .)
+    MENORIGUAL      reduce using rule 85 (factor -> variable .)
+    IGUALIGUAL      reduce using rule 85 (factor -> variable .)
+    DIFERENTE       reduce using rule 85 (factor -> variable .)
+    AND             reduce using rule 85 (factor -> variable .)
+    OR              reduce using rule 85 (factor -> variable .)
+    PUNTOCOMA       reduce using rule 85 (factor -> variable .)
+    COMA            reduce using rule 85 (factor -> variable .)
+    PARENT_C        reduce using rule 85 (factor -> variable .)
+    CORCHETE_C      reduce using rule 85 (factor -> variable .)
+    HASTA           reduce using rule 85 (factor -> variable .)
+    HACER           reduce using rule 85 (factor -> variable .)
 
 
 state 92
@@ -1464,53 +1472,57 @@ state 92
 
 state 93
 
-    (57) expresion -> t_expresion .
-    (58) expresion -> t_expresion . OR expresion
+    (57) expresion -> t_expresion . r_generate_quad_or
+    (58) expresion -> t_expresion . r_generate_quad_or OR r_push_oper expresion
+    (59) r_generate_quad_or -> .
 
-    PUNTOCOMA       reduce using rule 57 (expresion -> t_expresion .)
-    COMA            reduce using rule 57 (expresion -> t_expresion .)
-    PARENT_C        reduce using rule 57 (expresion -> t_expresion .)
-    CORCHETE_C      reduce using rule 57 (expresion -> t_expresion .)
-    HASTA           reduce using rule 57 (expresion -> t_expresion .)
-    HACER           reduce using rule 57 (expresion -> t_expresion .)
-    OR              shift and go to state 128
+    OR              reduce using rule 59 (r_generate_quad_or -> .)
+    PUNTOCOMA       reduce using rule 59 (r_generate_quad_or -> .)
+    COMA            reduce using rule 59 (r_generate_quad_or -> .)
+    PARENT_C        reduce using rule 59 (r_generate_quad_or -> .)
+    CORCHETE_C      reduce using rule 59 (r_generate_quad_or -> .)
+    HASTA           reduce using rule 59 (r_generate_quad_or -> .)
+    HACER           reduce using rule 59 (r_generate_quad_or -> .)
 
+    r_generate_quad_or             shift and go to state 128
 
 state 94
 
-    (59) t_expresion -> g_expresion .
-    (60) t_expresion -> g_expresion . AND t_expresion
+    (60) t_expresion -> g_expresion . r_generate_quad_and
+    (61) t_expresion -> g_expresion . r_generate_quad_and AND r_push_oper t_expresion
+    (62) r_generate_quad_and -> .
 
-    OR              reduce using rule 59 (t_expresion -> g_expresion .)
-    PUNTOCOMA       reduce using rule 59 (t_expresion -> g_expresion .)
-    COMA            reduce using rule 59 (t_expresion -> g_expresion .)
-    PARENT_C        reduce using rule 59 (t_expresion -> g_expresion .)
-    CORCHETE_C      reduce using rule 59 (t_expresion -> g_expresion .)
-    HASTA           reduce using rule 59 (t_expresion -> g_expresion .)
-    HACER           reduce using rule 59 (t_expresion -> g_expresion .)
-    AND             shift and go to state 129
+    AND             reduce using rule 62 (r_generate_quad_and -> .)
+    OR              reduce using rule 62 (r_generate_quad_and -> .)
+    PUNTOCOMA       reduce using rule 62 (r_generate_quad_and -> .)
+    COMA            reduce using rule 62 (r_generate_quad_and -> .)
+    PARENT_C        reduce using rule 62 (r_generate_quad_and -> .)
+    CORCHETE_C      reduce using rule 62 (r_generate_quad_and -> .)
+    HASTA           reduce using rule 62 (r_generate_quad_and -> .)
+    HACER           reduce using rule 62 (r_generate_quad_and -> .)
 
+    r_generate_quad_and            shift and go to state 129
 
 state 95
 
-    (61) g_expresion -> m_expresion . r_generate_quad_logicos
-    (62) g_expresion -> m_expresion . op_logicos m_expresion r_generate_quad_logicos
-    (63) r_generate_quad_logicos -> .
-    (64) op_logicos -> . MAYORQUE r_push_oper
-    (65) op_logicos -> . MENORQUE r_push_oper
-    (66) op_logicos -> . MAYORIGUAL r_push_oper
-    (67) op_logicos -> . MENORIGUAL r_push_oper
-    (68) op_logicos -> . IGUALIGUAL r_push_oper
-    (69) op_logicos -> . DIFERENTE r_push_oper
+    (63) g_expresion -> m_expresion . r_generate_quad_logicos
+    (64) g_expresion -> m_expresion . op_logicos m_expresion r_generate_quad_logicos
+    (65) r_generate_quad_logicos -> .
+    (66) op_logicos -> . MAYORQUE r_push_oper
+    (67) op_logicos -> . MENORQUE r_push_oper
+    (68) op_logicos -> . MAYORIGUAL r_push_oper
+    (69) op_logicos -> . MENORIGUAL r_push_oper
+    (70) op_logicos -> . IGUALIGUAL r_push_oper
+    (71) op_logicos -> . DIFERENTE r_push_oper
 
-    AND             reduce using rule 63 (r_generate_quad_logicos -> .)
-    OR              reduce using rule 63 (r_generate_quad_logicos -> .)
-    PUNTOCOMA       reduce using rule 63 (r_generate_quad_logicos -> .)
-    COMA            reduce using rule 63 (r_generate_quad_logicos -> .)
-    PARENT_C        reduce using rule 63 (r_generate_quad_logicos -> .)
-    CORCHETE_C      reduce using rule 63 (r_generate_quad_logicos -> .)
-    HASTA           reduce using rule 63 (r_generate_quad_logicos -> .)
-    HACER           reduce using rule 63 (r_generate_quad_logicos -> .)
+    AND             reduce using rule 65 (r_generate_quad_logicos -> .)
+    OR              reduce using rule 65 (r_generate_quad_logicos -> .)
+    PUNTOCOMA       reduce using rule 65 (r_generate_quad_logicos -> .)
+    COMA            reduce using rule 65 (r_generate_quad_logicos -> .)
+    PARENT_C        reduce using rule 65 (r_generate_quad_logicos -> .)
+    CORCHETE_C      reduce using rule 65 (r_generate_quad_logicos -> .)
+    HASTA           reduce using rule 65 (r_generate_quad_logicos -> .)
+    HACER           reduce using rule 65 (r_generate_quad_logicos -> .)
     MAYORQUE        shift and go to state 132
     MENORQUE        shift and go to state 133
     MAYORIGUAL      shift and go to state 134
@@ -1523,199 +1535,171 @@ state 95
 
 state 96
 
-    (70) m_expresion -> termino . r_generate_quad_masmen
-    (71) m_expresion -> termino . r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> termino . r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (77) r_generate_quad_masmen -> .
+    (72) m_expresion -> termino . r_generate_quad_masmen
+    (73) m_expresion -> termino . r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> termino . r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (79) r_generate_quad_masmen -> .
 
-    MAS             reduce using rule 77 (r_generate_quad_masmen -> .)
-    MENOS           reduce using rule 77 (r_generate_quad_masmen -> .)
-    MAYORQUE        reduce using rule 77 (r_generate_quad_masmen -> .)
-    MENORQUE        reduce using rule 77 (r_generate_quad_masmen -> .)
-    MAYORIGUAL      reduce using rule 77 (r_generate_quad_masmen -> .)
-    MENORIGUAL      reduce using rule 77 (r_generate_quad_masmen -> .)
-    IGUALIGUAL      reduce using rule 77 (r_generate_quad_masmen -> .)
-    DIFERENTE       reduce using rule 77 (r_generate_quad_masmen -> .)
-    AND             reduce using rule 77 (r_generate_quad_masmen -> .)
-    OR              reduce using rule 77 (r_generate_quad_masmen -> .)
-    PUNTOCOMA       reduce using rule 77 (r_generate_quad_masmen -> .)
-    COMA            reduce using rule 77 (r_generate_quad_masmen -> .)
-    PARENT_C        reduce using rule 77 (r_generate_quad_masmen -> .)
-    CORCHETE_C      reduce using rule 77 (r_generate_quad_masmen -> .)
-    HASTA           reduce using rule 77 (r_generate_quad_masmen -> .)
-    HACER           reduce using rule 77 (r_generate_quad_masmen -> .)
+    MAS             reduce using rule 79 (r_generate_quad_masmen -> .)
+    MENOS           reduce using rule 79 (r_generate_quad_masmen -> .)
+    MAYORQUE        reduce using rule 79 (r_generate_quad_masmen -> .)
+    MENORQUE        reduce using rule 79 (r_generate_quad_masmen -> .)
+    MAYORIGUAL      reduce using rule 79 (r_generate_quad_masmen -> .)
+    MENORIGUAL      reduce using rule 79 (r_generate_quad_masmen -> .)
+    IGUALIGUAL      reduce using rule 79 (r_generate_quad_masmen -> .)
+    DIFERENTE       reduce using rule 79 (r_generate_quad_masmen -> .)
+    AND             reduce using rule 79 (r_generate_quad_masmen -> .)
+    OR              reduce using rule 79 (r_generate_quad_masmen -> .)
+    PUNTOCOMA       reduce using rule 79 (r_generate_quad_masmen -> .)
+    COMA            reduce using rule 79 (r_generate_quad_masmen -> .)
+    PARENT_C        reduce using rule 79 (r_generate_quad_masmen -> .)
+    CORCHETE_C      reduce using rule 79 (r_generate_quad_masmen -> .)
+    HASTA           reduce using rule 79 (r_generate_quad_masmen -> .)
+    HACER           reduce using rule 79 (r_generate_quad_masmen -> .)
 
     r_generate_quad_masmen         shift and go to state 138
 
 state 97
 
-    (73) termino -> factor . r_generate_quad_muldiv
-    (74) termino -> factor . r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> factor . r_generate_quad_muldiv DIV r_push_oper termino
-    (78) r_generate_quad_muldiv -> .
+    (75) termino -> factor . r_generate_quad_muldiv
+    (76) termino -> factor . r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> factor . r_generate_quad_muldiv DIV r_push_oper termino
+    (80) r_generate_quad_muldiv -> .
 
-    POR             reduce using rule 78 (r_generate_quad_muldiv -> .)
-    DIV             reduce using rule 78 (r_generate_quad_muldiv -> .)
-    MAS             reduce using rule 78 (r_generate_quad_muldiv -> .)
-    MENOS           reduce using rule 78 (r_generate_quad_muldiv -> .)
-    MAYORQUE        reduce using rule 78 (r_generate_quad_muldiv -> .)
-    MENORQUE        reduce using rule 78 (r_generate_quad_muldiv -> .)
-    MAYORIGUAL      reduce using rule 78 (r_generate_quad_muldiv -> .)
-    MENORIGUAL      reduce using rule 78 (r_generate_quad_muldiv -> .)
-    IGUALIGUAL      reduce using rule 78 (r_generate_quad_muldiv -> .)
-    DIFERENTE       reduce using rule 78 (r_generate_quad_muldiv -> .)
-    AND             reduce using rule 78 (r_generate_quad_muldiv -> .)
-    OR              reduce using rule 78 (r_generate_quad_muldiv -> .)
-    PUNTOCOMA       reduce using rule 78 (r_generate_quad_muldiv -> .)
-    COMA            reduce using rule 78 (r_generate_quad_muldiv -> .)
-    PARENT_C        reduce using rule 78 (r_generate_quad_muldiv -> .)
-    CORCHETE_C      reduce using rule 78 (r_generate_quad_muldiv -> .)
-    HASTA           reduce using rule 78 (r_generate_quad_muldiv -> .)
-    HACER           reduce using rule 78 (r_generate_quad_muldiv -> .)
+    POR             reduce using rule 80 (r_generate_quad_muldiv -> .)
+    DIV             reduce using rule 80 (r_generate_quad_muldiv -> .)
+    MAS             reduce using rule 80 (r_generate_quad_muldiv -> .)
+    MENOS           reduce using rule 80 (r_generate_quad_muldiv -> .)
+    MAYORQUE        reduce using rule 80 (r_generate_quad_muldiv -> .)
+    MENORQUE        reduce using rule 80 (r_generate_quad_muldiv -> .)
+    MAYORIGUAL      reduce using rule 80 (r_generate_quad_muldiv -> .)
+    MENORIGUAL      reduce using rule 80 (r_generate_quad_muldiv -> .)
+    IGUALIGUAL      reduce using rule 80 (r_generate_quad_muldiv -> .)
+    DIFERENTE       reduce using rule 80 (r_generate_quad_muldiv -> .)
+    AND             reduce using rule 80 (r_generate_quad_muldiv -> .)
+    OR              reduce using rule 80 (r_generate_quad_muldiv -> .)
+    PUNTOCOMA       reduce using rule 80 (r_generate_quad_muldiv -> .)
+    COMA            reduce using rule 80 (r_generate_quad_muldiv -> .)
+    PARENT_C        reduce using rule 80 (r_generate_quad_muldiv -> .)
+    CORCHETE_C      reduce using rule 80 (r_generate_quad_muldiv -> .)
+    HASTA           reduce using rule 80 (r_generate_quad_muldiv -> .)
+    HACER           reduce using rule 80 (r_generate_quad_muldiv -> .)
 
     r_generate_quad_muldiv         shift and go to state 139
 
 state 98
 
-    (79) factor -> PARENT_A . expresion PARENT_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (81) factor -> PARENT_A . r_push_ff expresion PARENT_C r_pop_ff
+    (90) r_push_ff -> .
 
-    PARENT_A        shift and go to state 98
-    CTE_I           shift and go to state 99
-    CTE_F           shift and go to state 100
-    CTE_CH          shift and go to state 101
-    ID              shift and go to state 103
+    PARENT_A        reduce using rule 90 (r_push_ff -> .)
+    CTE_I           reduce using rule 90 (r_push_ff -> .)
+    CTE_F           reduce using rule 90 (r_push_ff -> .)
+    CTE_CH          reduce using rule 90 (r_push_ff -> .)
+    ID              reduce using rule 90 (r_push_ff -> .)
 
-    expresion                      shift and go to state 140
-    t_expresion                    shift and go to state 93
-    g_expresion                    shift and go to state 94
-    m_expresion                    shift and go to state 95
-    termino                        shift and go to state 96
-    factor                         shift and go to state 97
-    variable                       shift and go to state 91
-    llamada                        shift and go to state 102
+    r_push_ff                      shift and go to state 140
 
 state 99
 
-    (80) factor -> CTE_I . r_push_cte_i
-    (85) r_push_cte_i -> .
+    (82) factor -> CTE_I . r_push_cte_i
+    (87) r_push_cte_i -> .
 
-    POR             reduce using rule 85 (r_push_cte_i -> .)
-    DIV             reduce using rule 85 (r_push_cte_i -> .)
-    MAS             reduce using rule 85 (r_push_cte_i -> .)
-    MENOS           reduce using rule 85 (r_push_cte_i -> .)
-    MAYORQUE        reduce using rule 85 (r_push_cte_i -> .)
-    MENORQUE        reduce using rule 85 (r_push_cte_i -> .)
-    MAYORIGUAL      reduce using rule 85 (r_push_cte_i -> .)
-    MENORIGUAL      reduce using rule 85 (r_push_cte_i -> .)
-    IGUALIGUAL      reduce using rule 85 (r_push_cte_i -> .)
-    DIFERENTE       reduce using rule 85 (r_push_cte_i -> .)
-    AND             reduce using rule 85 (r_push_cte_i -> .)
-    OR              reduce using rule 85 (r_push_cte_i -> .)
-    PUNTOCOMA       reduce using rule 85 (r_push_cte_i -> .)
-    COMA            reduce using rule 85 (r_push_cte_i -> .)
-    PARENT_C        reduce using rule 85 (r_push_cte_i -> .)
-    CORCHETE_C      reduce using rule 85 (r_push_cte_i -> .)
-    HASTA           reduce using rule 85 (r_push_cte_i -> .)
-    HACER           reduce using rule 85 (r_push_cte_i -> .)
+    POR             reduce using rule 87 (r_push_cte_i -> .)
+    DIV             reduce using rule 87 (r_push_cte_i -> .)
+    MAS             reduce using rule 87 (r_push_cte_i -> .)
+    MENOS           reduce using rule 87 (r_push_cte_i -> .)
+    MAYORQUE        reduce using rule 87 (r_push_cte_i -> .)
+    MENORQUE        reduce using rule 87 (r_push_cte_i -> .)
+    MAYORIGUAL      reduce using rule 87 (r_push_cte_i -> .)
+    MENORIGUAL      reduce using rule 87 (r_push_cte_i -> .)
+    IGUALIGUAL      reduce using rule 87 (r_push_cte_i -> .)
+    DIFERENTE       reduce using rule 87 (r_push_cte_i -> .)
+    AND             reduce using rule 87 (r_push_cte_i -> .)
+    OR              reduce using rule 87 (r_push_cte_i -> .)
+    PUNTOCOMA       reduce using rule 87 (r_push_cte_i -> .)
+    COMA            reduce using rule 87 (r_push_cte_i -> .)
+    PARENT_C        reduce using rule 87 (r_push_cte_i -> .)
+    CORCHETE_C      reduce using rule 87 (r_push_cte_i -> .)
+    HASTA           reduce using rule 87 (r_push_cte_i -> .)
+    HACER           reduce using rule 87 (r_push_cte_i -> .)
 
     r_push_cte_i                   shift and go to state 141
 
 state 100
 
-    (81) factor -> CTE_F . r_push_cte_f
-    (86) r_push_cte_f -> .
+    (83) factor -> CTE_F . r_push_cte_f
+    (88) r_push_cte_f -> .
 
-    POR             reduce using rule 86 (r_push_cte_f -> .)
-    DIV             reduce using rule 86 (r_push_cte_f -> .)
-    MAS             reduce using rule 86 (r_push_cte_f -> .)
-    MENOS           reduce using rule 86 (r_push_cte_f -> .)
-    MAYORQUE        reduce using rule 86 (r_push_cte_f -> .)
-    MENORQUE        reduce using rule 86 (r_push_cte_f -> .)
-    MAYORIGUAL      reduce using rule 86 (r_push_cte_f -> .)
-    MENORIGUAL      reduce using rule 86 (r_push_cte_f -> .)
-    IGUALIGUAL      reduce using rule 86 (r_push_cte_f -> .)
-    DIFERENTE       reduce using rule 86 (r_push_cte_f -> .)
-    AND             reduce using rule 86 (r_push_cte_f -> .)
-    OR              reduce using rule 86 (r_push_cte_f -> .)
-    PUNTOCOMA       reduce using rule 86 (r_push_cte_f -> .)
-    COMA            reduce using rule 86 (r_push_cte_f -> .)
-    PARENT_C        reduce using rule 86 (r_push_cte_f -> .)
-    CORCHETE_C      reduce using rule 86 (r_push_cte_f -> .)
-    HASTA           reduce using rule 86 (r_push_cte_f -> .)
-    HACER           reduce using rule 86 (r_push_cte_f -> .)
+    POR             reduce using rule 88 (r_push_cte_f -> .)
+    DIV             reduce using rule 88 (r_push_cte_f -> .)
+    MAS             reduce using rule 88 (r_push_cte_f -> .)
+    MENOS           reduce using rule 88 (r_push_cte_f -> .)
+    MAYORQUE        reduce using rule 88 (r_push_cte_f -> .)
+    MENORQUE        reduce using rule 88 (r_push_cte_f -> .)
+    MAYORIGUAL      reduce using rule 88 (r_push_cte_f -> .)
+    MENORIGUAL      reduce using rule 88 (r_push_cte_f -> .)
+    IGUALIGUAL      reduce using rule 88 (r_push_cte_f -> .)
+    DIFERENTE       reduce using rule 88 (r_push_cte_f -> .)
+    AND             reduce using rule 88 (r_push_cte_f -> .)
+    OR              reduce using rule 88 (r_push_cte_f -> .)
+    PUNTOCOMA       reduce using rule 88 (r_push_cte_f -> .)
+    COMA            reduce using rule 88 (r_push_cte_f -> .)
+    PARENT_C        reduce using rule 88 (r_push_cte_f -> .)
+    CORCHETE_C      reduce using rule 88 (r_push_cte_f -> .)
+    HASTA           reduce using rule 88 (r_push_cte_f -> .)
+    HACER           reduce using rule 88 (r_push_cte_f -> .)
 
     r_push_cte_f                   shift and go to state 142
 
 state 101
 
-    (82) factor -> CTE_CH . r_push_cte_c
-    (87) r_push_cte_c -> .
+    (84) factor -> CTE_CH . r_push_cte_c
+    (89) r_push_cte_c -> .
 
-    POR             reduce using rule 87 (r_push_cte_c -> .)
-    DIV             reduce using rule 87 (r_push_cte_c -> .)
-    MAS             reduce using rule 87 (r_push_cte_c -> .)
-    MENOS           reduce using rule 87 (r_push_cte_c -> .)
-    MAYORQUE        reduce using rule 87 (r_push_cte_c -> .)
-    MENORQUE        reduce using rule 87 (r_push_cte_c -> .)
-    MAYORIGUAL      reduce using rule 87 (r_push_cte_c -> .)
-    MENORIGUAL      reduce using rule 87 (r_push_cte_c -> .)
-    IGUALIGUAL      reduce using rule 87 (r_push_cte_c -> .)
-    DIFERENTE       reduce using rule 87 (r_push_cte_c -> .)
-    AND             reduce using rule 87 (r_push_cte_c -> .)
-    OR              reduce using rule 87 (r_push_cte_c -> .)
-    PUNTOCOMA       reduce using rule 87 (r_push_cte_c -> .)
-    COMA            reduce using rule 87 (r_push_cte_c -> .)
-    PARENT_C        reduce using rule 87 (r_push_cte_c -> .)
-    CORCHETE_C      reduce using rule 87 (r_push_cte_c -> .)
-    HASTA           reduce using rule 87 (r_push_cte_c -> .)
-    HACER           reduce using rule 87 (r_push_cte_c -> .)
+    POR             reduce using rule 89 (r_push_cte_c -> .)
+    DIV             reduce using rule 89 (r_push_cte_c -> .)
+    MAS             reduce using rule 89 (r_push_cte_c -> .)
+    MENOS           reduce using rule 89 (r_push_cte_c -> .)
+    MAYORQUE        reduce using rule 89 (r_push_cte_c -> .)
+    MENORQUE        reduce using rule 89 (r_push_cte_c -> .)
+    MAYORIGUAL      reduce using rule 89 (r_push_cte_c -> .)
+    MENORIGUAL      reduce using rule 89 (r_push_cte_c -> .)
+    IGUALIGUAL      reduce using rule 89 (r_push_cte_c -> .)
+    DIFERENTE       reduce using rule 89 (r_push_cte_c -> .)
+    AND             reduce using rule 89 (r_push_cte_c -> .)
+    OR              reduce using rule 89 (r_push_cte_c -> .)
+    PUNTOCOMA       reduce using rule 89 (r_push_cte_c -> .)
+    COMA            reduce using rule 89 (r_push_cte_c -> .)
+    PARENT_C        reduce using rule 89 (r_push_cte_c -> .)
+    CORCHETE_C      reduce using rule 89 (r_push_cte_c -> .)
+    HASTA           reduce using rule 89 (r_push_cte_c -> .)
+    HACER           reduce using rule 89 (r_push_cte_c -> .)
 
     r_push_cte_c                   shift and go to state 143
 
 state 102
 
-    (84) factor -> llamada .
+    (86) factor -> llamada .
 
-    POR             reduce using rule 84 (factor -> llamada .)
-    DIV             reduce using rule 84 (factor -> llamada .)
-    MAS             reduce using rule 84 (factor -> llamada .)
-    MENOS           reduce using rule 84 (factor -> llamada .)
-    MAYORQUE        reduce using rule 84 (factor -> llamada .)
-    MENORQUE        reduce using rule 84 (factor -> llamada .)
-    MAYORIGUAL      reduce using rule 84 (factor -> llamada .)
-    MENORIGUAL      reduce using rule 84 (factor -> llamada .)
-    IGUALIGUAL      reduce using rule 84 (factor -> llamada .)
-    DIFERENTE       reduce using rule 84 (factor -> llamada .)
-    AND             reduce using rule 84 (factor -> llamada .)
-    OR              reduce using rule 84 (factor -> llamada .)
-    PUNTOCOMA       reduce using rule 84 (factor -> llamada .)
-    COMA            reduce using rule 84 (factor -> llamada .)
-    PARENT_C        reduce using rule 84 (factor -> llamada .)
-    CORCHETE_C      reduce using rule 84 (factor -> llamada .)
-    HASTA           reduce using rule 84 (factor -> llamada .)
-    HACER           reduce using rule 84 (factor -> llamada .)
+    POR             reduce using rule 86 (factor -> llamada .)
+    DIV             reduce using rule 86 (factor -> llamada .)
+    MAS             reduce using rule 86 (factor -> llamada .)
+    MENOS           reduce using rule 86 (factor -> llamada .)
+    MAYORQUE        reduce using rule 86 (factor -> llamada .)
+    MENORQUE        reduce using rule 86 (factor -> llamada .)
+    MAYORIGUAL      reduce using rule 86 (factor -> llamada .)
+    MENORIGUAL      reduce using rule 86 (factor -> llamada .)
+    IGUALIGUAL      reduce using rule 86 (factor -> llamada .)
+    DIFERENTE       reduce using rule 86 (factor -> llamada .)
+    AND             reduce using rule 86 (factor -> llamada .)
+    OR              reduce using rule 86 (factor -> llamada .)
+    PUNTOCOMA       reduce using rule 86 (factor -> llamada .)
+    COMA            reduce using rule 86 (factor -> llamada .)
+    PARENT_C        reduce using rule 86 (factor -> llamada .)
+    CORCHETE_C      reduce using rule 86 (factor -> llamada .)
+    HASTA           reduce using rule 86 (factor -> llamada .)
+    HACER           reduce using rule 86 (factor -> llamada .)
 
 
 state 103
@@ -1817,24 +1801,24 @@ state 107
 state 108
 
     (25) dim -> CORCHETE_A . expresion CORCHETE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1857,14 +1841,14 @@ state 108
 
 state 109
 
-    (88) retorno -> REGRESA PARENT_A expresion . PARENT_C
+    (92) retorno -> REGRESA PARENT_A expresion . PARENT_C
 
     PARENT_C        shift and go to state 147
 
 
 state 110
 
-    (89) lectura -> LEER PARENT_A variables . PARENT_C
+    (93) lectura -> LEER PARENT_A variables . PARENT_C
 
     PARENT_C        shift and go to state 148
 
@@ -1880,80 +1864,80 @@ state 111
 
 state 112
 
-    (90) escritura -> ESCRIBIR PARENT_A escr . PARENT_C
+    (94) escritura -> ESCRIBIR PARENT_A escr . PARENT_C
 
     PARENT_C        shift and go to state 150
 
 
 state 113
 
-    (93) escr -> escritura_dos .
-    (94) escr -> escritura_dos . COMA escr
+    (97) escr -> escritura_dos .
+    (98) escr -> escritura_dos . COMA escr
 
-    PARENT_C        reduce using rule 93 (escr -> escritura_dos .)
+    PARENT_C        reduce using rule 97 (escr -> escritura_dos .)
     COMA            shift and go to state 151
 
 
 state 114
 
-    (91) escritura_dos -> CTE_STR .
+    (95) escritura_dos -> CTE_STR .
 
-    COMA            reduce using rule 91 (escritura_dos -> CTE_STR .)
-    PARENT_C        reduce using rule 91 (escritura_dos -> CTE_STR .)
+    COMA            reduce using rule 95 (escritura_dos -> CTE_STR .)
+    PARENT_C        reduce using rule 95 (escritura_dos -> CTE_STR .)
 
 
 state 115
 
-    (92) escritura_dos -> expresion .
+    (96) escritura_dos -> expresion .
 
-    COMA            reduce using rule 92 (escritura_dos -> expresion .)
-    PARENT_C        reduce using rule 92 (escritura_dos -> expresion .)
+    COMA            reduce using rule 96 (escritura_dos -> expresion .)
+    PARENT_C        reduce using rule 96 (escritura_dos -> expresion .)
 
 
 state 116
 
-    (96) decision -> if r_goto_ifelse else . r_end_if
-    (99) r_end_if -> .
+    (100) decision -> if r_goto_ifelse else . r_end_if
+    (103) r_end_if -> .
 
-    ID              reduce using rule 99 (r_end_if -> .)
-    REGRESA         reduce using rule 99 (r_end_if -> .)
-    LEER            reduce using rule 99 (r_end_if -> .)
-    ESCRIBIR        reduce using rule 99 (r_end_if -> .)
-    DESDE           reduce using rule 99 (r_end_if -> .)
-    MIENTRAS        reduce using rule 99 (r_end_if -> .)
-    SI              reduce using rule 99 (r_end_if -> .)
-    LLAVE_C         reduce using rule 99 (r_end_if -> .)
+    ID              reduce using rule 103 (r_end_if -> .)
+    REGRESA         reduce using rule 103 (r_end_if -> .)
+    LEER            reduce using rule 103 (r_end_if -> .)
+    ESCRIBIR        reduce using rule 103 (r_end_if -> .)
+    DESDE           reduce using rule 103 (r_end_if -> .)
+    MIENTRAS        reduce using rule 103 (r_end_if -> .)
+    SI              reduce using rule 103 (r_end_if -> .)
+    LLAVE_C         reduce using rule 103 (r_end_if -> .)
 
     r_end_if                       shift and go to state 152
 
 state 117
 
-    (101) else -> SINO . LLAVE_A estatutos_dos LLAVE_C
+    (105) else -> SINO . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 153
 
 
 state 118
 
-    (103) ciclo_for -> DESDE variable IGUAL . expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (107) ciclo_for -> DESDE variable IGUAL . expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -1976,14 +1960,14 @@ state 118
 
 state 119
 
-    (102) ciclo_while -> MIENTRAS PARENT_A expresion . PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> MIENTRAS PARENT_A expresion . PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_C        shift and go to state 155
 
 
 state 120
 
-    (97) if -> SI PARENT_A expresion . PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> SI PARENT_A expresion . PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_C        shift and go to state 156
 
@@ -2052,112 +2036,62 @@ state 127
 
 state 128
 
-    (58) expresion -> t_expresion OR . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (57) expresion -> t_expresion r_generate_quad_or .
+    (58) expresion -> t_expresion r_generate_quad_or . OR r_push_oper expresion
 
-    PARENT_A        shift and go to state 98
-    CTE_I           shift and go to state 99
-    CTE_F           shift and go to state 100
-    CTE_CH          shift and go to state 101
-    ID              shift and go to state 103
+    PUNTOCOMA       reduce using rule 57 (expresion -> t_expresion r_generate_quad_or .)
+    COMA            reduce using rule 57 (expresion -> t_expresion r_generate_quad_or .)
+    PARENT_C        reduce using rule 57 (expresion -> t_expresion r_generate_quad_or .)
+    CORCHETE_C      reduce using rule 57 (expresion -> t_expresion r_generate_quad_or .)
+    HASTA           reduce using rule 57 (expresion -> t_expresion r_generate_quad_or .)
+    HACER           reduce using rule 57 (expresion -> t_expresion r_generate_quad_or .)
+    OR              shift and go to state 160
 
-    t_expresion                    shift and go to state 93
-    expresion                      shift and go to state 160
-    g_expresion                    shift and go to state 94
-    m_expresion                    shift and go to state 95
-    termino                        shift and go to state 96
-    factor                         shift and go to state 97
-    variable                       shift and go to state 91
-    llamada                        shift and go to state 102
 
 state 129
 
-    (60) t_expresion -> g_expresion AND . t_expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (60) t_expresion -> g_expresion r_generate_quad_and .
+    (61) t_expresion -> g_expresion r_generate_quad_and . AND r_push_oper t_expresion
 
-    PARENT_A        shift and go to state 98
-    CTE_I           shift and go to state 99
-    CTE_F           shift and go to state 100
-    CTE_CH          shift and go to state 101
-    ID              shift and go to state 103
+    OR              reduce using rule 60 (t_expresion -> g_expresion r_generate_quad_and .)
+    PUNTOCOMA       reduce using rule 60 (t_expresion -> g_expresion r_generate_quad_and .)
+    COMA            reduce using rule 60 (t_expresion -> g_expresion r_generate_quad_and .)
+    PARENT_C        reduce using rule 60 (t_expresion -> g_expresion r_generate_quad_and .)
+    CORCHETE_C      reduce using rule 60 (t_expresion -> g_expresion r_generate_quad_and .)
+    HASTA           reduce using rule 60 (t_expresion -> g_expresion r_generate_quad_and .)
+    HACER           reduce using rule 60 (t_expresion -> g_expresion r_generate_quad_and .)
+    AND             shift and go to state 161
 
-    g_expresion                    shift and go to state 94
-    t_expresion                    shift and go to state 161
-    m_expresion                    shift and go to state 95
-    termino                        shift and go to state 96
-    factor                         shift and go to state 97
-    variable                       shift and go to state 91
-    llamada                        shift and go to state 102
 
 state 130
 
-    (61) g_expresion -> m_expresion r_generate_quad_logicos .
+    (63) g_expresion -> m_expresion r_generate_quad_logicos .
 
-    AND             reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
-    OR              reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
-    PUNTOCOMA       reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
-    COMA            reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
-    PARENT_C        reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
-    CORCHETE_C      reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
-    HASTA           reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
-    HACER           reduce using rule 61 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    AND             reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    OR              reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    PUNTOCOMA       reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    COMA            reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    PARENT_C        reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    CORCHETE_C      reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    HASTA           reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
+    HACER           reduce using rule 63 (g_expresion -> m_expresion r_generate_quad_logicos .)
 
 
 state 131
 
-    (62) g_expresion -> m_expresion op_logicos . m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (64) g_expresion -> m_expresion op_logicos . m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -2177,209 +2111,243 @@ state 131
 
 state 132
 
-    (64) op_logicos -> MAYORQUE . r_push_oper
-    (76) r_push_oper -> .
+    (66) op_logicos -> MAYORQUE . r_push_oper
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 163
 
 state 133
 
-    (65) op_logicos -> MENORQUE . r_push_oper
-    (76) r_push_oper -> .
+    (67) op_logicos -> MENORQUE . r_push_oper
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 164
 
 state 134
 
-    (66) op_logicos -> MAYORIGUAL . r_push_oper
-    (76) r_push_oper -> .
+    (68) op_logicos -> MAYORIGUAL . r_push_oper
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 165
 
 state 135
 
-    (67) op_logicos -> MENORIGUAL . r_push_oper
-    (76) r_push_oper -> .
+    (69) op_logicos -> MENORIGUAL . r_push_oper
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 166
 
 state 136
 
-    (68) op_logicos -> IGUALIGUAL . r_push_oper
-    (76) r_push_oper -> .
+    (70) op_logicos -> IGUALIGUAL . r_push_oper
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 167
 
 state 137
 
-    (69) op_logicos -> DIFERENTE . r_push_oper
-    (76) r_push_oper -> .
+    (71) op_logicos -> DIFERENTE . r_push_oper
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 168
 
 state 138
 
-    (70) m_expresion -> termino r_generate_quad_masmen .
-    (71) m_expresion -> termino r_generate_quad_masmen . MAS r_push_oper m_expresion
-    (72) m_expresion -> termino r_generate_quad_masmen . MENOS r_push_oper m_expresion
+    (72) m_expresion -> termino r_generate_quad_masmen .
+    (73) m_expresion -> termino r_generate_quad_masmen . MAS r_push_oper m_expresion
+    (74) m_expresion -> termino r_generate_quad_masmen . MENOS r_push_oper m_expresion
 
-    MAYORQUE        reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    MENORQUE        reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    MAYORIGUAL      reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    MENORIGUAL      reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    IGUALIGUAL      reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    DIFERENTE       reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    AND             reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    OR              reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    PUNTOCOMA       reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    COMA            reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    PARENT_C        reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    CORCHETE_C      reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    HASTA           reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
-    HACER           reduce using rule 70 (m_expresion -> termino r_generate_quad_masmen .)
+    MAYORQUE        reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    MENORQUE        reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    MAYORIGUAL      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    MENORIGUAL      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    IGUALIGUAL      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    DIFERENTE       reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    AND             reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    OR              reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    PUNTOCOMA       reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    COMA            reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    PARENT_C        reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    CORCHETE_C      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    HASTA           reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
+    HACER           reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen .)
     MAS             shift and go to state 169
     MENOS           shift and go to state 170
 
 
 state 139
 
-    (73) termino -> factor r_generate_quad_muldiv .
-    (74) termino -> factor r_generate_quad_muldiv . POR r_push_oper termino
-    (75) termino -> factor r_generate_quad_muldiv . DIV r_push_oper termino
+    (75) termino -> factor r_generate_quad_muldiv .
+    (76) termino -> factor r_generate_quad_muldiv . POR r_push_oper termino
+    (77) termino -> factor r_generate_quad_muldiv . DIV r_push_oper termino
 
-    MAS             reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    MENOS           reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    MAYORQUE        reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    MENORQUE        reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    MAYORIGUAL      reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    MENORIGUAL      reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    IGUALIGUAL      reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    DIFERENTE       reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    AND             reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    OR              reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    PUNTOCOMA       reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    COMA            reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    PARENT_C        reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    CORCHETE_C      reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    HASTA           reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
-    HACER           reduce using rule 73 (termino -> factor r_generate_quad_muldiv .)
+    MAS             reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    MENOS           reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    MAYORQUE        reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    MENORQUE        reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    MAYORIGUAL      reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    MENORIGUAL      reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    IGUALIGUAL      reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    DIFERENTE       reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    AND             reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    OR              reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    PUNTOCOMA       reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    COMA            reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    PARENT_C        reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    CORCHETE_C      reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    HASTA           reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
+    HACER           reduce using rule 75 (termino -> factor r_generate_quad_muldiv .)
     POR             shift and go to state 171
     DIV             shift and go to state 172
 
 
 state 140
 
-    (79) factor -> PARENT_A expresion . PARENT_C
+    (81) factor -> PARENT_A r_push_ff . expresion PARENT_C r_pop_ff
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (53) llamada -> . ID PARENT_A PARENT_C
+    (54) llamada -> . ID PARENT_A expresiones PARENT_C
 
-    PARENT_C        shift and go to state 173
+    PARENT_A        shift and go to state 98
+    CTE_I           shift and go to state 99
+    CTE_F           shift and go to state 100
+    CTE_CH          shift and go to state 101
+    ID              shift and go to state 103
 
+    expresion                      shift and go to state 173
+    t_expresion                    shift and go to state 93
+    g_expresion                    shift and go to state 94
+    m_expresion                    shift and go to state 95
+    termino                        shift and go to state 96
+    factor                         shift and go to state 97
+    variable                       shift and go to state 91
+    llamada                        shift and go to state 102
 
 state 141
 
-    (80) factor -> CTE_I r_push_cte_i .
+    (82) factor -> CTE_I r_push_cte_i .
 
-    POR             reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    DIV             reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    MAS             reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    MENOS           reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    MAYORQUE        reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    MENORQUE        reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    MAYORIGUAL      reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    MENORIGUAL      reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    IGUALIGUAL      reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    DIFERENTE       reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    AND             reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    OR              reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    PUNTOCOMA       reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    COMA            reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    PARENT_C        reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    CORCHETE_C      reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    HASTA           reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
-    HACER           reduce using rule 80 (factor -> CTE_I r_push_cte_i .)
+    POR             reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    DIV             reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    MAS             reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    MENOS           reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    MAYORQUE        reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    MENORQUE        reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    MAYORIGUAL      reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    MENORIGUAL      reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    IGUALIGUAL      reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    DIFERENTE       reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    AND             reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    OR              reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    PUNTOCOMA       reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    COMA            reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    PARENT_C        reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    CORCHETE_C      reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    HASTA           reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
+    HACER           reduce using rule 82 (factor -> CTE_I r_push_cte_i .)
 
 
 state 142
 
-    (81) factor -> CTE_F r_push_cte_f .
+    (83) factor -> CTE_F r_push_cte_f .
 
-    POR             reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    DIV             reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    MAS             reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    MENOS           reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    MAYORQUE        reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    MENORQUE        reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    MAYORIGUAL      reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    MENORIGUAL      reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    IGUALIGUAL      reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    DIFERENTE       reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    AND             reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    OR              reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    PUNTOCOMA       reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    COMA            reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    PARENT_C        reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    CORCHETE_C      reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    HASTA           reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
-    HACER           reduce using rule 81 (factor -> CTE_F r_push_cte_f .)
+    POR             reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    DIV             reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    MAS             reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    MENOS           reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    MAYORQUE        reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    MENORQUE        reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    MAYORIGUAL      reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    MENORIGUAL      reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    IGUALIGUAL      reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    DIFERENTE       reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    AND             reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    OR              reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    PUNTOCOMA       reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    COMA            reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    PARENT_C        reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    CORCHETE_C      reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    HASTA           reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
+    HACER           reduce using rule 83 (factor -> CTE_F r_push_cte_f .)
 
 
 state 143
 
-    (82) factor -> CTE_CH r_push_cte_c .
+    (84) factor -> CTE_CH r_push_cte_c .
 
-    POR             reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    DIV             reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    MAS             reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    MENOS           reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    MAYORQUE        reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    MENORQUE        reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    MAYORIGUAL      reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    MENORIGUAL      reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    IGUALIGUAL      reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    DIFERENTE       reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    AND             reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    OR              reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    PUNTOCOMA       reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    COMA            reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    PARENT_C        reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    CORCHETE_C      reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    HASTA           reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
-    HACER           reduce using rule 82 (factor -> CTE_CH r_push_cte_c .)
+    POR             reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    DIV             reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    MAS             reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    MENOS           reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    MAYORQUE        reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    MENORQUE        reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    MAYORIGUAL      reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    MENORIGUAL      reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    IGUALIGUAL      reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    DIFERENTE       reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    AND             reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    OR              reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    PUNTOCOMA       reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    COMA            reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    PARENT_C        reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    CORCHETE_C      reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    HASTA           reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
+    HACER           reduce using rule 84 (factor -> CTE_CH r_push_cte_c .)
 
 
 state 144
@@ -2409,24 +2377,24 @@ state 144
 state 145
 
     (56) expresiones -> expresion COMA . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -2456,16 +2424,16 @@ state 146
 
 state 147
 
-    (88) retorno -> REGRESA PARENT_A expresion PARENT_C .
+    (92) retorno -> REGRESA PARENT_A expresion PARENT_C .
 
-    PUNTOCOMA       reduce using rule 88 (retorno -> REGRESA PARENT_A expresion PARENT_C .)
+    PUNTOCOMA       reduce using rule 92 (retorno -> REGRESA PARENT_A expresion PARENT_C .)
 
 
 state 148
 
-    (89) lectura -> LEER PARENT_A variables PARENT_C .
+    (93) lectura -> LEER PARENT_A variables PARENT_C .
 
-    PUNTOCOMA       reduce using rule 89 (lectura -> LEER PARENT_A variables PARENT_C .)
+    PUNTOCOMA       reduce using rule 93 (lectura -> LEER PARENT_A variables PARENT_C .)
 
 
 state 149
@@ -2483,36 +2451,36 @@ state 149
 
 state 150
 
-    (90) escritura -> ESCRIBIR PARENT_A escr PARENT_C .
+    (94) escritura -> ESCRIBIR PARENT_A escr PARENT_C .
 
-    PUNTOCOMA       reduce using rule 90 (escritura -> ESCRIBIR PARENT_A escr PARENT_C .)
+    PUNTOCOMA       reduce using rule 94 (escritura -> ESCRIBIR PARENT_A escr PARENT_C .)
 
 
 state 151
 
-    (94) escr -> escritura_dos COMA . escr
-    (93) escr -> . escritura_dos
-    (94) escr -> . escritura_dos COMA escr
-    (91) escritura_dos -> . CTE_STR
-    (92) escritura_dos -> . expresion
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (98) escr -> escritura_dos COMA . escr
+    (97) escr -> . escritura_dos
+    (98) escr -> . escritura_dos COMA escr
+    (95) escritura_dos -> . CTE_STR
+    (96) escritura_dos -> . expresion
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -2538,21 +2506,21 @@ state 151
 
 state 152
 
-    (96) decision -> if r_goto_ifelse else r_end_if .
+    (100) decision -> if r_goto_ifelse else r_end_if .
 
-    ID              reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
-    REGRESA         reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
-    LEER            reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
-    ESCRIBIR        reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
-    DESDE           reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
-    MIENTRAS        reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
-    SI              reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
-    LLAVE_C         reduce using rule 96 (decision -> if r_goto_ifelse else r_end_if .)
+    ID              reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
+    REGRESA         reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
+    LEER            reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
+    ESCRIBIR        reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
+    DESDE           reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
+    MIENTRAS        reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
+    SI              reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
+    LLAVE_C         reduce using rule 100 (decision -> if r_goto_ifelse else r_end_if .)
 
 
 state 153
 
-    (101) else -> SINO LLAVE_A . estatutos_dos LLAVE_C
+    (105) else -> SINO LLAVE_A . estatutos_dos LLAVE_C
     (50) estatutos_dos -> . estatutos
     (51) estatutos_dos -> . estatutos estatutos_dos
     (42) estatutos -> . asignacion PUNTOCOMA
@@ -2566,16 +2534,16 @@ state 153
     (52) asignacion -> . variable IGUAL expresion
     (53) llamada -> . ID PARENT_A PARENT_C
     (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (88) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (89) lectura -> . LEER PARENT_A variables PARENT_C
-    (90) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (95) decision -> . if r_end_if
-    (96) decision -> . if r_goto_ifelse else r_end_if
-    (103) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (102) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (92) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (93) lectura -> . LEER PARENT_A variables PARENT_C
+    (94) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (99) decision -> . if r_end_if
+    (100) decision -> . if r_goto_ifelse else r_end_if
+    (107) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (97) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -2600,24 +2568,24 @@ state 153
 
 state 154
 
-    (103) ciclo_for -> DESDE variable IGUAL expresion . HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (107) ciclo_for -> DESDE variable IGUAL expresion . HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
     HASTA           shift and go to state 179
 
 
 state 155
 
-    (102) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C . HAZ LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C . HAZ LLAVE_A estatutos_dos LLAVE_C
 
     HAZ             shift and go to state 180
 
 
 state 156
 
-    (97) if -> SI PARENT_A expresion PARENT_C . r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
-    (98) r_check_exp_type -> .
+    (101) if -> SI PARENT_A expresion PARENT_C . r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (102) r_check_exp_type -> .
 
-    ENTONCES        reduce using rule 98 (r_check_exp_type -> .)
+    ENTONCES        reduce using rule 102 (r_check_exp_type -> .)
 
     r_check_exp_type               shift and go to state 181
 
@@ -2656,185 +2624,169 @@ state 159
 
 state 160
 
-    (58) expresion -> t_expresion OR expresion .
+    (58) expresion -> t_expresion r_generate_quad_or OR . r_push_oper expresion
+    (78) r_push_oper -> .
 
-    PUNTOCOMA       reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    COMA            reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    PARENT_C        reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    CORCHETE_C      reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    HASTA           reduce using rule 58 (expresion -> t_expresion OR expresion .)
-    HACER           reduce using rule 58 (expresion -> t_expresion OR expresion .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
+    r_push_oper                    shift and go to state 184
 
 state 161
 
-    (60) t_expresion -> g_expresion AND t_expresion .
+    (61) t_expresion -> g_expresion r_generate_quad_and AND . r_push_oper t_expresion
+    (78) r_push_oper -> .
 
-    OR              reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    PUNTOCOMA       reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    COMA            reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    PARENT_C        reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    CORCHETE_C      reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    HASTA           reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
-    HACER           reduce using rule 60 (t_expresion -> g_expresion AND t_expresion .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
+    r_push_oper                    shift and go to state 185
 
 state 162
 
-    (62) g_expresion -> m_expresion op_logicos m_expresion . r_generate_quad_logicos
-    (63) r_generate_quad_logicos -> .
+    (64) g_expresion -> m_expresion op_logicos m_expresion . r_generate_quad_logicos
+    (65) r_generate_quad_logicos -> .
 
-    AND             reduce using rule 63 (r_generate_quad_logicos -> .)
-    OR              reduce using rule 63 (r_generate_quad_logicos -> .)
-    PUNTOCOMA       reduce using rule 63 (r_generate_quad_logicos -> .)
-    COMA            reduce using rule 63 (r_generate_quad_logicos -> .)
-    PARENT_C        reduce using rule 63 (r_generate_quad_logicos -> .)
-    CORCHETE_C      reduce using rule 63 (r_generate_quad_logicos -> .)
-    HASTA           reduce using rule 63 (r_generate_quad_logicos -> .)
-    HACER           reduce using rule 63 (r_generate_quad_logicos -> .)
+    AND             reduce using rule 65 (r_generate_quad_logicos -> .)
+    OR              reduce using rule 65 (r_generate_quad_logicos -> .)
+    PUNTOCOMA       reduce using rule 65 (r_generate_quad_logicos -> .)
+    COMA            reduce using rule 65 (r_generate_quad_logicos -> .)
+    PARENT_C        reduce using rule 65 (r_generate_quad_logicos -> .)
+    CORCHETE_C      reduce using rule 65 (r_generate_quad_logicos -> .)
+    HASTA           reduce using rule 65 (r_generate_quad_logicos -> .)
+    HACER           reduce using rule 65 (r_generate_quad_logicos -> .)
 
-    r_generate_quad_logicos        shift and go to state 184
+    r_generate_quad_logicos        shift and go to state 186
 
 state 163
 
-    (64) op_logicos -> MAYORQUE r_push_oper .
+    (66) op_logicos -> MAYORQUE r_push_oper .
 
-    PARENT_A        reduce using rule 64 (op_logicos -> MAYORQUE r_push_oper .)
-    CTE_I           reduce using rule 64 (op_logicos -> MAYORQUE r_push_oper .)
-    CTE_F           reduce using rule 64 (op_logicos -> MAYORQUE r_push_oper .)
-    CTE_CH          reduce using rule 64 (op_logicos -> MAYORQUE r_push_oper .)
-    ID              reduce using rule 64 (op_logicos -> MAYORQUE r_push_oper .)
+    PARENT_A        reduce using rule 66 (op_logicos -> MAYORQUE r_push_oper .)
+    CTE_I           reduce using rule 66 (op_logicos -> MAYORQUE r_push_oper .)
+    CTE_F           reduce using rule 66 (op_logicos -> MAYORQUE r_push_oper .)
+    CTE_CH          reduce using rule 66 (op_logicos -> MAYORQUE r_push_oper .)
+    ID              reduce using rule 66 (op_logicos -> MAYORQUE r_push_oper .)
 
 
 state 164
 
-    (65) op_logicos -> MENORQUE r_push_oper .
+    (67) op_logicos -> MENORQUE r_push_oper .
 
-    PARENT_A        reduce using rule 65 (op_logicos -> MENORQUE r_push_oper .)
-    CTE_I           reduce using rule 65 (op_logicos -> MENORQUE r_push_oper .)
-    CTE_F           reduce using rule 65 (op_logicos -> MENORQUE r_push_oper .)
-    CTE_CH          reduce using rule 65 (op_logicos -> MENORQUE r_push_oper .)
-    ID              reduce using rule 65 (op_logicos -> MENORQUE r_push_oper .)
+    PARENT_A        reduce using rule 67 (op_logicos -> MENORQUE r_push_oper .)
+    CTE_I           reduce using rule 67 (op_logicos -> MENORQUE r_push_oper .)
+    CTE_F           reduce using rule 67 (op_logicos -> MENORQUE r_push_oper .)
+    CTE_CH          reduce using rule 67 (op_logicos -> MENORQUE r_push_oper .)
+    ID              reduce using rule 67 (op_logicos -> MENORQUE r_push_oper .)
 
 
 state 165
 
-    (66) op_logicos -> MAYORIGUAL r_push_oper .
+    (68) op_logicos -> MAYORIGUAL r_push_oper .
 
-    PARENT_A        reduce using rule 66 (op_logicos -> MAYORIGUAL r_push_oper .)
-    CTE_I           reduce using rule 66 (op_logicos -> MAYORIGUAL r_push_oper .)
-    CTE_F           reduce using rule 66 (op_logicos -> MAYORIGUAL r_push_oper .)
-    CTE_CH          reduce using rule 66 (op_logicos -> MAYORIGUAL r_push_oper .)
-    ID              reduce using rule 66 (op_logicos -> MAYORIGUAL r_push_oper .)
+    PARENT_A        reduce using rule 68 (op_logicos -> MAYORIGUAL r_push_oper .)
+    CTE_I           reduce using rule 68 (op_logicos -> MAYORIGUAL r_push_oper .)
+    CTE_F           reduce using rule 68 (op_logicos -> MAYORIGUAL r_push_oper .)
+    CTE_CH          reduce using rule 68 (op_logicos -> MAYORIGUAL r_push_oper .)
+    ID              reduce using rule 68 (op_logicos -> MAYORIGUAL r_push_oper .)
 
 
 state 166
 
-    (67) op_logicos -> MENORIGUAL r_push_oper .
+    (69) op_logicos -> MENORIGUAL r_push_oper .
 
-    PARENT_A        reduce using rule 67 (op_logicos -> MENORIGUAL r_push_oper .)
-    CTE_I           reduce using rule 67 (op_logicos -> MENORIGUAL r_push_oper .)
-    CTE_F           reduce using rule 67 (op_logicos -> MENORIGUAL r_push_oper .)
-    CTE_CH          reduce using rule 67 (op_logicos -> MENORIGUAL r_push_oper .)
-    ID              reduce using rule 67 (op_logicos -> MENORIGUAL r_push_oper .)
+    PARENT_A        reduce using rule 69 (op_logicos -> MENORIGUAL r_push_oper .)
+    CTE_I           reduce using rule 69 (op_logicos -> MENORIGUAL r_push_oper .)
+    CTE_F           reduce using rule 69 (op_logicos -> MENORIGUAL r_push_oper .)
+    CTE_CH          reduce using rule 69 (op_logicos -> MENORIGUAL r_push_oper .)
+    ID              reduce using rule 69 (op_logicos -> MENORIGUAL r_push_oper .)
 
 
 state 167
 
-    (68) op_logicos -> IGUALIGUAL r_push_oper .
+    (70) op_logicos -> IGUALIGUAL r_push_oper .
 
-    PARENT_A        reduce using rule 68 (op_logicos -> IGUALIGUAL r_push_oper .)
-    CTE_I           reduce using rule 68 (op_logicos -> IGUALIGUAL r_push_oper .)
-    CTE_F           reduce using rule 68 (op_logicos -> IGUALIGUAL r_push_oper .)
-    CTE_CH          reduce using rule 68 (op_logicos -> IGUALIGUAL r_push_oper .)
-    ID              reduce using rule 68 (op_logicos -> IGUALIGUAL r_push_oper .)
+    PARENT_A        reduce using rule 70 (op_logicos -> IGUALIGUAL r_push_oper .)
+    CTE_I           reduce using rule 70 (op_logicos -> IGUALIGUAL r_push_oper .)
+    CTE_F           reduce using rule 70 (op_logicos -> IGUALIGUAL r_push_oper .)
+    CTE_CH          reduce using rule 70 (op_logicos -> IGUALIGUAL r_push_oper .)
+    ID              reduce using rule 70 (op_logicos -> IGUALIGUAL r_push_oper .)
 
 
 state 168
 
-    (69) op_logicos -> DIFERENTE r_push_oper .
+    (71) op_logicos -> DIFERENTE r_push_oper .
 
-    PARENT_A        reduce using rule 69 (op_logicos -> DIFERENTE r_push_oper .)
-    CTE_I           reduce using rule 69 (op_logicos -> DIFERENTE r_push_oper .)
-    CTE_F           reduce using rule 69 (op_logicos -> DIFERENTE r_push_oper .)
-    CTE_CH          reduce using rule 69 (op_logicos -> DIFERENTE r_push_oper .)
-    ID              reduce using rule 69 (op_logicos -> DIFERENTE r_push_oper .)
+    PARENT_A        reduce using rule 71 (op_logicos -> DIFERENTE r_push_oper .)
+    CTE_I           reduce using rule 71 (op_logicos -> DIFERENTE r_push_oper .)
+    CTE_F           reduce using rule 71 (op_logicos -> DIFERENTE r_push_oper .)
+    CTE_CH          reduce using rule 71 (op_logicos -> DIFERENTE r_push_oper .)
+    ID              reduce using rule 71 (op_logicos -> DIFERENTE r_push_oper .)
 
 
 state 169
 
-    (71) m_expresion -> termino r_generate_quad_masmen MAS . r_push_oper m_expresion
-    (76) r_push_oper -> .
+    (73) m_expresion -> termino r_generate_quad_masmen MAS . r_push_oper m_expresion
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
-
-    r_push_oper                    shift and go to state 185
-
-state 170
-
-    (72) m_expresion -> termino r_generate_quad_masmen MENOS . r_push_oper m_expresion
-    (76) r_push_oper -> .
-
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
-
-    r_push_oper                    shift and go to state 186
-
-state 171
-
-    (74) termino -> factor r_generate_quad_muldiv POR . r_push_oper termino
-    (76) r_push_oper -> .
-
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 187
 
-state 172
+state 170
 
-    (75) termino -> factor r_generate_quad_muldiv DIV . r_push_oper termino
-    (76) r_push_oper -> .
+    (74) m_expresion -> termino r_generate_quad_masmen MENOS . r_push_oper m_expresion
+    (78) r_push_oper -> .
 
-    PARENT_A        reduce using rule 76 (r_push_oper -> .)
-    CTE_I           reduce using rule 76 (r_push_oper -> .)
-    CTE_F           reduce using rule 76 (r_push_oper -> .)
-    CTE_CH          reduce using rule 76 (r_push_oper -> .)
-    ID              reduce using rule 76 (r_push_oper -> .)
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
 
     r_push_oper                    shift and go to state 188
 
+state 171
+
+    (76) termino -> factor r_generate_quad_muldiv POR . r_push_oper termino
+    (78) r_push_oper -> .
+
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
+
+    r_push_oper                    shift and go to state 189
+
+state 172
+
+    (77) termino -> factor r_generate_quad_muldiv DIV . r_push_oper termino
+    (78) r_push_oper -> .
+
+    PARENT_A        reduce using rule 78 (r_push_oper -> .)
+    CTE_I           reduce using rule 78 (r_push_oper -> .)
+    CTE_F           reduce using rule 78 (r_push_oper -> .)
+    CTE_CH          reduce using rule 78 (r_push_oper -> .)
+    ID              reduce using rule 78 (r_push_oper -> .)
+
+    r_push_oper                    shift and go to state 190
+
 state 173
 
-    (79) factor -> PARENT_A expresion PARENT_C .
+    (81) factor -> PARENT_A r_push_ff expresion . PARENT_C r_pop_ff
 
-    POR             reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    DIV             reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    MAS             reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    MENOS           reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    MAYORQUE        reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    MENORQUE        reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    MAYORIGUAL      reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    MENORIGUAL      reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    IGUALIGUAL      reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    DIFERENTE       reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    AND             reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    OR              reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    PUNTOCOMA       reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    COMA            reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    PARENT_C        reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    CORCHETE_C      reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    HASTA           reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
-    HACER           reduce using rule 79 (factor -> PARENT_A expresion PARENT_C .)
+    PARENT_C        shift and go to state 191
 
 
 state 174
@@ -2878,39 +2830,39 @@ state 176
 
 state 177
 
-    (94) escr -> escritura_dos COMA escr .
+    (98) escr -> escritura_dos COMA escr .
 
-    PARENT_C        reduce using rule 94 (escr -> escritura_dos COMA escr .)
+    PARENT_C        reduce using rule 98 (escr -> escritura_dos COMA escr .)
 
 
 state 178
 
-    (101) else -> SINO LLAVE_A estatutos_dos . LLAVE_C
+    (105) else -> SINO LLAVE_A estatutos_dos . LLAVE_C
 
-    LLAVE_C         shift and go to state 189
+    LLAVE_C         shift and go to state 192
 
 
 state 179
 
-    (103) ciclo_for -> DESDE variable IGUAL expresion HASTA . expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (57) expresion -> . t_expresion
-    (58) expresion -> . t_expresion OR expresion
-    (59) t_expresion -> . g_expresion
-    (60) t_expresion -> . g_expresion AND t_expresion
-    (61) g_expresion -> . m_expresion r_generate_quad_logicos
-    (62) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (107) ciclo_for -> DESDE variable IGUAL expresion HASTA . expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -2923,7 +2875,7 @@ state 179
     ID              shift and go to state 103
 
     variable                       shift and go to state 91
-    expresion                      shift and go to state 190
+    expresion                      shift and go to state 193
     t_expresion                    shift and go to state 93
     g_expresion                    shift and go to state 94
     m_expresion                    shift and go to state 95
@@ -2933,16 +2885,16 @@ state 179
 
 state 180
 
-    (102) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ . LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ . LLAVE_A estatutos_dos LLAVE_C
 
-    LLAVE_A         shift and go to state 191
+    LLAVE_A         shift and go to state 194
 
 
 state 181
 
-    (97) if -> SI PARENT_A expresion PARENT_C r_check_exp_type . ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> SI PARENT_A expresion PARENT_C r_check_exp_type . ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
-    ENTONCES        shift and go to state 192
+    ENTONCES        shift and go to state 195
 
 
 state 182
@@ -2967,37 +2919,29 @@ state 183
     CHAR            shift and go to state 21
 
     tipo_simple                    shift and go to state 89
-    parametros                     shift and go to state 193
+    parametros                     shift and go to state 196
 
 state 184
 
-    (62) g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .
-
-    AND             reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-    OR              reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-    PUNTOCOMA       reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-    COMA            reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-    PARENT_C        reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-    CORCHETE_C      reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-    HASTA           reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-    HACER           reduce using rule 62 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
-
-
-state 185
-
-    (71) m_expresion -> termino r_generate_quad_masmen MAS r_push_oper . m_expresion
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (58) expresion -> t_expresion r_generate_quad_or OR r_push_oper . expresion
+    (57) expresion -> . t_expresion r_generate_quad_or
+    (58) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -3009,27 +2953,82 @@ state 185
     CTE_CH          shift and go to state 101
     ID              shift and go to state 103
 
+    t_expresion                    shift and go to state 93
+    expresion                      shift and go to state 197
+    g_expresion                    shift and go to state 94
+    m_expresion                    shift and go to state 95
     termino                        shift and go to state 96
-    m_expresion                    shift and go to state 194
+    factor                         shift and go to state 97
+    variable                       shift and go to state 91
+    llamada                        shift and go to state 102
+
+state 185
+
+    (61) t_expresion -> g_expresion r_generate_quad_and AND r_push_oper . t_expresion
+    (60) t_expresion -> . g_expresion r_generate_quad_and
+    (61) t_expresion -> . g_expresion r_generate_quad_and AND r_push_oper t_expresion
+    (63) g_expresion -> . m_expresion r_generate_quad_logicos
+    (64) g_expresion -> . m_expresion op_logicos m_expresion r_generate_quad_logicos
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (53) llamada -> . ID PARENT_A PARENT_C
+    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+
+    PARENT_A        shift and go to state 98
+    CTE_I           shift and go to state 99
+    CTE_F           shift and go to state 100
+    CTE_CH          shift and go to state 101
+    ID              shift and go to state 103
+
+    g_expresion                    shift and go to state 94
+    t_expresion                    shift and go to state 198
+    m_expresion                    shift and go to state 95
+    termino                        shift and go to state 96
     factor                         shift and go to state 97
     variable                       shift and go to state 91
     llamada                        shift and go to state 102
 
 state 186
 
-    (72) m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper . m_expresion
-    (70) m_expresion -> . termino r_generate_quad_masmen
-    (71) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (72) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (64) g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .
+
+    AND             reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+    OR              reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+    PUNTOCOMA       reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+    COMA            reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+    PARENT_C        reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+    CORCHETE_C      reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+    HASTA           reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+    HACER           reduce using rule 64 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
+
+
+state 187
+
+    (73) m_expresion -> termino r_generate_quad_masmen MAS r_push_oper . m_expresion
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -3042,51 +3041,55 @@ state 186
     ID              shift and go to state 103
 
     termino                        shift and go to state 96
-    m_expresion                    shift and go to state 195
+    m_expresion                    shift and go to state 199
     factor                         shift and go to state 97
-    variable                       shift and go to state 91
-    llamada                        shift and go to state 102
-
-state 187
-
-    (74) termino -> factor r_generate_quad_muldiv POR r_push_oper . termino
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-
-    PARENT_A        shift and go to state 98
-    CTE_I           shift and go to state 99
-    CTE_F           shift and go to state 100
-    CTE_CH          shift and go to state 101
-    ID              shift and go to state 103
-
-    factor                         shift and go to state 97
-    termino                        shift and go to state 196
     variable                       shift and go to state 91
     llamada                        shift and go to state 102
 
 state 188
 
-    (75) termino -> factor r_generate_quad_muldiv DIV r_push_oper . termino
-    (73) termino -> . factor r_generate_quad_muldiv
-    (74) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (75) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (79) factor -> . PARENT_A expresion PARENT_C
-    (80) factor -> . CTE_I r_push_cte_i
-    (81) factor -> . CTE_F r_push_cte_f
-    (82) factor -> . CTE_CH r_push_cte_c
-    (83) factor -> . variable
-    (84) factor -> . llamada
+    (74) m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper . m_expresion
+    (72) m_expresion -> . termino r_generate_quad_masmen
+    (73) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (74) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (53) llamada -> . ID PARENT_A PARENT_C
+    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+
+    PARENT_A        shift and go to state 98
+    CTE_I           shift and go to state 99
+    CTE_F           shift and go to state 100
+    CTE_CH          shift and go to state 101
+    ID              shift and go to state 103
+
+    termino                        shift and go to state 96
+    m_expresion                    shift and go to state 200
+    factor                         shift and go to state 97
+    variable                       shift and go to state 91
+    llamada                        shift and go to state 102
+
+state 189
+
+    (76) termino -> factor r_generate_quad_muldiv POR r_push_oper . termino
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
     (53) llamada -> . ID PARENT_A PARENT_C
@@ -3099,34 +3102,88 @@ state 188
     ID              shift and go to state 103
 
     factor                         shift and go to state 97
-    termino                        shift and go to state 197
+    termino                        shift and go to state 201
     variable                       shift and go to state 91
     llamada                        shift and go to state 102
 
-state 189
-
-    (101) else -> SINO LLAVE_A estatutos_dos LLAVE_C .
-
-    ID              reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 101 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-
-
 state 190
 
-    (103) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion . HACER LLAVE_A estatutos_dos LLAVE_C
+    (77) termino -> factor r_generate_quad_muldiv DIV r_push_oper . termino
+    (75) termino -> . factor r_generate_quad_muldiv
+    (76) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (77) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (81) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (82) factor -> . CTE_I r_push_cte_i
+    (83) factor -> . CTE_F r_push_cte_f
+    (84) factor -> . CTE_CH r_push_cte_c
+    (85) factor -> . variable
+    (86) factor -> . llamada
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (53) llamada -> . ID PARENT_A PARENT_C
+    (54) llamada -> . ID PARENT_A expresiones PARENT_C
 
-    HACER           shift and go to state 198
+    PARENT_A        shift and go to state 98
+    CTE_I           shift and go to state 99
+    CTE_F           shift and go to state 100
+    CTE_CH          shift and go to state 101
+    ID              shift and go to state 103
 
+    factor                         shift and go to state 97
+    termino                        shift and go to state 202
+    variable                       shift and go to state 91
+    llamada                        shift and go to state 102
 
 state 191
 
-    (102) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A . estatutos_dos LLAVE_C
+    (81) factor -> PARENT_A r_push_ff expresion PARENT_C . r_pop_ff
+    (91) r_pop_ff -> .
+
+    POR             reduce using rule 91 (r_pop_ff -> .)
+    DIV             reduce using rule 91 (r_pop_ff -> .)
+    MAS             reduce using rule 91 (r_pop_ff -> .)
+    MENOS           reduce using rule 91 (r_pop_ff -> .)
+    MAYORQUE        reduce using rule 91 (r_pop_ff -> .)
+    MENORQUE        reduce using rule 91 (r_pop_ff -> .)
+    MAYORIGUAL      reduce using rule 91 (r_pop_ff -> .)
+    MENORIGUAL      reduce using rule 91 (r_pop_ff -> .)
+    IGUALIGUAL      reduce using rule 91 (r_pop_ff -> .)
+    DIFERENTE       reduce using rule 91 (r_pop_ff -> .)
+    AND             reduce using rule 91 (r_pop_ff -> .)
+    OR              reduce using rule 91 (r_pop_ff -> .)
+    PUNTOCOMA       reduce using rule 91 (r_pop_ff -> .)
+    COMA            reduce using rule 91 (r_pop_ff -> .)
+    PARENT_C        reduce using rule 91 (r_pop_ff -> .)
+    CORCHETE_C      reduce using rule 91 (r_pop_ff -> .)
+    HASTA           reduce using rule 91 (r_pop_ff -> .)
+    HACER           reduce using rule 91 (r_pop_ff -> .)
+
+    r_pop_ff                       shift and go to state 203
+
+state 192
+
+    (105) else -> SINO LLAVE_A estatutos_dos LLAVE_C .
+
+    ID              reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 105 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+
+
+state 193
+
+    (107) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion . HACER LLAVE_A estatutos_dos LLAVE_C
+
+    HACER           shift and go to state 204
+
+
+state 194
+
+    (106) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A . estatutos_dos LLAVE_C
     (50) estatutos_dos -> . estatutos
     (51) estatutos_dos -> . estatutos estatutos_dos
     (42) estatutos -> . asignacion PUNTOCOMA
@@ -3140,16 +3197,16 @@ state 191
     (52) asignacion -> . variable IGUAL expresion
     (53) llamada -> . ID PARENT_A PARENT_C
     (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (88) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (89) lectura -> . LEER PARENT_A variables PARENT_C
-    (90) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (95) decision -> . if r_end_if
-    (96) decision -> . if r_goto_ifelse else r_end_if
-    (103) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (102) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (92) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (93) lectura -> . LEER PARENT_A variables PARENT_C
+    (94) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (99) decision -> . if r_end_if
+    (100) decision -> . if r_goto_ifelse else r_end_if
+    (107) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (97) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -3159,7 +3216,7 @@ state 191
     MIENTRAS        shift and go to state 56
     SI              shift and go to state 57
 
-    estatutos_dos                  shift and go to state 199
+    estatutos_dos                  shift and go to state 205
     estatutos                      shift and go to state 40
     asignacion                     shift and go to state 41
     llamada                        shift and go to state 42
@@ -3172,267 +3229,316 @@ state 191
     variable                       shift and go to state 49
     if                             shift and go to state 54
 
-state 192
+state 195
 
-    (97) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES . LLAVE_A estatutos_dos LLAVE_C
+    (101) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES . LLAVE_A estatutos_dos LLAVE_C
 
-    LLAVE_A         shift and go to state 200
+    LLAVE_A         shift and go to state 206
 
 
-state 193
+state 196
 
     (38) parametros -> tipo_simple ID save_params_list COMA parametros .
 
     PARENT_C        reduce using rule 38 (parametros -> tipo_simple ID save_params_list COMA parametros .)
 
 
-state 194
-
-    (71) m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .
-
-    MAYORQUE        reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    MENORQUE        reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    MAYORIGUAL      reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    MENORIGUAL      reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    IGUALIGUAL      reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    DIFERENTE       reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    AND             reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    OR              reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    PUNTOCOMA       reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    COMA            reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    PARENT_C        reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    CORCHETE_C      reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    HASTA           reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-    HACER           reduce using rule 71 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
-
-
-state 195
-
-    (72) m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .
-
-    MAYORQUE        reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    MENORQUE        reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    MAYORIGUAL      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    MENORIGUAL      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    IGUALIGUAL      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    DIFERENTE       reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    AND             reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    OR              reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    PUNTOCOMA       reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    COMA            reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    PARENT_C        reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    CORCHETE_C      reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    HASTA           reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-    HACER           reduce using rule 72 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
-
-
-state 196
-
-    (74) termino -> factor r_generate_quad_muldiv POR r_push_oper termino .
-
-    MAS             reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    MENOS           reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    MAYORQUE        reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    MENORQUE        reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    MAYORIGUAL      reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    MENORIGUAL      reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    IGUALIGUAL      reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    DIFERENTE       reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    AND             reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    OR              reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    PUNTOCOMA       reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    COMA            reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    PARENT_C        reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    CORCHETE_C      reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    HASTA           reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-    HACER           reduce using rule 74 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
-
-
 state 197
 
-    (75) termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .
+    (58) expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .
 
-    MAS             reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    MENOS           reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    MAYORQUE        reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    MENORQUE        reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    MAYORIGUAL      reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    MENORIGUAL      reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    IGUALIGUAL      reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    DIFERENTE       reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    AND             reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    OR              reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    PUNTOCOMA       reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    COMA            reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    PARENT_C        reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    CORCHETE_C      reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    HASTA           reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
-    HACER           reduce using rule 75 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    PUNTOCOMA       reduce using rule 58 (expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .)
+    COMA            reduce using rule 58 (expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .)
+    PARENT_C        reduce using rule 58 (expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .)
+    CORCHETE_C      reduce using rule 58 (expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .)
+    HASTA           reduce using rule 58 (expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .)
+    HACER           reduce using rule 58 (expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .)
 
 
 state 198
 
-    (103) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER . LLAVE_A estatutos_dos LLAVE_C
+    (61) t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .
 
-    LLAVE_A         shift and go to state 201
+    OR              reduce using rule 61 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
+    PUNTOCOMA       reduce using rule 61 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
+    COMA            reduce using rule 61 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
+    PARENT_C        reduce using rule 61 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
+    CORCHETE_C      reduce using rule 61 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
+    HASTA           reduce using rule 61 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
+    HACER           reduce using rule 61 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
 
 
 state 199
 
-    (102) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos . LLAVE_C
+    (73) m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .
 
-    LLAVE_C         shift and go to state 202
+    MAYORQUE        reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    MENORQUE        reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    MAYORIGUAL      reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    MENORIGUAL      reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    IGUALIGUAL      reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    DIFERENTE       reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    AND             reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    OR              reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    PUNTOCOMA       reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    COMA            reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    PARENT_C        reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    CORCHETE_C      reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    HASTA           reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
+    HACER           reduce using rule 73 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
 
 
 state 200
 
-    (97) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (88) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (89) lectura -> . LEER PARENT_A variables PARENT_C
-    (90) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (95) decision -> . if r_end_if
-    (96) decision -> . if r_goto_ifelse else r_end_if
-    (103) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (102) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (97) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (74) m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .
 
-    ID              shift and go to state 50
-    REGRESA         shift and go to state 51
-    LEER            shift and go to state 52
-    ESCRIBIR        shift and go to state 53
-    DESDE           shift and go to state 55
-    MIENTRAS        shift and go to state 56
-    SI              shift and go to state 57
+    MAYORQUE        reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    MENORQUE        reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    MAYORIGUAL      reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    MENORIGUAL      reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    IGUALIGUAL      reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    DIFERENTE       reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    AND             reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    OR              reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    PUNTOCOMA       reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    COMA            reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    PARENT_C        reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    CORCHETE_C      reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    HASTA           reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
+    HACER           reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
 
-    estatutos_dos                  shift and go to state 203
-    estatutos                      shift and go to state 40
-    asignacion                     shift and go to state 41
-    llamada                        shift and go to state 42
-    retorno                        shift and go to state 43
-    lectura                        shift and go to state 44
-    escritura                      shift and go to state 45
-    decision                       shift and go to state 46
-    ciclo_for                      shift and go to state 47
-    ciclo_while                    shift and go to state 48
-    variable                       shift and go to state 49
-    if                             shift and go to state 54
 
 state 201
 
-    (103) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL expresion
-    (53) llamada -> . ID PARENT_A PARENT_C
-    (54) llamada -> . ID PARENT_A expresiones PARENT_C
-    (88) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (89) lectura -> . LEER PARENT_A variables PARENT_C
-    (90) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (95) decision -> . if r_end_if
-    (96) decision -> . if r_goto_ifelse else r_end_if
-    (103) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (102) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (97) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (76) termino -> factor r_generate_quad_muldiv POR r_push_oper termino .
 
-    ID              shift and go to state 50
-    REGRESA         shift and go to state 51
-    LEER            shift and go to state 52
-    ESCRIBIR        shift and go to state 53
-    DESDE           shift and go to state 55
-    MIENTRAS        shift and go to state 56
-    SI              shift and go to state 57
+    MAS             reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    MENOS           reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    MAYORQUE        reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    MENORQUE        reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    MAYORIGUAL      reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    MENORIGUAL      reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    IGUALIGUAL      reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    DIFERENTE       reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    AND             reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    OR              reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    PUNTOCOMA       reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    COMA            reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    PARENT_C        reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    CORCHETE_C      reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    HASTA           reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
+    HACER           reduce using rule 76 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
 
-    variable                       shift and go to state 49
-    estatutos_dos                  shift and go to state 204
-    estatutos                      shift and go to state 40
-    asignacion                     shift and go to state 41
-    llamada                        shift and go to state 42
-    retorno                        shift and go to state 43
-    lectura                        shift and go to state 44
-    escritura                      shift and go to state 45
-    decision                       shift and go to state 46
-    ciclo_for                      shift and go to state 47
-    ciclo_while                    shift and go to state 48
-    if                             shift and go to state 54
 
 state 202
 
-    (102) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .
+    (77) termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .
 
-    ID              reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 102 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    MAS             reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    MENOS           reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    MAYORQUE        reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    MENORQUE        reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    MAYORIGUAL      reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    MENORIGUAL      reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    IGUALIGUAL      reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    DIFERENTE       reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    AND             reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    OR              reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    PUNTOCOMA       reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    COMA            reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    PARENT_C        reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    CORCHETE_C      reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    HASTA           reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
+    HACER           reduce using rule 77 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
 
 
 state 203
 
-    (97) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos . LLAVE_C
+    (81) factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .
 
-    LLAVE_C         shift and go to state 205
+    POR             reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    DIV             reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    MAS             reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    MENOS           reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    MAYORQUE        reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    MENORQUE        reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    MAYORIGUAL      reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    MENORIGUAL      reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    IGUALIGUAL      reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    DIFERENTE       reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    AND             reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    OR              reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    PUNTOCOMA       reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    COMA            reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    PARENT_C        reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    CORCHETE_C      reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    HASTA           reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
+    HACER           reduce using rule 81 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
 
 
 state 204
 
-    (103) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos . LLAVE_C
+    (107) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER . LLAVE_A estatutos_dos LLAVE_C
 
-    LLAVE_C         shift and go to state 206
+    LLAVE_A         shift and go to state 207
 
 
 state 205
 
-    (97) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .
+    (106) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos . LLAVE_C
 
-    SINO            reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    ID              reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 97 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         shift and go to state 208
 
 
 state 206
 
-    (103) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .
+    (101) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A . estatutos_dos LLAVE_C
+    (50) estatutos_dos -> . estatutos
+    (51) estatutos_dos -> . estatutos estatutos_dos
+    (42) estatutos -> . asignacion PUNTOCOMA
+    (43) estatutos -> . llamada PUNTOCOMA
+    (44) estatutos -> . retorno PUNTOCOMA
+    (45) estatutos -> . lectura PUNTOCOMA
+    (46) estatutos -> . escritura PUNTOCOMA
+    (47) estatutos -> . decision
+    (48) estatutos -> . ciclo_for
+    (49) estatutos -> . ciclo_while
+    (52) asignacion -> . variable IGUAL expresion
+    (53) llamada -> . ID PARENT_A PARENT_C
+    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (92) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (93) lectura -> . LEER PARENT_A variables PARENT_C
+    (94) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (99) decision -> . if r_end_if
+    (100) decision -> . if r_goto_ifelse else r_end_if
+    (107) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (101) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
-    ID              reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 103 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    ID              shift and go to state 50
+    REGRESA         shift and go to state 51
+    LEER            shift and go to state 52
+    ESCRIBIR        shift and go to state 53
+    DESDE           shift and go to state 55
+    MIENTRAS        shift and go to state 56
+    SI              shift and go to state 57
+
+    estatutos_dos                  shift and go to state 209
+    estatutos                      shift and go to state 40
+    asignacion                     shift and go to state 41
+    llamada                        shift and go to state 42
+    retorno                        shift and go to state 43
+    lectura                        shift and go to state 44
+    escritura                      shift and go to state 45
+    decision                       shift and go to state 46
+    ciclo_for                      shift and go to state 47
+    ciclo_while                    shift and go to state 48
+    variable                       shift and go to state 49
+    if                             shift and go to state 54
+
+state 207
+
+    (107) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A . estatutos_dos LLAVE_C
+    (50) estatutos_dos -> . estatutos
+    (51) estatutos_dos -> . estatutos estatutos_dos
+    (42) estatutos -> . asignacion PUNTOCOMA
+    (43) estatutos -> . llamada PUNTOCOMA
+    (44) estatutos -> . retorno PUNTOCOMA
+    (45) estatutos -> . lectura PUNTOCOMA
+    (46) estatutos -> . escritura PUNTOCOMA
+    (47) estatutos -> . decision
+    (48) estatutos -> . ciclo_for
+    (49) estatutos -> . ciclo_while
+    (52) asignacion -> . variable IGUAL expresion
+    (53) llamada -> . ID PARENT_A PARENT_C
+    (54) llamada -> . ID PARENT_A expresiones PARENT_C
+    (92) retorno -> . REGRESA PARENT_A expresion PARENT_C
+    (93) lectura -> . LEER PARENT_A variables PARENT_C
+    (94) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (99) decision -> . if r_end_if
+    (100) decision -> . if r_goto_ifelse else r_end_if
+    (107) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (106) ciclo_while -> . MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (101) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+
+    ID              shift and go to state 50
+    REGRESA         shift and go to state 51
+    LEER            shift and go to state 52
+    ESCRIBIR        shift and go to state 53
+    DESDE           shift and go to state 55
+    MIENTRAS        shift and go to state 56
+    SI              shift and go to state 57
+
+    variable                       shift and go to state 49
+    estatutos_dos                  shift and go to state 210
+    estatutos                      shift and go to state 40
+    asignacion                     shift and go to state 41
+    llamada                        shift and go to state 42
+    retorno                        shift and go to state 43
+    lectura                        shift and go to state 44
+    escritura                      shift and go to state 45
+    decision                       shift and go to state 46
+    ciclo_for                      shift and go to state 47
+    ciclo_while                    shift and go to state 48
+    if                             shift and go to state 54
+
+state 208
+
+    (106) ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .
+
+    ID              reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 106 (ciclo_while -> MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C .)
+
+
+state 209
+
+    (101) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos . LLAVE_C
+
+    LLAVE_C         shift and go to state 211
+
+
+state 210
+
+    (107) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos . LLAVE_C
+
+    LLAVE_C         shift and go to state 212
+
+
+state 211
+
+    (101) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .
+
+    SINO            reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    ID              reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 101 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+
+
+state 212
+
+    (107) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .
+
+    ID              reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 107 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
 

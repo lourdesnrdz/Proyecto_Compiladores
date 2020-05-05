@@ -418,21 +418,32 @@ def p_expresiones(p):
 
 # expresiones OR
 def p_expresion(p):
-	'''expresion : t_expresion
-	| t_expresion OR expresion
+	'''expresion : t_expresion r_generate_quad_or
+	| t_expresion r_generate_quad_or OR r_push_oper expresion
 	'''
+# llama a la funcion de generar cuadriplo para el OR
+def p_r_generate_quad_or(p):
+	'''r_generate_quad_or : '''
+	generate_quadruple(['|'])
+
 
 # expresiones AND
 def p_t_expresion(p):
-	'''t_expresion : g_expresion
-	| g_expresion AND t_expresion
+	'''t_expresion : g_expresion r_generate_quad_and
+	| g_expresion r_generate_quad_and AND r_push_oper t_expresion
 	'''
+# llama a la funcion de generar cuadriplo para el AND
+def p_r_generate_quad_and(p):
+	'''r_generate_quad_and : '''
+	generate_quadruple(['&'])
 
 # expresiones logicas
 def p_g_expresion(p):
 	'''g_expresion : m_expresion r_generate_quad_logicos
 	| m_expresion op_logicos m_expresion r_generate_quad_logicos
 	'''
+
+# llama a la funcion de generar cuadriplo para los operadores logicos
 def p_r_generate_quad_logicos(p):
 	'''r_generate_quad_logicos : '''
 	generate_quadruple(['>', '<', '>=', '<=', '==', '!='])
@@ -466,10 +477,12 @@ def p_r_push_oper(p):
 	oper_stack.append(p[-1])
 
 
+## llama a la funcion de generar cuadriplo para mas y menos
 def p_r_generate_quad_masmen(p):
 	'''r_generate_quad_masmen : '''
 	generate_quadruple(['+', '-'])
 
+# llama a la funcion de generar cuadriplo para por y div
 def p_r_generate_quad_muldiv(p):
 	'''r_generate_quad_muldiv : '''
 	generate_quadruple(['*', '/'])
@@ -541,7 +554,7 @@ def generate_quadruple(operations):
 
 # factores
 def p_factor(p):
-	''' factor : PARENT_A expresion PARENT_C
+	''' factor : PARENT_A r_push_ff expresion PARENT_C r_pop_ff
 	| CTE_I r_push_cte_i
 	| CTE_F r_push_cte_f
 	| CTE_CH r_push_cte_c
@@ -549,6 +562,9 @@ def p_factor(p):
 	| llamada
 	'''
 
+# guarda la cte en el diccionario de ctes
+# lo agrega a la pila de operandos
+# y agrega su tipo a la pila de tipos
 def p_r_push_cte_i(p):
 	'''r_push_cte_i : '''
 	global op_stack, type_stack
@@ -559,6 +575,9 @@ def p_r_push_cte_i(p):
 	op_stack.append(ctes_table[cte])
 	type_stack.append('int')
 
+# guarda la cte en el diccionario de ctes
+# lo agrega a la pila de operandos
+# y agrega su tipo a la pila de tipos
 def p_r_push_cte_f(p):
 	'''r_push_cte_f : '''
 	global op_stack, type_stack
@@ -569,6 +588,9 @@ def p_r_push_cte_f(p):
 	op_stack.append(ctes_table[cte])
 	type_stack.append('float')
 
+# guarda la cte en el diccionario de ctes
+# lo agrega a la pila de operandos
+# y agrega su tipo a la pila de tipos
 def p_r_push_cte_c(p):
 	'''r_push_cte_c : '''
 	global op_stack, type_stack
@@ -578,6 +600,20 @@ def p_r_push_cte_c(p):
 
 	op_stack.append(ctes_table[cte])
 	type_stack.append('char')
+
+# agrega el fondo false de la pila
+def p_r_push_ff(p):
+	'''r_push_ff : '''
+	global oper_stack
+
+	oper_stack.append('$')
+
+# saca el fondo false de la pila
+def p_r_pop_ff(p):
+	'''r_pop_ff : '''
+	global oper_stack
+
+	oper_stack.pop()
 
 # funcion para checar si la constante existe en la table de constantes
 # si no existe la incluye en la tabla
