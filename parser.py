@@ -45,6 +45,7 @@ ctes_table = {
 	'next_cte_int' : 43000,
 	'next_cte_float' : 46000,
 	'next_cte_char' : 49000,
+	'next_cte_str' : 52000
 }
 
 # precedencia de operadores en caso de conflicto
@@ -83,6 +84,7 @@ precedence = (
 # contantes int : 43000 - 45999
 # constantes float : 46000 - 48999
 # constantes char : 49000 - 51999
+# constantes str : 52000 - 54999
 
 
 
@@ -272,6 +274,16 @@ def p_variables(p):
 	| variable COMA variables 
 	'''
 
+# regla para generar el cuadruplo del estatuto de lectura
+# def p_generate_quad_leer(p):
+# 	'''r_generate_quad_leer : '''
+
+# 	global op_stack, type_stack
+# 	var = oper_stack.pop()
+# 	type_stack.pop()
+# 	quad = ['LEER', None, None, var]
+
+
 # establecer las dimensiones para vectores o matrices
 def p_dim(p):
 	'''dim : CORCHETE_A expresion CORCHETE_C
@@ -402,7 +414,13 @@ def p_estatutos_dos(p):
 
 # asignacion a una variable
 def p_asignacion(p):
-	'asignacion : variable IGUAL expresion'
+	'asignacion : variable IGUAL r_push_oper expresion r_generate_quad_asig'
+
+## llama a la funcion de generar cuadriplo para asignación
+def p_r_generate_quad_asig(p):
+	'''r_generate_quad_asig : '''
+	generate_quadruple(['='])
+
 
 # llamada de una funcion
 def p_llamada(p):
@@ -640,14 +658,44 @@ def p_escritura(p):
 
 # imprimir letrero o funcion
 def p_escritura_dos(p):
-	'''escritura_dos : CTE_STR 
+	'''escritura_dos : CTE_STR r_push_cte_str
 	| expresion
 	'''
 
+# guarda la cte en el diccionario de ctes
+# lo agrega a la pila de operandos
+# y agrega su tipo a la pila de tipos
+def p_r_push_cte_str(p):
+	'''r_push_cte_str : '''
+	global op_stack, type_stack
+	
+	cte = p[-1]
+	cte_exists(cte, 'cte_str')
+
+	op_stack.append(ctes_table[cte])
+	type_stack.append('str')
+
+
+# genera el cuadruplo para el estatuto de escritura
+def p_r_generate_quad_escr(p):
+	'''r_generate_quad_escr : '''
+
+	global op_stack, type_stack, quadruples
+
+	if op_stack:
+		op = op_stack.pop()
+		type_stack.pop()
+
+		quad = ['ESCRIBE', None, None, op]
+		print(quad)
+		quadruples.append(quad)
+	else:
+		error(p, 'Print action is not valid')
+
 # imprimir uno o varios letreros o expresiones
 def p_escr(p):
-	'''escr : escritura_dos
-	| escritura_dos COMA escr
+	'''escr : escritura_dos r_generate_quad_escr
+	| escritura_dos r_generate_quad_escr COMA escr
 	'''
 
 # ESTATUTOS IF
@@ -936,6 +984,14 @@ def assign_address(func, type_value):
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			ctes_table['next_cte_char'] += 1
+		elif(type_value == 'cte_str'):
+			# guarda la dirección
+			address = ctes_table['next_cte_str']
+			# valida que la dirección no sea mayor al límite
+			if(address > 54999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			ctes_table['next_cte_str'] += 1
 
 
 	# regresa la dirección
