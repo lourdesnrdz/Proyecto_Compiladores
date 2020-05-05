@@ -31,10 +31,20 @@ symbol_table = {
 
 		},
 		'next_int' : 1,
-		'next_float' : 3000,
-		'next_char' : 6000,
-		'next_temp' : 9000
+		'next_float' : 4000,
+		'next_char' : 7000,
+		'next_temp_int' : 10000,
+		'next_temp_float' : 13000,
+		'next_temp_char' : 16000,
+		'next_temp_bool' : 19000
 	}
+}
+
+# tabla de constantes
+ctes_table = {
+	'next_cte_int' : 43000,
+	'next_cte_float' : 46000,
+	'next_cte_char' : 49000,
 }
 
 # precedencia de operadores en caso de conflicto
@@ -49,19 +59,31 @@ precedence = (
 
 # DIRECCIONES DE MEMORIA
 # GLOBAL
-# Global int : 1 - 2999
-# Global float : 3000 - 5999
-# GLOBAL char : 6000 - 8999
-# Global temporales : 9000 - 9999
+# Global int : 1 - 3999
+# Global float : 4000 - 6999
+# GLOBAL char : 7000 - 9999
+# Global temporales : 
+# Global temp int : 10000 - 12999
+# Global temp float : 13000 - 15999
+# Global temp char : 16000 - 18999
+# Global temp bool : 19000 - 21999
 
 # LOCAL
-# Local int : 10000 - 12999
-# Local float : 13000 - 15999
-# Local char : 16000 - 18999
-# Local temporales : 19000 - 19999
+# Local int : 22000 - 24999
+# Local float : 25000 - 27999
+# Local char : 28000 - 30999
+# Local temporales : 
+# Local temp int : 31000 - 33999
+# Local temp float : 34000 - 36999
+# Local temp char : 37000 - 39999
+# Local temp bool : 40000 - 42999
 
 # CONSTANTES
-# Constantes : 20000 - 22999
+# Constantes : 
+# contantes int : 43000 - 45999
+# constantes float : 46000 - 48999
+# constantes char : 49000 - 51999
+
 
 
 # pila de operandos
@@ -106,9 +128,10 @@ def p_prog(p):
 def p_main(p):
 	'main : PRINCIPAL PARENT_A PARENT_C dec_est'
 
-	# global func_name, symbol_table
+	global func_name
 
-	# func_name = 'principal'
+	# asigno el nombre de la funcion principal
+	func_name = 'main'
 
 	# symbol_table[func_name] = {
 	
@@ -188,7 +211,7 @@ def p_save_vars_name(p):
 	# si no existe, la agrega a la lista de variables
 	list_vars[var_name] = {
 		'type' : current_type,
-		'address': get_address(func_name, current_type)
+		'address': assign_address(func_name, current_type)
 	}
 
 
@@ -199,6 +222,9 @@ def p_dimension(p):
 	global dim_size, list_vars
 
 	dim_size = p[2]
+
+	# guarda la constante en la tabla de constantes
+	cte_exists(dim_size, 'cte_int')
 
 	# guarda la dimension de la variable en la lista de variables
 	list_vars[var_name]['dim'] = dim_size
@@ -219,18 +245,18 @@ def p_r_push_id(p):
 	var_name = p[-1]
 	parent_func = ''
 
-	# checa si la variable está definida como parámetro
-	if var_name in symbol_table[func_name]['params']:
-		parent_func = func_name
-		# op_stack.append(var_name)
-		op_stack.append(symbol_table[func_name]['params'][var_name]['address'])
-		type_stack.append(symbol_table[parent_func]['params'][var_name]['type'])
 	# checa si la variable está definida dentro de la función
-	elif var_name in symbol_table[func_name]['vars']:
+	if var_name in symbol_table[func_name]['vars']:
 		parent_func = func_name
 		# op_stack.append(var_name)
 		op_stack.append(symbol_table[parent_func]['vars'][var_name]['address'])
 		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
+		# checa si la variable está definida como parámetro
+	elif var_name in symbol_table[func_name]['params']:
+		parent_func = func_name
+		# op_stack.append(var_name)
+		op_stack.append(symbol_table[func_name]['params'][var_name]['address'])
+		type_stack.append(symbol_table[parent_func]['params'][var_name]['type'])
 	# checa si es una variable global
 	elif var_name in symbol_table['global']['vars']:
 		parent_func = 'global'
@@ -294,10 +320,13 @@ def p_create_func_table(p):
 		'vars' : {
 
 		},
-		'next_int' : 10000,
-		'next_float' : 13000,
-		'next_char' : 16000,
-		'next_temp' : 19000
+		'next_int' : 22000,
+		'next_float' : 25000,
+		'next_char' : 28000,
+		'next_temp_int' : 31000,
+		'next_temp_float' : 34000,
+		'next_temp_char' : 37000,
+		'next_temp_bool' : 40000
 	}
 
 # declarar o no parametros en una funcion
@@ -305,6 +334,7 @@ def p_func_dos(p):
 	'''func_dos : PARENT_A PARENT_C var_funcs
 	| PARENT_A parametros PARENT_C save_params var_funcs
 	'''
+
 # guardar los parametros en symbol table
 # dentro de la funcion correspondiente
 def p_save_params(p):
@@ -344,7 +374,7 @@ def p_save_params_list(p):
 	# guarda los parametros en la lista de parametros
 	list_params[param_name] = {
 			'type' : current_type,
-			'address' : get_address(func_name, current_type)
+			'address' : assign_address(func_name, current_type)
 		}
 
 # declarar o no estatutos
@@ -468,12 +498,16 @@ def generate_quadruple(operations):
 			if(result_type != None):
 				# print(func_name)
 				# obtiene la direccion temporal para el resultado
-				result = get_address(func_name, 'temp')
+				result = assign_address(func_name, 'temp_' + result_type)
 
 				# result = gen_quad(left_op, operator, right_op)
 
+				# genera el cuadruplo
+				quad = [operator, left_op, right_op, result]
+				print(quad)
+
 				# guarda el cuadruplo en el stack
-				quadruples.append([operator, left_op, right_op, result])
+				quadruples.append(quad)
 				q_count += 1
 
 				# print(result)
@@ -518,8 +552,9 @@ def p_r_push_cte_i(p):
 	global op_stack, type_stack
 	
 	cte = p[-1]
+	cte_exists(cte, 'cte_int')
 
-	op_stack.append(cte)
+	op_stack.append(ctes_table[cte])
 	type_stack.append('int')
 
 def p_r_push_cte_f(p):
@@ -527,8 +562,9 @@ def p_r_push_cte_f(p):
 	global op_stack, type_stack
 	
 	cte = p[-1]
+	cte_exists(cte, 'cte_float')
 
-	op_stack.append(cte)
+	op_stack.append(ctes_table[cte])
 	type_stack.append('float')
 
 def p_r_push_cte_c(p):
@@ -536,9 +572,18 @@ def p_r_push_cte_c(p):
 	global op_stack, type_stack
 	
 	cte = p[-1]
+	cte_exists(cte, 'cte_char')
 
-	op_stack.append(cte)
+	op_stack.append(ctes_table[cte])
 	type_stack.append('char')
+
+# funcion para checar si la constante existe en la table de constantes
+# si no existe la incluye en la tabla
+def cte_exists(cte, cte_type):
+	global ctes_table
+
+	if cte not in ctes_table:
+		ctes_table[cte] = assign_address('cte', cte_type)
 
 
 # retorno de una funcion
@@ -658,57 +703,203 @@ def error(p, message):
 
 # DIRECCIONES DE MEMORIA
 # GLOBAL
-# Global int : 1 - 2999
-# Global float : 3000 - 5999
-# GLOBAL char : 6000 - 8999
-# Global temporales : 9000 - 9999
+# Global int : 1 - 3999
+# Global float : 4000 - 6999
+# GLOBAL char : 7000 - 9999
+# Global temporales : 
+# Global temp int : 10000 - 12999
+# Global temp float : 13000 - 15999
+# Global temp char : 16000 - 18999
+# Global temp bool : 19000 - 21999
 
 # LOCAL
-# Local int : 10000 - 12999
-# Local float : 13000 - 15999
-# Local char : 16000 - 18999
-# Local temporales : 19000 - 19999
+# Local int : 22000 - 24999
+# Local float : 25000 - 27999
+# Local char : 28000 - 30999
+# Local temporales : 
+# Local temp int : 31000 - 33999
+# Local temp float : 34000 - 36999
+# Local temp char : 37000 - 39999
+# Local temp bool : 40000 - 42999
 
 # CONSTANTES
-# Constantes : 20000 - 22999
+# Constantes : 
+# contantes int : 43000 - 45999
+# constantes float : 46000 - 48999
+# constantes char : 49000 - 51999
 
+# función para asignar el valor de la dirección de memoria a una variable global, local o constante
+def assign_address(func, type_value):
 
-# función para obtener el valor de la dirección de memoria
-def get_address(func, type_value):
+	global symbol_table, ctes_table
 
-	global symbol_table
+	# direcciones para la funcion principal y variables globales
+	if(func == 'main' or func == 'global'):
+		if(type_value == 'int'):
+			# guarda la dirección
+			address = symbol_table[func]['next_int']
 
-	if(type_value == 'int'):
-		# guarda la dirección
-		address = symbol_table[func]['next_int']
-		# actualiza el valor de la siguiente dirección
-		symbol_table[func]['next_int'] += 1
-	elif(type_value == 'float'):
-		# guarda la dirección
-		address = symbol_table[func]['next_float']
-		# actualiza el valor de la siguiente dirección
-		symbol_table[func]['next_float'] += 1
-	elif(type_value == 'char'):
-		# guarda la dirección
-		address = symbol_table[func]['next_char']
-		# actualiza el valor de la siguiente dirección
-		symbol_table[func]['next_char'] += 1
-	elif(type_value == 'temp'):
-		# guarda la dirección
-		address = symbol_table[func]['next_temp']
-		# actualiza el valor de la siguiente dirección
-		symbol_table[func]['next_temp'] += 1
+			# valida que la dirección no sea mayor al límite
+			if(address > 3999):
+				error("stack overflow")
+
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_int'] += 1
+
+		elif(type_value == 'float'):
+			# guarda la dirección
+			address = symbol_table[func]['next_float']
+			# valida que la dirección no sea mayor al límite
+			if(address > 6999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_float'] += 1
+
+		elif(type_value == 'char'):
+			# guarda la dirección
+			address = symbol_table[func]['next_char']
+			# valida que la dirección no sea mayor al límite
+			if(address > 9999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_char'] += 1
+
+		elif(type_value == 'temp_int'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_int']
+
+			# valida que la dirección no sea mayor al límite
+			if(address > 12999):
+				error("stack overflow")
+
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_int'] += 1
+
+		elif(type_value == 'temp_float'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_float']
+			# valida que la dirección no sea mayor al límite
+			if(address > 15999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_float'] += 1
+
+		elif(type_value == 'temp_char'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_char']
+			# valida que la dirección no sea mayor al límite
+			if(address > 18999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_char'] += 1
+		elif(type_value == 'temp_bool'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_bool']
+			# valida que la dirección no sea mayor al límite
+			if(address > 21999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_bool'] += 1
+	elif(func != 'cte'):
+		if(type_value == 'int'):
+			# guarda la dirección
+			address = symbol_table[func]['next_int']
+
+			# valida que la dirección no sea mayor al límite
+			if(address > 24999):
+				error("stack overflow")
+
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_int'] += 1
+
+		elif(type_value == 'float'):
+			# guarda la dirección
+			address = symbol_table[func]['next_float']
+			# valida que la dirección no sea mayor al límite
+			if(address > 27999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_float'] += 1
+
+		elif(type_value == 'char'):
+			# guarda la dirección
+			address = symbol_table[func]['next_char']
+			# valida que la dirección no sea mayor al límite
+			if(address > 30999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_char'] += 1
+
+		elif(type_value == 'temp_int'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_int']
+
+			# valida que la dirección no sea mayor al límite
+			if(address > 33999):
+				error("stack overflow")
+
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_int'] += 1
+
+		elif(type_value == 'temp_float'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_float']
+			# valida que la dirección no sea mayor al límite
+			if(address > 36999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_float'] += 1
+
+		elif(type_value == 'temp_char'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_char']
+			# valida que la dirección no sea mayor al límite
+			if(address > 39999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_char'] += 1
+
+		elif(type_value == 'temp_bool'):
+			# guarda la dirección
+			address = symbol_table[func]['next_temp_bool']
+			# valida que la dirección no sea mayor al límite
+			if(address > 42999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_temp_bool'] += 1
 	else:
-		error('.')
+		if(type_value == 'cte_int'):
+			# guarda la dirección
+			address = ctes_table['next_cte_int']
 
-		# falta checar que no haya overflow
+			# valida que la dirección no sea mayor al límite
+			if(address > 45999):
+				error("stack overflow")
+
+			# actualiza el valor de la siguiente dirección
+			ctes_table['next_cte_int'] += 1
+
+		elif(type_value == 'cte_float'):
+			# guarda la dirección
+			address = ctes_table['next_cte_float']
+			# valida que la dirección no sea mayor al límite
+			if(address > 48999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			ctes_table['next_cte_float'] += 1
+
+		elif(type_value == 'cte_char'):
+			# guarda la dirección
+			address = ctes_table['next_cte_char']
+			# valida que la dirección no sea mayor al límite
+			if(address > 51999):
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			ctes_table['next_cte_char'] += 1
+
 
 	# regresa la dirección
 	return address
-
-
-
-
 
 # Build the parser
 yacc.yacc()
@@ -725,5 +916,10 @@ yacc.parse(data)
 
 # print(symbol_table)
 for key, val in symbol_table.items():
+	print(key, ':', val)
+	print('\n')
+
+print("---------------------- \n")
+for key, val in ctes_table.items():
 	print(key, ':', val)
 	print('\n')
