@@ -95,73 +95,74 @@ Rule 89    r_push_cte_f -> <empty>
 Rule 90    r_push_cte_c -> <empty>
 Rule 91    r_push_ff -> <empty>
 Rule 92    r_pop_ff -> <empty>
-Rule 93    retorno -> REGRESA PARENT_A expresion PARENT_C
-Rule 94    lectura -> LEER PARENT_A variables PARENT_C
-Rule 95    r_generate_quad_leer -> <empty>
-Rule 96    escritura -> ESCRIBIR PARENT_A escr PARENT_C
-Rule 97    escritura_dos -> CTE_STR r_push_cte_str
-Rule 98    escritura_dos -> expresion
-Rule 99    r_push_cte_str -> <empty>
-Rule 100   r_generate_quad_escr -> <empty>
-Rule 101   escr -> escritura_dos r_generate_quad_escr
-Rule 102   escr -> escritura_dos r_generate_quad_escr COMA escr
-Rule 103   decision -> if r_end_if
-Rule 104   decision -> if r_goto_ifelse else r_end_if
-Rule 105   if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
-Rule 106   r_check_exp_type -> <empty>
-Rule 107   r_end_if -> <empty>
-Rule 108   r_goto_ifelse -> <empty>
-Rule 109   else -> SINO LLAVE_A estatutos_dos LLAVE_C
-Rule 110   ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
-Rule 111   r_goto_while -> <empty>
-Rule 112   r_save_jump -> <empty>
-Rule 113   ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+Rule 93    retorno -> REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno
+Rule 94    r_generate_quad_retorno -> <empty>
+Rule 95    lectura -> LEER PARENT_A variables PARENT_C
+Rule 96    r_generate_quad_leer -> <empty>
+Rule 97    escritura -> ESCRIBIR PARENT_A escr PARENT_C
+Rule 98    escritura_dos -> CTE_STR r_push_cte_str
+Rule 99    escritura_dos -> expresion
+Rule 100   r_push_cte_str -> <empty>
+Rule 101   r_generate_quad_escr -> <empty>
+Rule 102   escr -> escritura_dos r_generate_quad_escr
+Rule 103   escr -> escritura_dos r_generate_quad_escr COMA escr
+Rule 104   decision -> if r_end_if
+Rule 105   decision -> if r_goto_ifelse else r_end_if
+Rule 106   if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+Rule 107   r_check_exp_type -> <empty>
+Rule 108   r_end_if -> <empty>
+Rule 109   r_goto_ifelse -> <empty>
+Rule 110   else -> SINO LLAVE_A estatutos_dos LLAVE_C
+Rule 111   ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+Rule 112   r_goto_while -> <empty>
+Rule 113   r_save_jump -> <empty>
+Rule 114   ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
 Terminals, with rules where they appear
 
 AND                  : 62
 CHAR                 : 13
-COMA                 : 16 17 24 38 57 102
+COMA                 : 16 17 24 38 57 103
 CORCHETE_A           : 19 25
 CORCHETE_C           : 19 25
 CTE_CH               : 85
 CTE_F                : 84
 CTE_I                : 19 83
-CTE_STR              : 97
-DESDE                : 113
+CTE_STR              : 98
+DESDE                : 114
 DIFERENTE            : 72
 DIV                  : 78
-ENTONCES             : 105
-ESCRIBIR             : 96
+ENTONCES             : 106
+ESCRIBIR             : 97
 FLOAT                : 12
 FUNCION              : 28 29
-HACER                : 113
-HASTA                : 113
-HAZ                  : 110
+HACER                : 114
+HASTA                : 114
+HAZ                  : 111
 ID                   : 1 14 15 16 17 20 21 28 29 37 38 54 55
-IGUAL                : 52 113
+IGUAL                : 52 114
 IGUALIGUAL           : 71
 INT                  : 11
-LEER                 : 94
-LLAVE_A              : 40 41 105 109 110 113
-LLAVE_C              : 40 41 105 109 110 113
+LEER                 : 95
+LLAVE_A              : 40 41 106 110 111 114
+LLAVE_C              : 40 41 106 110 111 114
 MAS                  : 74
 MAYORIGUAL           : 69
 MAYORQUE             : 67
 MENORIGUAL           : 70
 MENORQUE             : 68
 MENOS                : 75
-MIENTRAS             : 110
+MIENTRAS             : 111
 OR                   : 59
-PARENT_A             : 6 32 33 54 55 82 93 94 96 105 110
-PARENT_C             : 6 32 33 54 55 82 93 94 96 105 110
+PARENT_A             : 6 32 33 54 55 82 93 95 97 106 111
+PARENT_C             : 6 32 33 54 55 82 93 95 97 106 111
 POR                  : 77
 PRINCIPAL            : 6
 PROGRAMA             : 1
 PUNTOCOMA            : 1 8 9 42 43 44 45 46
 REGRESA              : 93
-SI                   : 105
-SINO                 : 109
+SI                   : 106
+SINO                 : 110
 VAR                  : 7
 VOID                 : 29
 error                : 
@@ -178,13 +179,13 @@ dec_vars             : 3 4 36
 decision             : 47
 dim                  : 21
 dimension            : 15 17
-else                 : 104
-escr                 : 96 102
+else                 : 105
+escr                 : 97 103
 escritura            : 46
-escritura_dos        : 101 102
+escritura_dos        : 102 103
 estatutos            : 50 51
-estatutos_dos        : 41 51 105 109 110 113
-expresion            : 25 52 56 57 57 59 82 93 98 105 110 113 113
+estatutos_dos        : 41 51 106 110 111 114
+expresion            : 25 52 56 57 57 59 82 93 99 106 111 114 114
 expresiones          : 55
 factor               : 76 77 78
 func_dos             : 28 29
@@ -192,7 +193,7 @@ func_type_void       : 29
 funcion              : 26 27
 g_expresion          : 61 62
 ids_simple           : 8 9 16 17
-if                   : 103 104
+if                   : 104 105
 lectura              : 45
 llamada              : 43 87
 m_expresion          : 64 65 65 74 75
@@ -201,27 +202,28 @@ op_logicos           : 65
 parametros           : 33 38
 prog                 : 1
 programa             : 0
-r_check_exp_type     : 105 110
-r_end_if             : 103 104
+r_check_exp_type     : 106 111
+r_end_if             : 104 105
 r_generate_quad_and  : 61 62
 r_generate_quad_asig : 52
-r_generate_quad_escr : 101 102
+r_generate_quad_escr : 102 103
 r_generate_quad_leer : 23 24
 r_generate_quad_logicos : 64 65
 r_generate_quad_masmen : 73 74 75
 r_generate_quad_muldiv : 76 77 78
 r_generate_quad_or   : 58 59
-r_goto_ifelse        : 104
-r_goto_while         : 110
+r_generate_quad_retorno : 93
+r_goto_ifelse        : 105
+r_goto_while         : 111
 r_pop_ff             : 82
 r_push_cte_c         : 85
 r_push_cte_f         : 84
 r_push_cte_i         : 83
-r_push_cte_str       : 97
+r_push_cte_str       : 98
 r_push_ff            : 82
 r_push_id            : 20 21
 r_push_oper          : 52 59 62 67 68 69 70 71 72 74 75 77 78
-r_save_jump          : 110
+r_save_jump          : 111
 retorno              : 44
 save_params          : 33
 save_params_list     : 37 38
@@ -231,8 +233,8 @@ t_expresion          : 58 59 62
 termino              : 73 74 75 77 78
 tipo_simple          : 8 9 28 37 38
 var_funcs            : 32 33
-variable             : 23 24 52 86 113
-variables            : 24 94
+variable             : 23 24 52 86 114
+variables            : 24 95
 vars                 : 7 9
 
 Parsing method: LALR
@@ -569,16 +571,16 @@ state 33
     (52) asignacion -> . variable IGUAL r_push_oper expresion r_generate_quad_asig
     (54) llamada -> . ID PARENT_A PARENT_C
     (55) llamada -> . ID PARENT_A expresiones PARENT_C
-    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (94) lectura -> . LEER PARENT_A variables PARENT_C
-    (96) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (103) decision -> . if r_end_if
-    (104) decision -> . if r_goto_ifelse else r_end_if
-    (113) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (110) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno
+    (95) lectura -> . LEER PARENT_A variables PARENT_C
+    (97) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (104) decision -> . if r_end_if
+    (105) decision -> . if r_goto_ifelse else r_end_if
+    (114) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (105) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_C         shift and go to state 38
     ID              shift and go to state 50
@@ -688,16 +690,16 @@ state 40
     (52) asignacion -> . variable IGUAL r_push_oper expresion r_generate_quad_asig
     (54) llamada -> . ID PARENT_A PARENT_C
     (55) llamada -> . ID PARENT_A expresiones PARENT_C
-    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (94) lectura -> . LEER PARENT_A variables PARENT_C
-    (96) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (103) decision -> . if r_end_if
-    (104) decision -> . if r_goto_ifelse else r_end_if
-    (113) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (110) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno
+    (95) lectura -> . LEER PARENT_A variables PARENT_C
+    (97) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (104) decision -> . if r_end_if
+    (105) decision -> . if r_goto_ifelse else r_end_if
+    (114) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (105) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_C         reduce using rule 50 (estatutos_dos -> estatutos .)
     ID              shift and go to state 50
@@ -821,48 +823,48 @@ state 50
 
 state 51
 
-    (93) retorno -> REGRESA . PARENT_A expresion PARENT_C
+    (93) retorno -> REGRESA . PARENT_A expresion PARENT_C r_generate_quad_retorno
 
     PARENT_A        shift and go to state 75
 
 
 state 52
 
-    (94) lectura -> LEER . PARENT_A variables PARENT_C
+    (95) lectura -> LEER . PARENT_A variables PARENT_C
 
     PARENT_A        shift and go to state 76
 
 
 state 53
 
-    (96) escritura -> ESCRIBIR . PARENT_A escr PARENT_C
+    (97) escritura -> ESCRIBIR . PARENT_A escr PARENT_C
 
     PARENT_A        shift and go to state 77
 
 
 state 54
 
-    (103) decision -> if . r_end_if
-    (104) decision -> if . r_goto_ifelse else r_end_if
-    (107) r_end_if -> .
-    (108) r_goto_ifelse -> .
+    (104) decision -> if . r_end_if
+    (105) decision -> if . r_goto_ifelse else r_end_if
+    (108) r_end_if -> .
+    (109) r_goto_ifelse -> .
 
-    ID              reduce using rule 107 (r_end_if -> .)
-    REGRESA         reduce using rule 107 (r_end_if -> .)
-    LEER            reduce using rule 107 (r_end_if -> .)
-    ESCRIBIR        reduce using rule 107 (r_end_if -> .)
-    DESDE           reduce using rule 107 (r_end_if -> .)
-    MIENTRAS        reduce using rule 107 (r_end_if -> .)
-    SI              reduce using rule 107 (r_end_if -> .)
-    LLAVE_C         reduce using rule 107 (r_end_if -> .)
-    SINO            reduce using rule 108 (r_goto_ifelse -> .)
+    ID              reduce using rule 108 (r_end_if -> .)
+    REGRESA         reduce using rule 108 (r_end_if -> .)
+    LEER            reduce using rule 108 (r_end_if -> .)
+    ESCRIBIR        reduce using rule 108 (r_end_if -> .)
+    DESDE           reduce using rule 108 (r_end_if -> .)
+    MIENTRAS        reduce using rule 108 (r_end_if -> .)
+    SI              reduce using rule 108 (r_end_if -> .)
+    LLAVE_C         reduce using rule 108 (r_end_if -> .)
+    SINO            reduce using rule 109 (r_goto_ifelse -> .)
 
     r_end_if                       shift and go to state 78
     r_goto_ifelse                  shift and go to state 79
 
 state 55
 
-    (113) ciclo_for -> DESDE . variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (114) ciclo_for -> DESDE . variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
 
@@ -872,16 +874,16 @@ state 55
 
 state 56
 
-    (110) ciclo_while -> MIENTRAS . r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
-    (112) r_save_jump -> .
+    (111) ciclo_while -> MIENTRAS . r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (113) r_save_jump -> .
 
-    PARENT_A        reduce using rule 112 (r_save_jump -> .)
+    PARENT_A        reduce using rule 113 (r_save_jump -> .)
 
     r_save_jump                    shift and go to state 82
 
 state 57
 
-    (105) if -> SI . PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> SI . PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_A        shift and go to state 83
 
@@ -1135,7 +1137,7 @@ state 74
 
 state 75
 
-    (93) retorno -> REGRESA PARENT_A . expresion PARENT_C
+    (93) retorno -> REGRESA PARENT_A . expresion PARENT_C r_generate_quad_retorno
     (58) expresion -> . t_expresion r_generate_quad_or
     (59) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -1176,7 +1178,7 @@ state 75
 
 state 76
 
-    (94) lectura -> LEER PARENT_A . variables PARENT_C
+    (95) lectura -> LEER PARENT_A . variables PARENT_C
     (23) variables -> . variable r_generate_quad_leer
     (24) variables -> . variable r_generate_quad_leer COMA variables
     (20) variable -> . ID r_push_id
@@ -1189,11 +1191,11 @@ state 76
 
 state 77
 
-    (96) escritura -> ESCRIBIR PARENT_A . escr PARENT_C
-    (101) escr -> . escritura_dos r_generate_quad_escr
-    (102) escr -> . escritura_dos r_generate_quad_escr COMA escr
-    (97) escritura_dos -> . CTE_STR r_push_cte_str
-    (98) escritura_dos -> . expresion
+    (97) escritura -> ESCRIBIR PARENT_A . escr PARENT_C
+    (102) escr -> . escritura_dos r_generate_quad_escr
+    (103) escr -> . escritura_dos r_generate_quad_escr COMA escr
+    (98) escritura_dos -> . CTE_STR r_push_cte_str
+    (99) escritura_dos -> . expresion
     (58) expresion -> . t_expresion r_generate_quad_or
     (59) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -1237,22 +1239,22 @@ state 77
 
 state 78
 
-    (103) decision -> if r_end_if .
+    (104) decision -> if r_end_if .
 
-    ID              reduce using rule 103 (decision -> if r_end_if .)
-    REGRESA         reduce using rule 103 (decision -> if r_end_if .)
-    LEER            reduce using rule 103 (decision -> if r_end_if .)
-    ESCRIBIR        reduce using rule 103 (decision -> if r_end_if .)
-    DESDE           reduce using rule 103 (decision -> if r_end_if .)
-    MIENTRAS        reduce using rule 103 (decision -> if r_end_if .)
-    SI              reduce using rule 103 (decision -> if r_end_if .)
-    LLAVE_C         reduce using rule 103 (decision -> if r_end_if .)
+    ID              reduce using rule 104 (decision -> if r_end_if .)
+    REGRESA         reduce using rule 104 (decision -> if r_end_if .)
+    LEER            reduce using rule 104 (decision -> if r_end_if .)
+    ESCRIBIR        reduce using rule 104 (decision -> if r_end_if .)
+    DESDE           reduce using rule 104 (decision -> if r_end_if .)
+    MIENTRAS        reduce using rule 104 (decision -> if r_end_if .)
+    SI              reduce using rule 104 (decision -> if r_end_if .)
+    LLAVE_C         reduce using rule 104 (decision -> if r_end_if .)
 
 
 state 79
 
-    (104) decision -> if r_goto_ifelse . else r_end_if
-    (109) else -> . SINO LLAVE_A estatutos_dos LLAVE_C
+    (105) decision -> if r_goto_ifelse . else r_end_if
+    (110) else -> . SINO LLAVE_A estatutos_dos LLAVE_C
 
     SINO            shift and go to state 117
 
@@ -1260,7 +1262,7 @@ state 79
 
 state 80
 
-    (113) ciclo_for -> DESDE variable . IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (114) ciclo_for -> DESDE variable . IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
     IGUAL           shift and go to state 118
 
@@ -1280,14 +1282,14 @@ state 81
 
 state 82
 
-    (110) ciclo_while -> MIENTRAS r_save_jump . PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (111) ciclo_while -> MIENTRAS r_save_jump . PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
 
     PARENT_A        shift and go to state 119
 
 
 state 83
 
-    (105) if -> SI PARENT_A . expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> SI PARENT_A . expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
     (58) expresion -> . t_expresion r_generate_quad_or
     (59) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -1827,14 +1829,14 @@ state 108
 
 state 109
 
-    (93) retorno -> REGRESA PARENT_A expresion . PARENT_C
+    (93) retorno -> REGRESA PARENT_A expresion . PARENT_C r_generate_quad_retorno
 
     PARENT_C        shift and go to state 148
 
 
 state 110
 
-    (94) lectura -> LEER PARENT_A variables . PARENT_C
+    (95) lectura -> LEER PARENT_A variables . PARENT_C
 
     PARENT_C        shift and go to state 149
 
@@ -1843,75 +1845,75 @@ state 111
 
     (23) variables -> variable . r_generate_quad_leer
     (24) variables -> variable . r_generate_quad_leer COMA variables
-    (95) r_generate_quad_leer -> .
+    (96) r_generate_quad_leer -> .
 
-    COMA            reduce using rule 95 (r_generate_quad_leer -> .)
-    PARENT_C        reduce using rule 95 (r_generate_quad_leer -> .)
+    COMA            reduce using rule 96 (r_generate_quad_leer -> .)
+    PARENT_C        reduce using rule 96 (r_generate_quad_leer -> .)
 
     r_generate_quad_leer           shift and go to state 150
 
 state 112
 
-    (96) escritura -> ESCRIBIR PARENT_A escr . PARENT_C
+    (97) escritura -> ESCRIBIR PARENT_A escr . PARENT_C
 
     PARENT_C        shift and go to state 151
 
 
 state 113
 
-    (101) escr -> escritura_dos . r_generate_quad_escr
-    (102) escr -> escritura_dos . r_generate_quad_escr COMA escr
-    (100) r_generate_quad_escr -> .
+    (102) escr -> escritura_dos . r_generate_quad_escr
+    (103) escr -> escritura_dos . r_generate_quad_escr COMA escr
+    (101) r_generate_quad_escr -> .
 
-    COMA            reduce using rule 100 (r_generate_quad_escr -> .)
-    PARENT_C        reduce using rule 100 (r_generate_quad_escr -> .)
+    COMA            reduce using rule 101 (r_generate_quad_escr -> .)
+    PARENT_C        reduce using rule 101 (r_generate_quad_escr -> .)
 
     r_generate_quad_escr           shift and go to state 152
 
 state 114
 
-    (97) escritura_dos -> CTE_STR . r_push_cte_str
-    (99) r_push_cte_str -> .
+    (98) escritura_dos -> CTE_STR . r_push_cte_str
+    (100) r_push_cte_str -> .
 
-    COMA            reduce using rule 99 (r_push_cte_str -> .)
-    PARENT_C        reduce using rule 99 (r_push_cte_str -> .)
+    COMA            reduce using rule 100 (r_push_cte_str -> .)
+    PARENT_C        reduce using rule 100 (r_push_cte_str -> .)
 
     r_push_cte_str                 shift and go to state 153
 
 state 115
 
-    (98) escritura_dos -> expresion .
+    (99) escritura_dos -> expresion .
 
-    COMA            reduce using rule 98 (escritura_dos -> expresion .)
-    PARENT_C        reduce using rule 98 (escritura_dos -> expresion .)
+    COMA            reduce using rule 99 (escritura_dos -> expresion .)
+    PARENT_C        reduce using rule 99 (escritura_dos -> expresion .)
 
 
 state 116
 
-    (104) decision -> if r_goto_ifelse else . r_end_if
-    (107) r_end_if -> .
+    (105) decision -> if r_goto_ifelse else . r_end_if
+    (108) r_end_if -> .
 
-    ID              reduce using rule 107 (r_end_if -> .)
-    REGRESA         reduce using rule 107 (r_end_if -> .)
-    LEER            reduce using rule 107 (r_end_if -> .)
-    ESCRIBIR        reduce using rule 107 (r_end_if -> .)
-    DESDE           reduce using rule 107 (r_end_if -> .)
-    MIENTRAS        reduce using rule 107 (r_end_if -> .)
-    SI              reduce using rule 107 (r_end_if -> .)
-    LLAVE_C         reduce using rule 107 (r_end_if -> .)
+    ID              reduce using rule 108 (r_end_if -> .)
+    REGRESA         reduce using rule 108 (r_end_if -> .)
+    LEER            reduce using rule 108 (r_end_if -> .)
+    ESCRIBIR        reduce using rule 108 (r_end_if -> .)
+    DESDE           reduce using rule 108 (r_end_if -> .)
+    MIENTRAS        reduce using rule 108 (r_end_if -> .)
+    SI              reduce using rule 108 (r_end_if -> .)
+    LLAVE_C         reduce using rule 108 (r_end_if -> .)
 
     r_end_if                       shift and go to state 154
 
 state 117
 
-    (109) else -> SINO . LLAVE_A estatutos_dos LLAVE_C
+    (110) else -> SINO . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 155
 
 
 state 118
 
-    (113) ciclo_for -> DESDE variable IGUAL . expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (114) ciclo_for -> DESDE variable IGUAL . expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
     (58) expresion -> . t_expresion r_generate_quad_or
     (59) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -1952,7 +1954,7 @@ state 118
 
 state 119
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A . expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A . expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
     (58) expresion -> . t_expresion r_generate_quad_or
     (59) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -1993,7 +1995,7 @@ state 119
 
 state 120
 
-    (105) if -> SI PARENT_A expresion . PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> SI PARENT_A expresion . PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     PARENT_C        shift and go to state 158
 
@@ -2459,16 +2461,18 @@ state 147
 
 state 148
 
-    (93) retorno -> REGRESA PARENT_A expresion PARENT_C .
+    (93) retorno -> REGRESA PARENT_A expresion PARENT_C . r_generate_quad_retorno
+    (94) r_generate_quad_retorno -> .
 
-    PUNTOCOMA       reduce using rule 93 (retorno -> REGRESA PARENT_A expresion PARENT_C .)
+    PUNTOCOMA       reduce using rule 94 (r_generate_quad_retorno -> .)
 
+    r_generate_quad_retorno        shift and go to state 179
 
 state 149
 
-    (94) lectura -> LEER PARENT_A variables PARENT_C .
+    (95) lectura -> LEER PARENT_A variables PARENT_C .
 
-    PUNTOCOMA       reduce using rule 94 (lectura -> LEER PARENT_A variables PARENT_C .)
+    PUNTOCOMA       reduce using rule 95 (lectura -> LEER PARENT_A variables PARENT_C .)
 
 
 state 150
@@ -2477,50 +2481,50 @@ state 150
     (24) variables -> variable r_generate_quad_leer . COMA variables
 
     PARENT_C        reduce using rule 23 (variables -> variable r_generate_quad_leer .)
-    COMA            shift and go to state 179
+    COMA            shift and go to state 180
 
 
 state 151
 
-    (96) escritura -> ESCRIBIR PARENT_A escr PARENT_C .
+    (97) escritura -> ESCRIBIR PARENT_A escr PARENT_C .
 
-    PUNTOCOMA       reduce using rule 96 (escritura -> ESCRIBIR PARENT_A escr PARENT_C .)
+    PUNTOCOMA       reduce using rule 97 (escritura -> ESCRIBIR PARENT_A escr PARENT_C .)
 
 
 state 152
 
-    (101) escr -> escritura_dos r_generate_quad_escr .
-    (102) escr -> escritura_dos r_generate_quad_escr . COMA escr
+    (102) escr -> escritura_dos r_generate_quad_escr .
+    (103) escr -> escritura_dos r_generate_quad_escr . COMA escr
 
-    PARENT_C        reduce using rule 101 (escr -> escritura_dos r_generate_quad_escr .)
-    COMA            shift and go to state 180
+    PARENT_C        reduce using rule 102 (escr -> escritura_dos r_generate_quad_escr .)
+    COMA            shift and go to state 181
 
 
 state 153
 
-    (97) escritura_dos -> CTE_STR r_push_cte_str .
+    (98) escritura_dos -> CTE_STR r_push_cte_str .
 
-    COMA            reduce using rule 97 (escritura_dos -> CTE_STR r_push_cte_str .)
-    PARENT_C        reduce using rule 97 (escritura_dos -> CTE_STR r_push_cte_str .)
+    COMA            reduce using rule 98 (escritura_dos -> CTE_STR r_push_cte_str .)
+    PARENT_C        reduce using rule 98 (escritura_dos -> CTE_STR r_push_cte_str .)
 
 
 state 154
 
-    (104) decision -> if r_goto_ifelse else r_end_if .
+    (105) decision -> if r_goto_ifelse else r_end_if .
 
-    ID              reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
-    REGRESA         reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
-    LEER            reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
-    ESCRIBIR        reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
-    DESDE           reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
-    MIENTRAS        reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
-    SI              reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
-    LLAVE_C         reduce using rule 104 (decision -> if r_goto_ifelse else r_end_if .)
+    ID              reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
+    REGRESA         reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
+    LEER            reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
+    ESCRIBIR        reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
+    DESDE           reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
+    MIENTRAS        reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
+    SI              reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
+    LLAVE_C         reduce using rule 105 (decision -> if r_goto_ifelse else r_end_if .)
 
 
 state 155
 
-    (109) else -> SINO LLAVE_A . estatutos_dos LLAVE_C
+    (110) else -> SINO LLAVE_A . estatutos_dos LLAVE_C
     (50) estatutos_dos -> . estatutos
     (51) estatutos_dos -> . estatutos estatutos_dos
     (42) estatutos -> . asignacion PUNTOCOMA
@@ -2534,16 +2538,16 @@ state 155
     (52) asignacion -> . variable IGUAL r_push_oper expresion r_generate_quad_asig
     (54) llamada -> . ID PARENT_A PARENT_C
     (55) llamada -> . ID PARENT_A expresiones PARENT_C
-    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (94) lectura -> . LEER PARENT_A variables PARENT_C
-    (96) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (103) decision -> . if r_end_if
-    (104) decision -> . if r_goto_ifelse else r_end_if
-    (113) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (110) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno
+    (95) lectura -> . LEER PARENT_A variables PARENT_C
+    (97) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (104) decision -> . if r_end_if
+    (105) decision -> . if r_goto_ifelse else r_end_if
+    (114) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (105) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -2553,7 +2557,7 @@ state 155
     MIENTRAS        shift and go to state 56
     SI              shift and go to state 57
 
-    estatutos_dos                  shift and go to state 181
+    estatutos_dos                  shift and go to state 182
     estatutos                      shift and go to state 40
     asignacion                     shift and go to state 41
     llamada                        shift and go to state 42
@@ -2568,26 +2572,26 @@ state 155
 
 state 156
 
-    (113) ciclo_for -> DESDE variable IGUAL expresion . HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (114) ciclo_for -> DESDE variable IGUAL expresion . HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
 
-    HASTA           shift and go to state 182
+    HASTA           shift and go to state 183
 
 
 state 157
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion . PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion . PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
 
-    PARENT_C        shift and go to state 183
+    PARENT_C        shift and go to state 184
 
 
 state 158
 
-    (105) if -> SI PARENT_A expresion PARENT_C . r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
-    (106) r_check_exp_type -> .
+    (106) if -> SI PARENT_A expresion PARENT_C . r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (107) r_check_exp_type -> .
 
-    ENTONCES        reduce using rule 106 (r_check_exp_type -> .)
+    ENTONCES        reduce using rule 107 (r_check_exp_type -> .)
 
-    r_check_exp_type               shift and go to state 184
+    r_check_exp_type               shift and go to state 185
 
 state 159
 
@@ -2609,7 +2613,7 @@ state 160
     LLAVE_A         shift and go to state 33
     VAR             shift and go to state 10
 
-    var_funcs                      shift and go to state 185
+    var_funcs                      shift and go to state 186
     dec_est                        shift and go to state 124
     dec_vars                       shift and go to state 125
 
@@ -2619,7 +2623,7 @@ state 161
     (38) parametros -> tipo_simple ID save_params_list . COMA parametros
 
     PARENT_C        reduce using rule 37 (parametros -> tipo_simple ID save_params_list .)
-    COMA            shift and go to state 186
+    COMA            shift and go to state 187
 
 
 state 162
@@ -2633,7 +2637,7 @@ state 163
 
     (82) factor -> PARENT_A r_push_ff expresion . PARENT_C r_pop_ff
 
-    PARENT_C        shift and go to state 187
+    PARENT_C        shift and go to state 188
 
 
 state 164
@@ -2654,7 +2658,7 @@ state 165
     CTE_CH          reduce using rule 79 (r_push_oper -> .)
     ID              reduce using rule 79 (r_push_oper -> .)
 
-    r_push_oper                    shift and go to state 188
+    r_push_oper                    shift and go to state 189
 
 state 166
 
@@ -2667,7 +2671,7 @@ state 166
     CTE_CH          reduce using rule 79 (r_push_oper -> .)
     ID              reduce using rule 79 (r_push_oper -> .)
 
-    r_push_oper                    shift and go to state 189
+    r_push_oper                    shift and go to state 190
 
 state 167
 
@@ -2683,7 +2687,7 @@ state 167
     HASTA           reduce using rule 66 (r_generate_quad_logicos -> .)
     HACER           reduce using rule 66 (r_generate_quad_logicos -> .)
 
-    r_generate_quad_logicos        shift and go to state 190
+    r_generate_quad_logicos        shift and go to state 191
 
 state 168
 
@@ -2762,7 +2766,7 @@ state 174
     CTE_CH          reduce using rule 79 (r_push_oper -> .)
     ID              reduce using rule 79 (r_push_oper -> .)
 
-    r_push_oper                    shift and go to state 191
+    r_push_oper                    shift and go to state 192
 
 state 175
 
@@ -2775,7 +2779,7 @@ state 175
     CTE_CH          reduce using rule 79 (r_push_oper -> .)
     ID              reduce using rule 79 (r_push_oper -> .)
 
-    r_push_oper                    shift and go to state 192
+    r_push_oper                    shift and go to state 193
 
 state 176
 
@@ -2788,7 +2792,7 @@ state 176
     CTE_CH          reduce using rule 79 (r_push_oper -> .)
     ID              reduce using rule 79 (r_push_oper -> .)
 
-    r_push_oper                    shift and go to state 193
+    r_push_oper                    shift and go to state 194
 
 state 177
 
@@ -2801,7 +2805,7 @@ state 177
     CTE_CH          reduce using rule 79 (r_push_oper -> .)
     ID              reduce using rule 79 (r_push_oper -> .)
 
-    r_push_oper                    shift and go to state 194
+    r_push_oper                    shift and go to state 195
 
 state 178
 
@@ -2830,6 +2834,13 @@ state 178
 
 state 179
 
+    (93) retorno -> REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno .
+
+    PUNTOCOMA       reduce using rule 93 (retorno -> REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno .)
+
+
+state 180
+
     (24) variables -> variable r_generate_quad_leer COMA . variables
     (23) variables -> . variable r_generate_quad_leer
     (24) variables -> . variable r_generate_quad_leer COMA variables
@@ -2839,15 +2850,15 @@ state 179
     ID              shift and go to state 81
 
     variable                       shift and go to state 111
-    variables                      shift and go to state 195
+    variables                      shift and go to state 196
 
-state 180
+state 181
 
-    (102) escr -> escritura_dos r_generate_quad_escr COMA . escr
-    (101) escr -> . escritura_dos r_generate_quad_escr
-    (102) escr -> . escritura_dos r_generate_quad_escr COMA escr
-    (97) escritura_dos -> . CTE_STR r_push_cte_str
-    (98) escritura_dos -> . expresion
+    (103) escr -> escritura_dos r_generate_quad_escr COMA . escr
+    (102) escr -> . escritura_dos r_generate_quad_escr
+    (103) escr -> . escritura_dos r_generate_quad_escr COMA escr
+    (98) escritura_dos -> . CTE_STR r_push_cte_str
+    (99) escritura_dos -> . expresion
     (58) expresion -> . t_expresion r_generate_quad_or
     (59) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -2879,7 +2890,7 @@ state 180
     ID              shift and go to state 92
 
     escritura_dos                  shift and go to state 113
-    escr                           shift and go to state 196
+    escr                           shift and go to state 197
     expresion                      shift and go to state 115
     t_expresion                    shift and go to state 97
     g_expresion                    shift and go to state 98
@@ -2889,16 +2900,16 @@ state 180
     variable                       shift and go to state 105
     llamada                        shift and go to state 106
 
-state 181
-
-    (109) else -> SINO LLAVE_A estatutos_dos . LLAVE_C
-
-    LLAVE_C         shift and go to state 197
-
-
 state 182
 
-    (113) ciclo_for -> DESDE variable IGUAL expresion HASTA . expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (110) else -> SINO LLAVE_A estatutos_dos . LLAVE_C
+
+    LLAVE_C         shift and go to state 198
+
+
+state 183
+
+    (114) ciclo_for -> DESDE variable IGUAL expresion HASTA . expresion HACER LLAVE_A estatutos_dos LLAVE_C
     (58) expresion -> . t_expresion r_generate_quad_or
     (59) expresion -> . t_expresion r_generate_quad_or OR r_push_oper expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -2929,7 +2940,7 @@ state 182
     ID              shift and go to state 92
 
     variable                       shift and go to state 105
-    expresion                      shift and go to state 198
+    expresion                      shift and go to state 199
     t_expresion                    shift and go to state 97
     g_expresion                    shift and go to state 98
     m_expresion                    shift and go to state 99
@@ -2937,23 +2948,23 @@ state 182
     factor                         shift and go to state 101
     llamada                        shift and go to state 106
 
-state 183
-
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C . r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
-    (106) r_check_exp_type -> .
-
-    HAZ             reduce using rule 106 (r_check_exp_type -> .)
-
-    r_check_exp_type               shift and go to state 199
-
 state 184
 
-    (105) if -> SI PARENT_A expresion PARENT_C r_check_exp_type . ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C . r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (107) r_check_exp_type -> .
 
-    ENTONCES        shift and go to state 200
+    HAZ             reduce using rule 107 (r_check_exp_type -> .)
 
+    r_check_exp_type               shift and go to state 200
 
 state 185
+
+    (106) if -> SI PARENT_A expresion PARENT_C r_check_exp_type . ENTONCES LLAVE_A estatutos_dos LLAVE_C
+
+    ENTONCES        shift and go to state 201
+
+
+state 186
 
     (33) func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .
 
@@ -2961,7 +2972,7 @@ state 185
     PRINCIPAL       reduce using rule 33 (func_dos -> PARENT_A parametros PARENT_C save_params var_funcs .)
 
 
-state 186
+state 187
 
     (38) parametros -> tipo_simple ID save_params_list COMA . parametros
     (37) parametros -> . tipo_simple ID save_params_list
@@ -2975,9 +2986,9 @@ state 186
     CHAR            shift and go to state 21
 
     tipo_simple                    shift and go to state 89
-    parametros                     shift and go to state 201
+    parametros                     shift and go to state 202
 
-state 187
+state 188
 
     (82) factor -> PARENT_A r_push_ff expresion PARENT_C . r_pop_ff
     (92) r_pop_ff -> .
@@ -3001,9 +3012,9 @@ state 187
     HASTA           reduce using rule 92 (r_pop_ff -> .)
     HACER           reduce using rule 92 (r_pop_ff -> .)
 
-    r_pop_ff                       shift and go to state 202
+    r_pop_ff                       shift and go to state 203
 
-state 188
+state 189
 
     (59) expresion -> t_expresion r_generate_quad_or OR r_push_oper . expresion
     (58) expresion -> . t_expresion r_generate_quad_or
@@ -3036,7 +3047,7 @@ state 188
     ID              shift and go to state 92
 
     t_expresion                    shift and go to state 97
-    expresion                      shift and go to state 203
+    expresion                      shift and go to state 204
     g_expresion                    shift and go to state 98
     m_expresion                    shift and go to state 99
     termino                        shift and go to state 100
@@ -3044,7 +3055,7 @@ state 188
     variable                       shift and go to state 105
     llamada                        shift and go to state 106
 
-state 189
+state 190
 
     (62) t_expresion -> g_expresion r_generate_quad_and AND r_push_oper . t_expresion
     (61) t_expresion -> . g_expresion r_generate_quad_and
@@ -3075,14 +3086,14 @@ state 189
     ID              shift and go to state 92
 
     g_expresion                    shift and go to state 98
-    t_expresion                    shift and go to state 204
+    t_expresion                    shift and go to state 205
     m_expresion                    shift and go to state 99
     termino                        shift and go to state 100
     factor                         shift and go to state 101
     variable                       shift and go to state 105
     llamada                        shift and go to state 106
 
-state 190
+state 191
 
     (65) g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .
 
@@ -3096,41 +3107,9 @@ state 190
     HACER           reduce using rule 65 (g_expresion -> m_expresion op_logicos m_expresion r_generate_quad_logicos .)
 
 
-state 191
-
-    (74) m_expresion -> termino r_generate_quad_masmen MAS r_push_oper . m_expresion
-    (73) m_expresion -> . termino r_generate_quad_masmen
-    (74) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
-    (75) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-    (76) termino -> . factor r_generate_quad_muldiv
-    (77) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
-    (78) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
-    (82) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
-    (83) factor -> . CTE_I r_push_cte_i
-    (84) factor -> . CTE_F r_push_cte_f
-    (85) factor -> . CTE_CH r_push_cte_c
-    (86) factor -> . variable
-    (87) factor -> . llamada
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (54) llamada -> . ID PARENT_A PARENT_C
-    (55) llamada -> . ID PARENT_A expresiones PARENT_C
-
-    PARENT_A        shift and go to state 93
-    CTE_I           shift and go to state 102
-    CTE_F           shift and go to state 103
-    CTE_CH          shift and go to state 104
-    ID              shift and go to state 92
-
-    termino                        shift and go to state 100
-    m_expresion                    shift and go to state 205
-    factor                         shift and go to state 101
-    variable                       shift and go to state 105
-    llamada                        shift and go to state 106
-
 state 192
 
-    (75) m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper . m_expresion
+    (74) m_expresion -> termino r_generate_quad_masmen MAS r_push_oper . m_expresion
     (73) m_expresion -> . termino r_generate_quad_masmen
     (74) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
     (75) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
@@ -3162,7 +3141,10 @@ state 192
 
 state 193
 
-    (77) termino -> factor r_generate_quad_muldiv POR r_push_oper . termino
+    (75) m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper . m_expresion
+    (73) m_expresion -> . termino r_generate_quad_masmen
+    (74) m_expresion -> . termino r_generate_quad_masmen MAS r_push_oper m_expresion
+    (75) m_expresion -> . termino r_generate_quad_masmen MENOS r_push_oper m_expresion
     (76) termino -> . factor r_generate_quad_muldiv
     (77) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
     (78) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
@@ -3183,14 +3165,15 @@ state 193
     CTE_CH          shift and go to state 104
     ID              shift and go to state 92
 
+    termino                        shift and go to state 100
+    m_expresion                    shift and go to state 207
     factor                         shift and go to state 101
-    termino                        shift and go to state 207
     variable                       shift and go to state 105
     llamada                        shift and go to state 106
 
 state 194
 
-    (78) termino -> factor r_generate_quad_muldiv DIV r_push_oper . termino
+    (77) termino -> factor r_generate_quad_muldiv POR r_push_oper . termino
     (76) termino -> . factor r_generate_quad_muldiv
     (77) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
     (78) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
@@ -3218,61 +3201,89 @@ state 194
 
 state 195
 
+    (78) termino -> factor r_generate_quad_muldiv DIV r_push_oper . termino
+    (76) termino -> . factor r_generate_quad_muldiv
+    (77) termino -> . factor r_generate_quad_muldiv POR r_push_oper termino
+    (78) termino -> . factor r_generate_quad_muldiv DIV r_push_oper termino
+    (82) factor -> . PARENT_A r_push_ff expresion PARENT_C r_pop_ff
+    (83) factor -> . CTE_I r_push_cte_i
+    (84) factor -> . CTE_F r_push_cte_f
+    (85) factor -> . CTE_CH r_push_cte_c
+    (86) factor -> . variable
+    (87) factor -> . llamada
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (54) llamada -> . ID PARENT_A PARENT_C
+    (55) llamada -> . ID PARENT_A expresiones PARENT_C
+
+    PARENT_A        shift and go to state 93
+    CTE_I           shift and go to state 102
+    CTE_F           shift and go to state 103
+    CTE_CH          shift and go to state 104
+    ID              shift and go to state 92
+
+    factor                         shift and go to state 101
+    termino                        shift and go to state 209
+    variable                       shift and go to state 105
+    llamada                        shift and go to state 106
+
+state 196
+
     (24) variables -> variable r_generate_quad_leer COMA variables .
 
     PARENT_C        reduce using rule 24 (variables -> variable r_generate_quad_leer COMA variables .)
 
 
-state 196
-
-    (102) escr -> escritura_dos r_generate_quad_escr COMA escr .
-
-    PARENT_C        reduce using rule 102 (escr -> escritura_dos r_generate_quad_escr COMA escr .)
-
-
 state 197
 
-    (109) else -> SINO LLAVE_A estatutos_dos LLAVE_C .
+    (103) escr -> escritura_dos r_generate_quad_escr COMA escr .
 
-    ID              reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 109 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    PARENT_C        reduce using rule 103 (escr -> escritura_dos r_generate_quad_escr COMA escr .)
 
 
 state 198
 
-    (113) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion . HACER LLAVE_A estatutos_dos LLAVE_C
+    (110) else -> SINO LLAVE_A estatutos_dos LLAVE_C .
 
-    HACER           shift and go to state 209
+    ID              reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 110 (else -> SINO LLAVE_A estatutos_dos LLAVE_C .)
 
 
 state 199
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type . HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (114) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion . HACER LLAVE_A estatutos_dos LLAVE_C
 
-    HAZ             shift and go to state 210
+    HACER           shift and go to state 210
 
 
 state 200
 
-    (105) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES . LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type . HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
 
-    LLAVE_A         shift and go to state 211
+    HAZ             shift and go to state 211
 
 
 state 201
+
+    (106) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES . LLAVE_A estatutos_dos LLAVE_C
+
+    LLAVE_A         shift and go to state 212
+
+
+state 202
 
     (38) parametros -> tipo_simple ID save_params_list COMA parametros .
 
     PARENT_C        reduce using rule 38 (parametros -> tipo_simple ID save_params_list COMA parametros .)
 
 
-state 202
+state 203
 
     (82) factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .
 
@@ -3296,7 +3307,7 @@ state 202
     HACER           reduce using rule 82 (factor -> PARENT_A r_push_ff expresion PARENT_C r_pop_ff .)
 
 
-state 203
+state 204
 
     (59) expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .
 
@@ -3308,7 +3319,7 @@ state 203
     HACER           reduce using rule 59 (expresion -> t_expresion r_generate_quad_or OR r_push_oper expresion .)
 
 
-state 204
+state 205
 
     (62) t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .
 
@@ -3321,7 +3332,7 @@ state 204
     HACER           reduce using rule 62 (t_expresion -> g_expresion r_generate_quad_and AND r_push_oper t_expresion .)
 
 
-state 205
+state 206
 
     (74) m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .
 
@@ -3341,7 +3352,7 @@ state 205
     HACER           reduce using rule 74 (m_expresion -> termino r_generate_quad_masmen MAS r_push_oper m_expresion .)
 
 
-state 206
+state 207
 
     (75) m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .
 
@@ -3361,7 +3372,7 @@ state 206
     HACER           reduce using rule 75 (m_expresion -> termino r_generate_quad_masmen MENOS r_push_oper m_expresion .)
 
 
-state 207
+state 208
 
     (77) termino -> factor r_generate_quad_muldiv POR r_push_oper termino .
 
@@ -3383,7 +3394,7 @@ state 207
     HACER           reduce using rule 77 (termino -> factor r_generate_quad_muldiv POR r_push_oper termino .)
 
 
-state 208
+state 209
 
     (78) termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .
 
@@ -3405,71 +3416,23 @@ state 208
     HACER           reduce using rule 78 (termino -> factor r_generate_quad_muldiv DIV r_push_oper termino .)
 
 
-state 209
-
-    (113) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER . LLAVE_A estatutos_dos LLAVE_C
-
-    LLAVE_A         shift and go to state 212
-
-
 state 210
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ . LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (114) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER . LLAVE_A estatutos_dos LLAVE_C
 
     LLAVE_A         shift and go to state 213
 
 
 state 211
 
-    (105) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A . estatutos_dos LLAVE_C
-    (50) estatutos_dos -> . estatutos
-    (51) estatutos_dos -> . estatutos estatutos_dos
-    (42) estatutos -> . asignacion PUNTOCOMA
-    (43) estatutos -> . llamada PUNTOCOMA
-    (44) estatutos -> . retorno PUNTOCOMA
-    (45) estatutos -> . lectura PUNTOCOMA
-    (46) estatutos -> . escritura PUNTOCOMA
-    (47) estatutos -> . decision
-    (48) estatutos -> . ciclo_for
-    (49) estatutos -> . ciclo_while
-    (52) asignacion -> . variable IGUAL r_push_oper expresion r_generate_quad_asig
-    (54) llamada -> . ID PARENT_A PARENT_C
-    (55) llamada -> . ID PARENT_A expresiones PARENT_C
-    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (94) lectura -> . LEER PARENT_A variables PARENT_C
-    (96) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (103) decision -> . if r_end_if
-    (104) decision -> . if r_goto_ifelse else r_end_if
-    (113) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (110) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
-    (20) variable -> . ID r_push_id
-    (21) variable -> . ID r_push_id dim
-    (105) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ . LLAVE_A estatutos_dos LLAVE_C r_goto_while
 
-    ID              shift and go to state 50
-    REGRESA         shift and go to state 51
-    LEER            shift and go to state 52
-    ESCRIBIR        shift and go to state 53
-    DESDE           shift and go to state 55
-    MIENTRAS        shift and go to state 56
-    SI              shift and go to state 57
+    LLAVE_A         shift and go to state 214
 
-    estatutos_dos                  shift and go to state 214
-    estatutos                      shift and go to state 40
-    asignacion                     shift and go to state 41
-    llamada                        shift and go to state 42
-    retorno                        shift and go to state 43
-    lectura                        shift and go to state 44
-    escritura                      shift and go to state 45
-    decision                       shift and go to state 46
-    ciclo_for                      shift and go to state 47
-    ciclo_while                    shift and go to state 48
-    variable                       shift and go to state 49
-    if                             shift and go to state 54
 
 state 212
 
-    (113) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A . estatutos_dos LLAVE_C
+    (106) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A . estatutos_dos LLAVE_C
     (50) estatutos_dos -> . estatutos
     (51) estatutos_dos -> . estatutos estatutos_dos
     (42) estatutos -> . asignacion PUNTOCOMA
@@ -3483,16 +3446,16 @@ state 212
     (52) asignacion -> . variable IGUAL r_push_oper expresion r_generate_quad_asig
     (54) llamada -> . ID PARENT_A PARENT_C
     (55) llamada -> . ID PARENT_A expresiones PARENT_C
-    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (94) lectura -> . LEER PARENT_A variables PARENT_C
-    (96) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (103) decision -> . if r_end_if
-    (104) decision -> . if r_goto_ifelse else r_end_if
-    (113) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (110) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno
+    (95) lectura -> . LEER PARENT_A variables PARENT_C
+    (97) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (104) decision -> . if r_end_if
+    (105) decision -> . if r_goto_ifelse else r_end_if
+    (114) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (105) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -3502,7 +3465,6 @@ state 212
     MIENTRAS        shift and go to state 56
     SI              shift and go to state 57
 
-    variable                       shift and go to state 49
     estatutos_dos                  shift and go to state 215
     estatutos                      shift and go to state 40
     asignacion                     shift and go to state 41
@@ -3513,11 +3475,12 @@ state 212
     decision                       shift and go to state 46
     ciclo_for                      shift and go to state 47
     ciclo_while                    shift and go to state 48
+    variable                       shift and go to state 49
     if                             shift and go to state 54
 
 state 213
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A . estatutos_dos LLAVE_C r_goto_while
+    (114) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A . estatutos_dos LLAVE_C
     (50) estatutos_dos -> . estatutos
     (51) estatutos_dos -> . estatutos estatutos_dos
     (42) estatutos -> . asignacion PUNTOCOMA
@@ -3531,16 +3494,16 @@ state 213
     (52) asignacion -> . variable IGUAL r_push_oper expresion r_generate_quad_asig
     (54) llamada -> . ID PARENT_A PARENT_C
     (55) llamada -> . ID PARENT_A expresiones PARENT_C
-    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C
-    (94) lectura -> . LEER PARENT_A variables PARENT_C
-    (96) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
-    (103) decision -> . if r_end_if
-    (104) decision -> . if r_goto_ifelse else r_end_if
-    (113) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
-    (110) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno
+    (95) lectura -> . LEER PARENT_A variables PARENT_C
+    (97) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (104) decision -> . if r_end_if
+    (105) decision -> . if r_goto_ifelse else r_end_if
+    (114) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
     (20) variable -> . ID r_push_id
     (21) variable -> . ID r_push_id dim
-    (105) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+    (106) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
 
     ID              shift and go to state 50
     REGRESA         shift and go to state 51
@@ -3550,7 +3513,55 @@ state 213
     MIENTRAS        shift and go to state 56
     SI              shift and go to state 57
 
+    variable                       shift and go to state 49
     estatutos_dos                  shift and go to state 216
+    estatutos                      shift and go to state 40
+    asignacion                     shift and go to state 41
+    llamada                        shift and go to state 42
+    retorno                        shift and go to state 43
+    lectura                        shift and go to state 44
+    escritura                      shift and go to state 45
+    decision                       shift and go to state 46
+    ciclo_for                      shift and go to state 47
+    ciclo_while                    shift and go to state 48
+    if                             shift and go to state 54
+
+state 214
+
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A . estatutos_dos LLAVE_C r_goto_while
+    (50) estatutos_dos -> . estatutos
+    (51) estatutos_dos -> . estatutos estatutos_dos
+    (42) estatutos -> . asignacion PUNTOCOMA
+    (43) estatutos -> . llamada PUNTOCOMA
+    (44) estatutos -> . retorno PUNTOCOMA
+    (45) estatutos -> . lectura PUNTOCOMA
+    (46) estatutos -> . escritura PUNTOCOMA
+    (47) estatutos -> . decision
+    (48) estatutos -> . ciclo_for
+    (49) estatutos -> . ciclo_while
+    (52) asignacion -> . variable IGUAL r_push_oper expresion r_generate_quad_asig
+    (54) llamada -> . ID PARENT_A PARENT_C
+    (55) llamada -> . ID PARENT_A expresiones PARENT_C
+    (93) retorno -> . REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno
+    (95) lectura -> . LEER PARENT_A variables PARENT_C
+    (97) escritura -> . ESCRIBIR PARENT_A escr PARENT_C
+    (104) decision -> . if r_end_if
+    (105) decision -> . if r_goto_ifelse else r_end_if
+    (114) ciclo_for -> . DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+    (111) ciclo_while -> . MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while
+    (20) variable -> . ID r_push_id
+    (21) variable -> . ID r_push_id dim
+    (106) if -> . SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C
+
+    ID              shift and go to state 50
+    REGRESA         shift and go to state 51
+    LEER            shift and go to state 52
+    ESCRIBIR        shift and go to state 53
+    DESDE           shift and go to state 55
+    MIENTRAS        shift and go to state 56
+    SI              shift and go to state 57
+
+    estatutos_dos                  shift and go to state 217
     estatutos                      shift and go to state 40
     asignacion                     shift and go to state 41
     llamada                        shift and go to state 42
@@ -3563,82 +3574,82 @@ state 213
     variable                       shift and go to state 49
     if                             shift and go to state 54
 
-state 214
-
-    (105) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos . LLAVE_C
-
-    LLAVE_C         shift and go to state 217
-
-
 state 215
 
-    (113) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos . LLAVE_C
+    (106) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos . LLAVE_C
 
     LLAVE_C         shift and go to state 218
 
 
 state 216
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos . LLAVE_C r_goto_while
+    (114) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos . LLAVE_C
 
     LLAVE_C         shift and go to state 219
 
 
 state 217
 
-    (105) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos . LLAVE_C r_goto_while
 
-    SINO            reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    ID              reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 105 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         shift and go to state 220
 
 
 state 218
 
-    (113) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .
+    (106) if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .
 
-    ID              reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    REGRESA         reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    LEER            reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    ESCRIBIR        reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    DESDE           reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    MIENTRAS        reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    SI              reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
-    LLAVE_C         reduce using rule 113 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    SINO            reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    ID              reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 106 (if -> SI PARENT_A expresion PARENT_C r_check_exp_type ENTONCES LLAVE_A estatutos_dos LLAVE_C .)
 
 
 state 219
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C . r_goto_while
-    (111) r_goto_while -> .
+    (114) ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .
 
-    ID              reduce using rule 111 (r_goto_while -> .)
-    REGRESA         reduce using rule 111 (r_goto_while -> .)
-    LEER            reduce using rule 111 (r_goto_while -> .)
-    ESCRIBIR        reduce using rule 111 (r_goto_while -> .)
-    DESDE           reduce using rule 111 (r_goto_while -> .)
-    MIENTRAS        reduce using rule 111 (r_goto_while -> .)
-    SI              reduce using rule 111 (r_goto_while -> .)
-    LLAVE_C         reduce using rule 111 (r_goto_while -> .)
+    ID              reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    REGRESA         reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    LEER            reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    ESCRIBIR        reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    DESDE           reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    MIENTRAS        reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    SI              reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
+    LLAVE_C         reduce using rule 114 (ciclo_for -> DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C .)
 
-    r_goto_while                   shift and go to state 220
 
 state 220
 
-    (110) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C . r_goto_while
+    (112) r_goto_while -> .
 
-    ID              reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
-    REGRESA         reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
-    LEER            reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
-    ESCRIBIR        reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
-    DESDE           reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
-    MIENTRAS        reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
-    SI              reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
-    LLAVE_C         reduce using rule 110 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    ID              reduce using rule 112 (r_goto_while -> .)
+    REGRESA         reduce using rule 112 (r_goto_while -> .)
+    LEER            reduce using rule 112 (r_goto_while -> .)
+    ESCRIBIR        reduce using rule 112 (r_goto_while -> .)
+    DESDE           reduce using rule 112 (r_goto_while -> .)
+    MIENTRAS        reduce using rule 112 (r_goto_while -> .)
+    SI              reduce using rule 112 (r_goto_while -> .)
+    LLAVE_C         reduce using rule 112 (r_goto_while -> .)
+
+    r_goto_while                   shift and go to state 221
+
+state 221
+
+    (111) ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .
+
+    ID              reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    REGRESA         reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    LEER            reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    ESCRIBIR        reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    DESDE           reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    MIENTRAS        reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    SI              reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
+    LLAVE_C         reduce using rule 111 (ciclo_while -> MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while .)
 

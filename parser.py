@@ -675,7 +675,20 @@ def cte_exists(cte, cte_type):
 
 # retorno de una funcion
 def p_retorno(p):
-	'retorno : REGRESA PARENT_A expresion PARENT_C'
+	'retorno : REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno'
+
+
+def p_r_generate_quad_retorno(p):
+	'''r_generate_quad_retorno : '''
+
+	global op_stack, type_stack, quadruples, q_count
+
+	var = op_stack.pop()
+	type_stack.pop()
+	quad = ['REGRESA', None, None, var]
+	
+	quadruples.append(quad)
+	q_count += 1
 
 # estatuto de lectura
 def p_lectura(p):
