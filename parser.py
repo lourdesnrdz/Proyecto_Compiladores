@@ -126,6 +126,8 @@ def p_prog(p):
 	| dec_funciones main
 	'''
 
+	# generar cuadruplo de goto a la función main
+
 # funcion main
 def p_main(p):
 	'main : PRINCIPAL PARENT_A PARENT_C dec_est'
@@ -239,7 +241,7 @@ def p_variable(p):
 	| ID r_push_id dim
 	'''
 
-# regla para guardar el id en la pila
+# regla para guardar el id en la pila de operandos
 def p_r_push_id(p):
 	'''r_push_id : '''
 	global op_stack, type_stack
@@ -270,19 +272,9 @@ def p_r_push_id(p):
 
 # declarar unao varias variables
 def p_variables(p):
-	'''variables : variable
-	| variable COMA variables 
+	'''variables : variable r_generate_quad_leer
+	| variable r_generate_quad_leer COMA variables 
 	'''
-
-# regla para generar el cuadruplo del estatuto de lectura
-# def p_generate_quad_leer(p):
-# 	'''r_generate_quad_leer : '''
-
-# 	global op_stack, type_stack
-# 	var = oper_stack.pop()
-# 	type_stack.pop()
-# 	quad = ['LEER', None, None, var]
-
 
 # establecer las dimensiones para vectores o matrices
 def p_dim(p):
@@ -452,10 +444,10 @@ def generate_quadruple_asig(operations):
 
 				# genera el cuadruplo
 				quad = [operator, right_op, None, left_op]
-				print(quad)
+				# print(quad)
 
 				# guarda el cuadruplo en el stack
-				# quadruples.append(quad)
+				quadruples.append(quad)
 				q_count += 1
 			else:
 				error('Type mismatch: los tipos no coinciden')
@@ -576,7 +568,7 @@ def generate_quadruple(operations):
 
 				# genera el cuadruplo
 				quad = [operator, left_op, right_op, result]
-				print(quad)
+				# print(quad)
 
 				# guarda el cuadruplo en el stack
 				quadruples.append(quad)
@@ -689,6 +681,18 @@ def p_retorno(p):
 def p_lectura(p):
 	'lectura : LEER PARENT_A variables PARENT_C'
 
+# regla para generar el cuadruplo del estatuto de lectura
+def p_r_generate_quad_leer(p):
+	'''r_generate_quad_leer : '''
+
+	global op_stack, type_stack, quadruples, q_count
+
+	var = op_stack.pop()
+	type_stack.pop()
+	quad = ['LEER', None, None, var]
+	
+	quadruples.append(quad)
+	q_count += 1
 
 # estatuto de escritura
 def p_escritura(p):
@@ -719,15 +723,16 @@ def p_r_push_cte_str(p):
 def p_r_generate_quad_escr(p):
 	'''r_generate_quad_escr : '''
 
-	global op_stack, type_stack, quadruples
+	global op_stack, type_stack, quadruples, q_count
 
 	if op_stack:
 		op = op_stack.pop()
 		type_stack.pop()
 
 		quad = ['ESCRIBE', None, None, op]
-		print(quad)
+		# print(quad)
 		quadruples.append(quad)
+		q_count += 1
 	else:
 		error(p, 'Print action is not valid')
 
@@ -749,7 +754,7 @@ def p_if(p):
 def p_r_check_exp_type(p):
 	'r_check_exp_type : '
 
-	global type_stack, op_stack, quadruples
+	global type_stack, op_stack, quadruples, q_count
 
 	#obtiene el tipo del resultado de la expresión del if 
 	exp_type = type_stack.pop()
@@ -762,10 +767,12 @@ def p_r_check_exp_type(p):
 		result = op_stack.pop()
 		# genera el cuatruplo GotoF
 		quad = ['GotoF', result, None, None]
-		print(quad)
+		# print(quad)
 		quadruples.append(quad)
+		q_count += 1
 		# guarda el contador en la pila de saltos
-		jump_stack.append(q_count-1)
+		jump_stack.append(q_count - 1)
+
 
 def p_r_end_if(p):
 	'r_end_if : '
@@ -774,7 +781,9 @@ def p_r_end_if(p):
 
 	# obtiene el número del cuadruplo pendiente
 	# de la pila de saltos
+	# print(jump_stack)
 	end = jump_stack.pop()
+	# print('end: ', end)
 	# asigna el contador al cuadruplo pendiente
 	fill(end, q_count)
 
@@ -783,15 +792,18 @@ def p_r_goto_ifelse(p):
 
 	global jump_stack, q_count, quadruples
 
-	quadruples.append(['Goto', None, None, None])
+	quad = ['Goto', None, None, None]
+	# print(quad)
+	quadruples.append(quad)
 	q_count += 1
 
 	# obtiene el número del cuadruplo pendiente
 	# de la pila de saltos
+	# print(jump_stack)
 	false = jump_stack.pop()
 	# guarda el contador del goto
 	jump_stack.append(q_count-1)
-	# asigna el contador al cuadruplo pendiente
+	# asigna el contador al cuadruplo pendiente GOTOF
 	# si el if es false, brinca al else
 	fill(false, q_count)
 
@@ -802,7 +814,10 @@ def fill(val, cont):
 	global quadruples
 	# asigna al cuadruplo a dónde va a saltar
 	# print(quadruples)
-	quadruples[val][3] = cont
+	# print('quadruplo : ', quadruples[val])
+	# print('fill', val, cont)
+	# print('quadruplo: ', quadruples[val-1])
+	quadruples[val-1][3] = cont
 
 
 # condicion else
@@ -818,17 +833,19 @@ def p_r_goto_while(p):
 	'''r_goto_while : '''
 	global jump_stack, quadruples, q_count
 
+	# print(jump_stack)
 	end = jump_stack.pop()
 
 	_return = jump_stack.pop()
 
 	quad = ['GOTO', None, None, _return]
-	print(quad)
+	# print(quad)
 
 	quadruples.append(quad)
 	q_count += 1
 
 	fill(end, q_count)
+
 
 # función para agregar el contador de cuadruplos a la pila de saltos
 def p_save_jump(p):
@@ -1077,7 +1094,11 @@ yacc.parse(data)
 # else:
 # 	print("Invalid input")
 
-# print(symbol_table)
+print('\n')
+for q in quadruples:
+	print(q)
+	print('\n')
+print('\n')
 for key, val in symbol_table.items():
 	print(key, ':', val)
 	print('\n')
