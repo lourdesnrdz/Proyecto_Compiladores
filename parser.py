@@ -178,7 +178,10 @@ def p_save_vars(p):
 
 	global list_vars, symbol_table
 
+	# guarda las variables en la tabla de variables de la funcion
 	symbol_table[func_name]['vars'] = list_vars
+	# guarda la cantidad de variables
+	symbol_table[func_name]['vars_length'] = len(list_vars)
 	list_vars = {}
 
 # tipos simples de variables
@@ -344,7 +347,7 @@ def p_save_params(p):
 	# symbol_table[func_name]['vars'] = list_vars
 	# guarda los tipos de los parámetros en la tabla de la funcion
 	symbol_table[func_name]['params'] = list_params
-
+	symbol_table[func_name]['params_length'] = len(list_params)
 	# list_vars = {}
 	list_params = []
 
@@ -685,7 +688,7 @@ def p_r_generate_quad_retorno(p):
 
 	if(symbol_table[func_name]['func_type'] == 'void'):
 		error(p, 'Void function should not have a return statement')
-		
+
 	var = op_stack.pop()
 	type_stack.pop()
 	quad = ['REGRESA', None, None, var]
