@@ -683,6 +683,9 @@ def p_r_generate_quad_retorno(p):
 
 	global op_stack, type_stack, quadruples, q_count
 
+	if(symbol_table[func_name]['func_type'] == 'void'):
+		error(p, 'Void function should not have a return statement')
+		
 	var = op_stack.pop()
 	type_stack.pop()
 	quad = ['REGRESA', None, None, var]
