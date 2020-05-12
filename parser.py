@@ -182,6 +182,9 @@ def p_save_vars(p):
 	symbol_table[func_name]['vars'] = list_vars
 	# guarda la cantidad de variables
 	symbol_table[func_name]['vars_length'] = len(list_vars)
+	# guarda el contador de los cuadruplos actuales
+	# en la tabla de la función actual
+	symbol_table[func_name]['quad_cont'] = q_count
 	list_vars = {}
 
 # tipos simples de variables
@@ -286,9 +289,26 @@ def p_dim(p):
 
 # declaración para una o varias funciones
 def p_dec_funciones(p):
-	'''dec_funciones : funcion
-	| funcion dec_funciones
+	'''dec_funciones : funcion r_generate_endfunc
+	| funcion r_generate_endfunc dec_funciones
 	'''
+
+def p_r_generate_endfunc(p):
+	'''r_generate_endfunc : '''
+
+	global symbol_table, quadruples, q_count
+
+	# elimina la tabla de variables de la función
+	# symbol_table[func_name]['vars'] = {}
+	# genera el cuadruplo de endfunc
+	quad = ['ENDFunc', None, None, None]
+	quadruples.append(quad)
+	q_count += 1
+
+	# guarda el numero de variables temporales usadas
+	# dentro de la función
+
+
 
 # tipo simple o void para funciones
 def p_funcion(p):
@@ -347,6 +367,7 @@ def p_save_params(p):
 	# symbol_table[func_name]['vars'] = list_vars
 	# guarda los tipos de los parámetros en la tabla de la funcion
 	symbol_table[func_name]['params'] = list_params
+	# guarda la cantidad de parametros
 	symbol_table[func_name]['params_length'] = len(list_params)
 	# list_vars = {}
 	list_params = []
