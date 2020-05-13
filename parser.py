@@ -42,10 +42,11 @@ symbol_table = {
 
 # tabla de constantes
 ctes_table = {
-	'next_cte_int' : 43000,
+	'next_cte_int' : 43001,
 	'next_cte_float' : 46000,
 	'next_cte_char' : 49000,
-	'next_cte_str' : 52000
+	'next_cte_str' : 52000,
+	'1' : 43000
 }
 
 # precedencia de operadores en caso de conflicto
@@ -104,6 +105,8 @@ q_count = 1
 # contador de variables temporales 
 # de los cuadruplos de una funcion
 temp_count = 0
+
+for_stack = []
 
 # funcion principal del programa
 def p_programa(p) :
@@ -492,9 +495,17 @@ def generate_quadruple_asig(operations):
 
 # llamada de una funcion
 def p_llamada(p):
-	'''llamada : ID PARENT_A PARENT_C
-	| ID PARENT_A expresiones PARENT_C
+	'''llamada : ID r_check_func_exists PARENT_A PARENT_C
+	| ID r_check_func_exists PARENT_A expresiones PARENT_C
 	'''
+
+def p_r_check_func_exists(p):
+	'''r_check_func_exists : '''
+
+	func = p[-1]
+
+	if func not in symbol_table:
+		error(p, 'function does not exist')
 
 # llamar o no a expresiones
 def p_expresiones(p):
@@ -905,7 +916,7 @@ def p_r_goto_while(p):
 
 
 # función para agregar el contador de cuadruplos a la pila de saltos
-def p_save_jump(p):
+def p_r_save_jump(p):
 	'''r_save_jump : '''
 
 	global jump_stack
@@ -915,7 +926,120 @@ def p_save_jump(p):
 
 # ciclo for
 def p_ciclo_for(p):
-	'ciclo_for : DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C'
+	'ciclo_for : DESDE variable r_save_var_for IGUAL expresion r_generate_quad_asig_for HASTA r_save_jump expresion r_check_exp_type HACER LLAVE_A estatutos_dos LLAVE_C r_goto_for'
+
+
+def p_r_save_var_for(p):
+	'''r_save_var_for : '''
+	global op_stack, oper_stack, type_stack
+
+	var = p[-1]
+
+	if(symbol_table[func_name]['vars'][var]['type'] != 'int'):
+		error(p, 'Var debe der de tipo int')
+
+	var_address = symbol_table[func_name]['vars'][var]['address']
+	op_stack.append(var_address)
+	type_stack.append('int')
+	oper_stack.append('=')
+
+def p_r_generate_quad_asig_for(p):
+	'''p_r_generate_quad_asig_for : '''
+	# ...
+	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count, jump_stack, for_stack
+
+	# print(oper_stack)
+	# print(op_stack)
+	if oper_stack:
+		aux = oper_stack.pop()
+		oper_stack.append(aux)
+
+		if aux == '=':
+			right_op = op_stack.pop()
+			right_type = type_stack.pop()
+
+			if(right_type != 'int'):
+				error(p, 'type mismatch, debe ser int')
+
+			left_op = op_stack.pop()
+			left_type = type_stack.pop()
+			operator = oper_stack.pop()
+
+			# obtiene el tipo del resultado del cubo semántico
+			result_type = semantic_cube[left_type][operator][right_type]
+			# print(left_type, operator, right_type, result_type)
+
+			# checa que el tipo del resultado sea válido
+			if(result_type != None):
+				# print(func_name)
+				# obtiene la direccion temporal para el resultado
+				result = assign_address(func_name, 'temp_' + result_type)
+
+				# se suma uno al contador de variables temporales de la funcion
+				temp_count += 1
+
+				# result = gen_quad(left_op, operator, right_op)
+
+				# genera el cuadruplo
+				quad = [operator, right_op, None, left_op]
+				# print(quad)
+
+				# guarda el cuadruplo en el stack
+				quadruples.append(quad)
+				q_count += 1
+
+
+				for_stack.append(left_op)
+
+				# quadruplo goto
+				# quad2 = ['Goto', None, None, None]
+				# quadruples.append(quad2)
+				# q_count +=1
+
+				# jump_stack(q_count-1)
+
+
+
+			else:
+				error('Type mismatch: los tipos no coinciden')
+
+def p_r_goto_for(p):
+	'''r_goto_for : '''
+	global jump_stack, quadruples, q_count, for_stack
+
+	var = for_stack.pop()
+
+	cte = ctes_table['1']
+
+	
+	# obtiene la direccion temporal para el resultado
+	result = assign_address(func_name, 'temp_int')
+
+	# se suma uno al contador de variables temporales de la funcion
+	temp_count += 1
+
+	# genera el cuadruplo
+	quad1 = ['+', cte, var, result]
+	quadruples.append(quad1)
+	q_count += 1
+ 
+
+	quad2 = ['=', result, None, var]
+	quadruples.append(quad2)
+	q_count += 1
+
+
+	end = jump_stack.pop()
+
+	_return = jump_stack.pop()
+
+	quad = ['GOTO', None, None, _return]
+	# print(quad)
+
+	quadruples.append(quad)
+	q_count += 1
+
+	fill(end, q_count)
 
 # # empty
 # def p_empty(p):
