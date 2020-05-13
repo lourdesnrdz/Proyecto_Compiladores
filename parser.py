@@ -101,8 +101,9 @@ jump_stack = []
 # contador que apunta al siguiente cuadruplo
 q_count = 1
 
-
-
+# contador de variables temporales 
+# de los cuadruplos de una funcion
+temp_count = 0
 
 # funcion principal del programa
 def p_programa(p) :
@@ -130,16 +131,19 @@ def p_prog(p):
 
 # funcion main
 def p_main(p):
-	'main : PRINCIPAL PARENT_A PARENT_C dec_est'
+	'main : PRINCIPAL actualiza_func_name PARENT_A PARENT_C dec_est'
 
-	global func_name
+def p_actualiza_func_name(p):
+	'''actualiza_func_name : '''
+	global func_name, q_count
 
 	# asigno el nombre de la funcion principal
-	func_name = 'main'
+	func_name = 'global'
 
-	# symbol_table[func_name] = {
-	
-	# }
+	# guarda el contador de los cuadruplos actuales
+	# en la tabla de la función actual
+	# para establecer dónde empieza la funcion
+	symbol_table[func_name]['quad_cont'] = q_count
 
 
 # # funcion main
@@ -176,7 +180,7 @@ def p_vars(p):
 def p_save_vars(p):
 	'''save_vars : '''
 
-	global list_vars, symbol_table
+	global list_vars, symbol_table, q_count
 
 	# guarda las variables en la tabla de variables de la funcion
 	symbol_table[func_name]['vars'] = list_vars
@@ -184,8 +188,10 @@ def p_save_vars(p):
 	symbol_table[func_name]['vars_length'] = len(list_vars)
 	# guarda el contador de los cuadruplos actuales
 	# en la tabla de la función actual
+	# para establecer dónde empieza la funcion
 	symbol_table[func_name]['quad_cont'] = q_count
 	list_vars = {}
+	
 
 # tipos simples de variables
 def p_tipo_simple(p):
@@ -296,17 +302,21 @@ def p_dec_funciones(p):
 def p_r_generate_endfunc(p):
 	'''r_generate_endfunc : '''
 
-	global symbol_table, quadruples, q_count
+	global symbol_table, quadruples, q_count, temp_count
 
 	# elimina la tabla de variables de la función
-	# symbol_table[func_name]['vars'] = {}
+	symbol_table[func_name]['vars'] = {}
+
 	# genera el cuadruplo de endfunc
 	quad = ['ENDFunc', None, None, None]
 	quadruples.append(quad)
 	q_count += 1
 
+
 	# guarda el numero de variables temporales usadas
 	# dentro de la función
+	symbol_table[func_name]['temp_length'] = temp_count
+	temp_count = 0
 
 
 
@@ -439,7 +449,7 @@ def p_r_generate_quad_asig(p):
 
 def generate_quadruple_asig(operations):
 	# ...
-	global oper_stack, op_stack, type_stack, quadruples, q_count
+	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count
 
 	# print(oper_stack)
 	# print(op_stack)
@@ -463,6 +473,9 @@ def generate_quadruple_asig(operations):
 				# print(func_name)
 				# obtiene la direccion temporal para el resultado
 				result = assign_address(func_name, 'temp_' + result_type)
+
+				# se suma uno al contador de variables temporales de la funcion
+				temp_count += 1
 
 				# result = gen_quad(left_op, operator, right_op)
 
@@ -563,7 +576,7 @@ def p_r_generate_quad_muldiv(p):
 
 def generate_quadruple(operations):
 	# ...
-	global oper_stack, op_stack, type_stack, quadruples, q_count
+	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count
 
 	# print(oper_stack)
 	# print(op_stack)
@@ -587,6 +600,9 @@ def generate_quadruple(operations):
 				# print(func_name)
 				# obtiene la direccion temporal para el resultado
 				result = assign_address(func_name, 'temp_' + result_type)
+
+				# se suma uno al contador de variables temporales de la funcion
+				temp_count += 1
 
 				# result = gen_quad(left_op, operator, right_op)
 
@@ -707,8 +723,9 @@ def p_r_generate_quad_retorno(p):
 
 	global op_stack, type_stack, quadruples, q_count
 
-	if(symbol_table[func_name]['func_type'] == 'void'):
-		error(p, 'Void function should not have a return statement')
+	# checa si la función es void o main
+	if(symbol_table[func_name]['func_type'] == 'void' or symbol_table[func_name] == 'global'):
+		error(p, 'Function should not have a return statement')
 
 	var = op_stack.pop()
 	type_stack.pop()
