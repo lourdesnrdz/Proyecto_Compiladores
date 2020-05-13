@@ -491,8 +491,7 @@ def generate_quadruple_asig(operations):
 				q_count += 1
 			else:
 				error('Type mismatch: los tipos no coinciden')
-
-
+				
 # llamada de una funcion
 def p_llamada(p):
 	'''llamada : ID r_check_func_exists PARENT_A PARENT_C
