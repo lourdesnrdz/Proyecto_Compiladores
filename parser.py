@@ -491,7 +491,7 @@ def generate_quadruple_asig(operations):
 				q_count += 1
 			else:
 				error('Type mismatch: los tipos no coinciden')
-				
+
 # llamada de una funcion
 def p_llamada(p):
 	'''llamada : ID r_check_func_exists PARENT_A PARENT_C
@@ -925,25 +925,67 @@ def p_r_save_jump(p):
 
 # ciclo for
 def p_ciclo_for(p):
-	'ciclo_for : DESDE variable r_save_var_for IGUAL expresion r_generate_quad_asig_for HASTA r_save_jump expresion r_check_exp_type HACER LLAVE_A estatutos_dos LLAVE_C r_goto_for'
+	'ciclo_for : DESDE ID r_save_var_for IGUAL expresion r_generate_quad_asig_for HASTA r_save_jump r_expresion_for expresion r_check_exp_for HACER LLAVE_A estatutos_dos LLAVE_C r_goto_for'
+
+
+def p_r_expresion_for(p):
+	'''r_expresion_for : '''
+
+	global for_stack, op_stack, type_stack, oper_stack
+
+	var = for_stack.pop()
+	for_stack.append(var)
+	
+	# mete la variable a la pila
+	op_stack.append(var)
+
+	type_stack.append('int')
+
+	oper_stack.append('<')
+
+	# print(op_stack)
+	# print(type_stack)
+	# print(oper_stack)
+
+	# generate_quadruple(['<'])
 
 
 def p_r_save_var_for(p):
 	'''r_save_var_for : '''
 	global op_stack, oper_stack, type_stack
 
-	var = p[-1]
+	var_name = p[-1]
 
-	if(symbol_table[func_name]['vars'][var]['type'] != 'int'):
-		error(p, 'Var debe der de tipo int')
+	for q in quadruples:
+		print(q)
+		print('\n')
 
-	var_address = symbol_table[func_name]['vars'][var]['address']
+	if var_name in symbol_table[func_name]['vars']:
+		parent_func = func_name
+		# op_stack.append(var_name)
+		var_address = symbol_table[parent_func]['vars'][var_name]['address']
+		var_type = symbol_table[parent_func]['vars'][var_name]['type']
+	# checa si es una variable global
+	elif var_name in symbol_table['global']['vars']:
+		parent_func = 'global'
+		# op_stack.append(var_name)
+		var_address = symbol_table[parent_func]['vars'][var_name]['address']
+		var_type = symbol_table[parent_func]['vars'][var_name]['type']
+	# si la variable no existe, manda error
+	else:
+		error(p, 'Undeclared variable')
+
+	# si el tipo de la variable no es int, manda error
+	if(var_type != 'int'):
+		error(p, 'On FOR statement, variable must be of type integer')
+
 	op_stack.append(var_address)
 	type_stack.append('int')
 	oper_stack.append('=')
 
+
 def p_r_generate_quad_asig_for(p):
-	'''p_r_generate_quad_asig_for : '''
+	'''r_generate_quad_asig_for : '''
 	# ...
 	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count, jump_stack, for_stack
 
@@ -958,8 +1000,9 @@ def p_r_generate_quad_asig_for(p):
 			right_type = type_stack.pop()
 
 			if(right_type != 'int'):
-				error(p, 'type mismatch, debe ser int')
+				error(p, 'Type-mismatch: types do not match')
 
+			# print(right_op)
 			left_op = op_stack.pop()
 			left_type = type_stack.pop()
 			operator = oper_stack.pop()
@@ -990,21 +1033,35 @@ def p_r_generate_quad_asig_for(p):
 
 				for_stack.append(left_op)
 
-				# quadruplo goto
-				# quad2 = ['Goto', None, None, None]
-				# quadruples.append(quad2)
-				# q_count +=1
-
-				# jump_stack(q_count-1)
-
-
-
 			else:
-				error('Type mismatch: los tipos no coinciden')
+				error(p, 'Type-mismatch: types do not match')
+
+def p_r_check_exp_for(p):
+	'r_check_exp_for : '
+
+	global type_stack, op_stack, quadruples, q_count, op_stack, oper_stack
+
+	#obtiene el tipo del resultado de la expresión del if 
+	exp_type = type_stack.pop()
+	# si el tipo no es bool -> error
+	if(exp_type != 'bool'):
+		print(exp_type)
+		error(p, 'Type-mismatch: types do not match')
+	else:
+		# obtiene el resultado
+		result = op_stack.pop()
+		# genera el cuatruplo GotoF
+		quad = ['GotoF', result, None, None]
+		# print(quad)
+		quadruples.append(quad)
+		q_count += 1
+		# guarda el contador en la pila de saltos
+		jump_stack.append(q_count - 1)
+
 
 def p_r_goto_for(p):
 	'''r_goto_for : '''
-	global jump_stack, quadruples, q_count, for_stack
+	global jump_stack, quadruples, q_count, for_stack, temp_count
 
 	var = for_stack.pop()
 

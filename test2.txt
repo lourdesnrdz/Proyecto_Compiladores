@@ -27,6 +27,12 @@ var int x;
 	Arreglo[x] = y * x;
 	x = x+1;
 	}
+
+	desde x = 0 hasta x < 11 hacer
+	{
+	Arreglo = y * x;
+	x = x+1;
+	}
 }
 
 principal()
