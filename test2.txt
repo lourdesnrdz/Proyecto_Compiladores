@@ -5,7 +5,7 @@ var
 	float valor; 
 
 funcion int fact (int j)
-var int i;
+var int i; float a;
 {
 	i = j + (p - j * 2 + j);
 	si (j == 1) entonces 

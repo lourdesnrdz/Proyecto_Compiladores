@@ -1,5 +1,6 @@
 #scanner
 import ply.lex as lex
+import math
 
 # reserved key words
 reserved = {
@@ -108,17 +109,29 @@ def t_ID(t):
     t.type = reserved.get(t.value, 'ID')
     return t
 
-# Define a variable int
-def t_CTE_I(t):
-    r'\d+'
-    t.value = int(t.value)
-    return t
+# # Define a variable int
+# def t_CTE_I(t):
+#     r'\d+'
+#     t.value = int(t.value)
+#     return t
 
-# Define a float number
+# # Define a float number
+# def t_CTE_F(t):
+#     r'[0-9]+\.[0-9]+|[0-9]+'
+#     t.value = float(t.value)
+#     return t
+
 def t_CTE_F(t):
-    r'[0-9]+\.[0-9]+|[0-9]+'
+  r'([0-9]*[.])?[0-9]+'
+  # si el numero ya es un entero
+  # se regresa el mismo numero entero
+  if int(math.floor(float(t.value))) == float(t.value):
+    t.value = int(t.value)
+    t.type = 'CTE_I'
+  else:
     t.value = float(t.value)
-    return t
+  return t
+
 
 # OR
 def t_OR(t):

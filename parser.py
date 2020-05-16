@@ -24,6 +24,13 @@ list_vars = {}
 # lista para guardar los tipos de parametros
 list_params = []
 
+# contador de parametros
+param_count = 0
+
+# variable para guardar el nombre de la funcion
+# en las llamadas a funcion
+llamada_func = ''
+
 # tabla de simbolos
 symbol_table = {
 	'global': {
@@ -506,23 +513,65 @@ def generate_quadruple_asig(operations):
 
 # llamada de una funcion
 def p_llamada(p):
-	'''llamada : ID r_check_func_exists PARENT_A PARENT_C
-	| ID r_check_func_exists PARENT_A expresiones PARENT_C
+	'''llamada : ID r_check_func_exists PARENT_A r_generate_ERA PARENT_C
+	| ID r_check_func_exists PARENT_A r_generate_ERA expresiones PARENT_C
 	'''
 
 def p_r_check_func_exists(p):
 	'''r_check_func_exists : '''
 
-	func = p[-1]
+	global llamada_func
 
-	if func not in symbol_table:
+	llamada_func = p[-1]
+
+	if llamada_func not in symbol_table:
 		error(p, 'function does not exist')
+
+# Genera cuadruplo ERA
+def p_r_generate_ERA(p):
+	'''r_generate_ERA : '''
+
+	global quadruples, q_count, param_count, oper_stack
+
+	# genera el cuadruplo ERA
+	quad = ['ERA', None, None, llamada_func]
+
+	quadruples.append(quad)
+	q_count += 1
+
+	# inicia el contador de parametros en 0
+	param_count = 0
+
+	# crea fondo falso
+	oper_stack.append('$')
+
 
 # llamar o no a expresiones
 def p_expresiones(p):
-	'''expresiones : expresion
-	| expresion COMA expresion
+	'''expresiones : expresion r_generate_PARAMETER
+	| expresion r_generate_PARAMETER COMA expresion
 	'''
+
+def p_r_generate_PARAMETER(p):
+	'''r_generate_PARAMETER : '''
+
+	global op_stack, type_stack
+
+	# checa que la funcion sí reciba parametros
+	if 'params' not in symbol_table[llamada_func]:
+		error(p, 'Function ' + llamada_func + ' has no parameters')
+
+	# saca el resultado de la expresion
+	arg = op_stack.pop()
+	tipo = type_stack.pop()
+
+	print(symbol_table[llamada_func]['params'][param_count])
+
+	if tipo != symbol_table[llamada_func]['params'][param_count]:
+		error(p, 'Type-mismatch: Parameter type does not match')
+
+
+
 
 # expresiones OR
 def p_expresion(p):
