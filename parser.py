@@ -348,6 +348,10 @@ def p_create_func_table(p):
 	if func_name in symbol_table:
 		error(p, 'funcion ya declarada')
 
+	# checa que la funcion no exista como variable global
+	if func_name in symbol_table['global']['vars']:
+		error(p, 'Variable con el mismo nombre que una función')
+
 	# sino existe, la guarda en la tabla de funciones
 	symbol_table[func_name] = {
 		'func_type' : current_type,
@@ -362,6 +366,14 @@ def p_create_func_table(p):
 		'next_temp_char' : 37000,
 		'next_temp_bool' : 40000
 	}
+
+	# la guarda en la tabla de variables globales
+	# solo si la función no es void
+	if current_type != 'void':
+		symbol_table['global']['vars'][func_name] = {
+			'func_type' : current_type,
+			'address' : assign_address('global', current_type)
+		}
 
 # declarar o no parametros en una funcion
 def p_func_dos(p):
@@ -1209,6 +1221,7 @@ def assign_address(func, type_value):
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_bool'] += 1
+
 	elif(func != 'cte'):
 		if(type_value == 'int'):
 			# guarda la dirección
