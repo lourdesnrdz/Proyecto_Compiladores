@@ -31,6 +31,12 @@ param_count = 0
 # en las llamadas a funcion
 llamada_func = ''
 
+# flag para saber si la función de llamada de llama desde una expresion
+bool_llamada_exp = False
+
+# Flag para saber si ya se hizo el estatuto de retorno en las funciones no void
+bool_retorno = False
+
 # tabla de simbolos
 symbol_table = {
 	'global': {
@@ -312,7 +318,12 @@ def p_dec_funciones(p):
 def p_r_generate_endfunc(p):
 	'''r_generate_endfunc : '''
 
-	global symbol_table, quadruples, q_count, temp_count
+	global symbol_table, quadruples, q_count, temp_count, bool_retorno
+
+	# verifica que la funcion no sea void
+	# y si no tiene valor de retorno marca error
+	if not bool_retorno and symbol_table[func_name]['func_type'] != 'void':
+		error(p, 'Function ' + func_name + ' must have a return value')
 
 	# elimina la tabla de variables de la función
 	symbol_table[func_name]['vars'] = {}
@@ -346,7 +357,7 @@ def p_func_type_void(p):
 def p_create_func_table(p):
 	'''create_func_table : '''
 
-	global func_name, symbol_table
+	global func_name, symbol_table, bool_retorno
 
 	func_name = p[-1]
 
@@ -381,6 +392,9 @@ def p_create_func_table(p):
 			'func_type' : current_type,
 			'address' : assign_address('global', current_type)
 		}
+
+	# inicializo mi flag de retorno en false
+	bool_retorno = False
 
 # declarar o no parametros en una funcion
 def p_func_dos(p):
@@ -533,25 +547,37 @@ def p_r_generate_ERA(p):
 
 	global quadruples, q_count, param_count, oper_stack
 
-	# genera el cuadruplo ERA
-	quad = ['ERA', None, None, llamada_func]
+	# si la funcion se llama de una expresion
+	# y es de tipo void, marca error
+	if bool_llamada_exp and symbol_table[llamada_func]['func_type'] == 'void':
+		error(p, llamada_func + ' is a void function, and does not have a return value')
 
-	quadruples.append(quad)
-	q_count += 1
+	# si se llamó de un estatuto (mi flag es false)
+	# y no es una funcion void, marca error
+	elif not bool_llamada_exp and symbol_table[llamada_func]['func_type'] != 'void':
+		error(p, llamada_func + ' is a not void function')
 
-	# inicia el contador de parametros en 0
-	param_count = 0
+	else:
 
-	# crea fondo falso
-	oper_stack.append('$')
+		# genera el cuadruplo ERA
+		quad = ['ERA', None, None, llamada_func]
+
+		quadruples.append(quad)
+		q_count += 1
+
+		# inicia el contador de parametros en 0
+		param_count = 0
+
+		# crea fondo falso
+		oper_stack.append('$')
 
 def p_r_generate_gosub(p):
 	'''r_generate_gosub : '''
 
-	global oper_stack, quadruples, q_count
+	global oper_stack, quadruples, q_count, bool_llamada_exp, op_stack, type_stack
 
-	# print(param_count)
-	# print(symbol_table[llamada_func]['params_length'])
+	print(param_count)
+	print(symbol_table[llamada_func]['params_length'])
 	# checa que no se haya excedido ni faltado el numero de parametros
 	if param_count < symbol_table[llamada_func]['params_length'] - 1:
 		error(p, 'Missing parameters for function ' + llamada_func)
@@ -562,6 +588,32 @@ def p_r_generate_gosub(p):
 		quad = ['GOSUB', None, None, llamada_func]
 		quadruples.append(quad)
 		q_count += 1
+
+		# si la llamada no es a una funcion void
+		if bool_llamada_exp:
+			
+			func_dir = symbol_table['global']['vars'][llamada_func]['address']
+
+			# obtiene el tipo del resultado de la funcion
+			result_type = symbol_table['global']['vars'][llamada_func]['func_type']
+			# print(left_type, operator, right_type, result_type)
+			
+			# print(func_name)
+			# obtiene la direccion temporal para el resultado
+			result = assign_address(func_name, 'temp_' + result_type)
+
+			# se suma uno al contador de variables temporales de la funcion
+			temp_count += 1
+
+			# result = gen_quad(left_op, operator, right_op)
+
+			# genera el cuadruplo
+			quad = ['=', func_dir, None, result]
+			# print(quad)
+
+			# guarda el cuadruplo en el stack
+			quadruples.append(quad)
+			q_count += 1
 
 		# quita fondo falso
 		oper_stack.pop()
@@ -588,8 +640,8 @@ def p_r_generate_parameter(p):
 	# 	error(p, 'Exceeded number of parameters for function ' + llamada_func)
 
 	# saca el resultado de la expresion
-	arg = op_stack.pop()
-	tipo = type_stack.pop()
+	# arg = op_stack.pop()
+	# tipo = type_stack.pop()
 
 	# checa si la funcion regresa un valor
 	# if symbol_table[llamada_func]['func_type'] != 'void':
@@ -764,8 +816,18 @@ def p_factor(p):
 	| CTE_F r_push_cte_f
 	| CTE_CH r_push_cte_c
 	| variable
-	| llamada
+	| act_flag_llamada llamada
 	'''
+
+# actualiza la flag de llamada en una expresión
+def p_act_flag_llamada(p):
+	'''act_flag_llamada : '''
+
+	global bool_llamada_exp
+
+	# se le asigna true
+	bool_llamada_exp = True
+
 
 # guarda la cte en el diccionario de ctes
 # lo agrega a la pila de operandos
@@ -837,19 +899,30 @@ def p_retorno(p):
 def p_r_generate_quad_retorno(p):
 	'''r_generate_quad_retorno : '''
 
-	global op_stack, type_stack, quadruples, q_count
+	global op_stack, type_stack, quadruples, q_count, bool_retorno, symbol_table
 
 	# checa si la función es void o main
-	if(symbol_table[func_name]['func_type'] == 'void' or symbol_table[func_name] == 'global'):
+	if symbol_table[func_name]['func_type'] == 'void' or symbol_table[func_name] == 'global':
 		error(p, 'Function should not have a return statement')
 
 	if op_stack:
 		var = op_stack.pop()
-		type_stack.pop()
+		tipo = type_stack.pop()
+
+		# valida que el tipo de retorno sea el mismo que el de la funcion
+		if symbol_table[func_name]['func_type'] != tipo:
+			error(p, 'Type-mismatch: return value is not the correct type')
+
 		quad = ['REGRESA', None, None, var]
 		
 		quadruples.append(quad)
 		q_count += 1
+
+		# asigno el valor de la direccion de retorno a la variable global 
+		# con el nombre de la funcion
+		symbol_table['global']['vars'][func_name]['address'] = var
+
+		bool_retorno = True
 
 # estatuto de lectura
 def p_lectura(p):

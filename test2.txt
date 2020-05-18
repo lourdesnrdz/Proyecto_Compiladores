@@ -5,7 +5,7 @@ var
 	float valor; 
 
 funcion int fact (int j)
-var int i; float a;
+var int i;
 {
 	i = j + (p - j * 2 + j);
 	si (j == 1) entonces 
@@ -38,7 +38,7 @@ var int x;
 principal()
 {
 	lee(p); j = p * 2;
-	inicia (p * j - 5);
+	inicia (p * j - 5, 2.2, 'a');
 	desde i = 0 hasta 9 hacer
 		{ 
 		Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
