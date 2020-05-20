@@ -139,13 +139,23 @@ def p_programa(p) :
 
 # declarar o no variables y/o funciones
 def p_prog(p):
-	'''prog : main
-	| dec_vars dec_funciones main
-	| dec_vars main
-	| dec_funciones main
+	'''prog : r_genera_goto_main main
+	| r_genera_goto_main dec_vars dec_funciones main
+	| r_genera_goto_main dec_vars main
+	| r_genera_goto_main dec_funciones main
 	'''
 
-	# generar cuadruplo de goto a la función main
+# generar cuadruplo de goto a la función main
+def p_r_genera_goto_main(p):
+	'''r_genera_goto_main : '''
+
+	global quadruples, q_count, jump_stack
+
+	quad = ['GOTO', None, None, None]
+	quadruples.append(quad)
+	q_count += 1
+
+	jump_stack.append(q_count - 1)
 
 # funcion main
 def p_main(p):
@@ -162,6 +172,11 @@ def p_actualiza_func_name(p):
 	# en la tabla de la función actual
 	# para establecer dónde empieza la funcion
 	symbol_table[func_name]['quad_cont'] = q_count
+
+	main = jump_stack.pop()
+	
+	# asigna el contador al cuadruplo pendiente GOTO del main
+	fill(main, q_count)
 
 
 # declaración de variables
