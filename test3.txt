@@ -24,6 +24,10 @@ var int x;
         Arreglo[x] = y*x;
         x = x+1;
     }
+    desde i = 0 hasta 9 hacer
+	{ 
+	Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
+	}
 }
 
 

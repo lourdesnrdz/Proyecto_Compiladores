@@ -32,7 +32,7 @@ param_count = 0
 llamada_func = ''
 
 # flag para saber si la función de llamada de llama desde una expresion
-bool_llamada_exp = False
+# bool_llamada_exp = False
 
 # Flag para saber si ya se hizo el estatuto de retorno en las funciones no void
 bool_retorno = False
@@ -134,6 +134,8 @@ def p_programa(p) :
 		'type' : 'program'
 	}
 
+	# print(quadruples)
+
 
 # declarar o no variables y/o funciones
 def p_prog(p):
@@ -162,28 +164,10 @@ def p_actualiza_func_name(p):
 	symbol_table[func_name]['quad_cont'] = q_count
 
 
-# # funcion main
-# def p_main(p):
-# 	'''main : PRINCIPAL PARENT_A PARENT_C LLAVE_A LLAVE_C
-# 	| PRINCIPAL PARENT_A PARENT_C LLAVE_A estatutos_dos LLAVE_C
-# 	'''
-
 # declaración de variables
 def p_dec_vars(p):
 	'dec_vars : VAR vars save_vars'
 
-# def p_create_vars_table(p):
-# 	'''create_vars_table : '''
-# 	global symbol_table
-
-# 	# si se están definiento las variables globales
-# 	# crea la tabla de variables globales
-# 	# if(func_name == 'global'):
-# 	# 	symbol_table['global'] = {
-# 	# 		'vars' : {
-
-# 	# 		}
-# 	# 	}
 
 # declarar una o más variables
 def p_vars(p):
@@ -207,7 +191,6 @@ def p_save_vars(p):
 	# para establecer dónde empieza la funcion
 	symbol_table[func_name]['quad_cont'] = q_count
 	list_vars = {}
-	
 
 # tipos simples de variables
 def p_tipo_simple(p):
@@ -315,6 +298,7 @@ def p_dec_funciones(p):
 	| funcion r_generate_endfunc dec_funciones
 	'''
 
+# genera el cuadruplo de final de la funcion
 def p_r_generate_endfunc(p):
 	'''r_generate_endfunc : '''
 
@@ -339,8 +323,6 @@ def p_r_generate_endfunc(p):
 	symbol_table[func_name]['temp_length'] = temp_count
 	temp_count = 0
 
-
-
 # tipo simple o void para funciones
 def p_funcion(p):
 	'''funcion : FUNCION tipo_simple ID create_func_table func_dos
@@ -357,18 +339,18 @@ def p_func_type_void(p):
 def p_create_func_table(p):
 	'''create_func_table : '''
 
-	global func_name, symbol_table, bool_retorno
+	global func_name, symbol_table
 
 	func_name = p[-1]
 
 	# checa si la función ya está declarada
 	# para que no haya dos funciones con el mismo nombre
 	if func_name in symbol_table:
-		error(p, 'funcion ya declarada')
+		error(p, 'Function ' + func_name + ' has already been declared')
 
 	# checa que la funcion no exista como variable global
 	if func_name in symbol_table['global']['vars']:
-		error(p, 'Variable con el mismo nombre que una función')
+		error(p, 'Variable with same name as a function')
 
 	# sino existe, la guarda en la tabla de funciones
 	symbol_table[func_name] = {
@@ -440,7 +422,7 @@ def p_save_params_list(p):
 
 	#checa si el parámetro ya existe en la lista de parámetros 
 	if param_name in list_vars:
-		error(p, 'parámetro ya existe')
+		error(p, 'Parameter name already exists')
 
 	# guarda los parametros en la lista de parametros
 	list_vars[param_name] = {
@@ -510,7 +492,7 @@ def generate_quadruple_asig(operations):
 				# obtiene la direccion temporal para el resultado
 				result = assign_address(func_name, 'temp_' + result_type)
 
-				# se suma uno al contador de variables temporales de la funcion
+				# se suma uno al contador de variables temporales de la funcion	
 				temp_count += 1
 
 				# result = gen_quad(left_op, operator, right_op)
@@ -523,9 +505,10 @@ def generate_quadruple_asig(operations):
 				quadruples.append(quad)
 				q_count += 1
 			else:
-				error('Type mismatch: los tipos no coinciden')
+				error('Type mismatch: types do not match')
 
-# llamada de una funcion
+
+# llamada de una funcion void
 def p_llamada(p):
 	'''llamada : ID r_check_func_exists PARENT_A r_generate_ERA PARENT_C r_generate_gosub
 	| ID r_check_func_exists PARENT_A r_generate_ERA expresiones PARENT_C r_generate_gosub
@@ -547,14 +530,8 @@ def p_r_generate_ERA(p):
 
 	global quadruples, q_count, param_count, oper_stack
 
-	# si la funcion se llama de una expresion
-	# y es de tipo void, marca error
-	if bool_llamada_exp and symbol_table[llamada_func]['func_type'] == 'void':
-		error(p, llamada_func + ' is a void function, and does not have a return value')
-
-	# si se llamó de un estatuto (mi flag es false)
-	# y no es una funcion void, marca error
-	elif not bool_llamada_exp and symbol_table[llamada_func]['func_type'] != 'void':
+	# si la funcion no es tipo void, marca error
+	if symbol_table[llamada_func]['func_type'] != 'void':
 		error(p, llamada_func + ' is a not void function')
 
 	else:
@@ -574,10 +551,8 @@ def p_r_generate_ERA(p):
 def p_r_generate_gosub(p):
 	'''r_generate_gosub : '''
 
-	global oper_stack, quadruples, q_count, bool_llamada_exp, op_stack, type_stack
+	global oper_stack, quadruples, q_count, op_stack, type_stack
 
-	print(param_count)
-	print(symbol_table[llamada_func]['params_length'])
 	# checa que no se haya excedido ni faltado el numero de parametros
 	if param_count < symbol_table[llamada_func]['params_length'] - 1:
 		error(p, 'Missing parameters for function ' + llamada_func)
@@ -589,31 +564,83 @@ def p_r_generate_gosub(p):
 		quadruples.append(quad)
 		q_count += 1
 
-		# si la llamada no es a una funcion void
-		if bool_llamada_exp:
+		# quita fondo falso
+		oper_stack.pop()
+
+
+# llamada de una funcion con valor de retorno
+def p_llamada_exp(p):
+	'''llamada_exp : ID r_check_func_exists PARENT_A r_generate_ERA_dos PARENT_C r_generate_gosub_dos
+	| ID r_check_func_exists PARENT_A r_generate_ERA_dos expresiones PARENT_C r_generate_gosub_dos
+	'''
+
+# Genera cuadruplo ERA
+def p_r_generate_ERA_dos(p):
+	'''r_generate_ERA_dos : '''
+
+	global quadruples, q_count, param_count, oper_stack
+
+	# si la funcion es de tipo void, marca error
+	if symbol_table[llamada_func]['func_type'] == 'void':
+		error(p, llamada_func + ' is a void function, and does not have a return value')
+
+	# genera el cuadruplo ERA
+	quad = ['ERA', None, None, llamada_func]
+
+	quadruples.append(quad)
+	q_count += 1
+
+	# inicia el contador de parametros en 0
+	param_count = 0
+
+	# crea fondo falso
+	oper_stack.append('$')
+
+def p_r_generate_gosub_dos(p):
+	'''r_generate_gosub_dos : '''
+
+	global oper_stack, quadruples, q_count, op_stack, type_stack, temp_count
+
+	print('GOSUB 2')
+	# print(symbol_table[llamada_func]['params_length'])
+	# print(quadruples)
+	# checa que no se haya excedido ni faltado el numero de parametros
+	if param_count < symbol_table[llamada_func]['params_length'] - 1:
+		error(p, 'Missing parameters for function ' + llamada_func)
+	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
+		error(p, 'Exceeded number of parameters for function ' + llamada_func)
+	else:
+
+		quad = ['GOSUB', None, None, llamada_func]
+		quadruples.append(quad)
+		q_count += 1
 			
-			func_dir = symbol_table['global']['vars'][llamada_func]['address']
+		func_dir = symbol_table['global']['vars'][llamada_func]['address']
 
-			# obtiene el tipo del resultado de la funcion
-			result_type = symbol_table['global']['vars'][llamada_func]['func_type']
-			# print(left_type, operator, right_type, result_type)
-			
-			# print(func_name)
-			# obtiene la direccion temporal para el resultado
-			result = assign_address(func_name, 'temp_' + result_type)
+		# obtiene el tipo del resultado de la funcion
+		result_type = symbol_table['global']['vars'][llamada_func]['func_type']
+		# print(left_type, operator, right_type, result_type)
+		
+		# print(func_name)
+		# obtiene la direccion temporal para el resultado
+		result = assign_address(func_name, 'temp_' + result_type)
 
-			# se suma uno al contador de variables temporales de la funcion
-			temp_count += 1
+		# se suma uno al contador de variables temporales de la funcion
+		temp_count += 1
 
-			# result = gen_quad(left_op, operator, right_op)
+		# genera el cuadruplo
+		quad2 = ['=', func_dir, None, result]
+		# print(quad)
 
-			# genera el cuadruplo
-			quad = ['=', func_dir, None, result]
-			# print(quad)
+		# print(oper_stack)
+		# print(op_stack)
 
-			# guarda el cuadruplo en el stack
-			quadruples.append(quad)
-			q_count += 1
+		# guarda el cuadruplo en el stack
+		quadruples.append(quad2)
+		q_count += 1
+
+		op_stack.append(result)
+		type_stack.append(result_type)
 
 		# quita fondo falso
 		oper_stack.pop()
@@ -635,21 +662,8 @@ def p_r_generate_parameter(p):
 	if 'params' not in symbol_table[llamada_func]:
 		error(p, 'Function ' + llamada_func + ' has no parameters')
 
-	# # checa que no se haya excedido el numero de parametros
-	# if param_count >= symbol_table[llamada_func]['params_length']:
-	# 	error(p, 'Exceeded number of parameters for function ' + llamada_func)
-
-	# saca el resultado de la expresion
-	# arg = op_stack.pop()
-	# tipo = type_stack.pop()
-
-	# checa si la funcion regresa un valor
-	# if symbol_table[llamada_func]['func_type'] != 'void':
-	# 	op_stack.append(arg)
-	# 	type_stack.append(tipo)
-
-	# print(symbol_table[llamada_func]['params'][param_count])
-
+	arg = op_stack.pop()
+	tipo = type_stack.pop()
 
 	if tipo != symbol_table[llamada_func]['params'][param_count]:
 		error(p, 'Type-mismatch: Parameter type does not match')
@@ -672,7 +686,6 @@ def p_expresion(p):
 	'''expresion : t_expresion r_generate_quad_or
 	| t_expresion r_generate_quad_or OR r_push_oper expresion
 	'''
-
 # llama a la funcion de generar cuadriplo para el OR
 def p_r_generate_quad_or(p):
 	'''r_generate_quad_or : '''
@@ -684,7 +697,6 @@ def p_t_expresion(p):
 	'''t_expresion : g_expresion r_generate_quad_and
 	| g_expresion r_generate_quad_and AND r_push_oper t_expresion
 	'''
-
 # llama a la funcion de generar cuadriplo para el AND
 def p_r_generate_quad_and(p):
 	'''r_generate_quad_and : '''
@@ -747,7 +759,6 @@ def generate_quadruple(operations):
 
 	# print(oper_stack)
 	# print(op_stack)
-	# print(quadruples)
 	if oper_stack:
 		aux = oper_stack.pop()
 		oper_stack.append(aux)
@@ -769,7 +780,7 @@ def generate_quadruple(operations):
 				# obtiene la direccion temporal para el resultado
 				result = assign_address(func_name, 'temp_' + result_type)
 
-				# se suma uno al contador de variables temporales de la funcion
+				# se suma uno al contador de variables temporales de la funcion	
 				temp_count += 1
 
 				# result = gen_quad(left_op, operator, right_op)
@@ -788,25 +799,8 @@ def generate_quadruple(operations):
 				# guarda el tipo del resultado
 				type_stack.append(result_type)
 			else:
-				error('Type mismatch: los tipos no coinciden')
+				error('Type mismatch: types do not match')
 
-
-	# 	#...
-		# quadruples.append([])
-
-# def gen_quad(left_op, operator, right_op):
-# 	if(operator == '+'):
-# 		result = left_op + right_op
-# 	elif(operator == '-'):
-# 		result = left_op - right_op
-# 	elif(operator == '*'):
-# 		result = left_op * right_op
-# 	elif(operator == '/'):
-# 		result = left_op / right_op
-# 	else:
-# 		error('operación no válida')
-
-# 	return result
 
 
 # factores
@@ -816,18 +810,17 @@ def p_factor(p):
 	| CTE_F r_push_cte_f
 	| CTE_CH r_push_cte_c
 	| variable
-	| act_flag_llamada llamada
+	| llamada_exp
 	'''
 
-# actualiza la flag de llamada en una expresión
-def p_act_flag_llamada(p):
-	'''act_flag_llamada : '''
+# # actualiza la flag de llamada en una expresión
+# def p_r_act_flag_llamada(p):
+# 	'''r_act_flag_llamada : '''
 
-	global bool_llamada_exp
+# 	global bool_llamada_exp
 
-	# se le asigna true
-	bool_llamada_exp = True
-
+# 	# se le asigna true
+# 	bool_llamada_exp = True
 
 # guarda la cte en el diccionario de ctes
 # lo agrega a la pila de operandos
@@ -895,7 +888,7 @@ def cte_exists(cte, cte_type):
 def p_retorno(p):
 	'retorno : REGRESA PARENT_A expresion PARENT_C r_generate_quad_retorno'
 
-
+# genera el cuadruplo de retorno de una funcion
 def p_r_generate_quad_retorno(p):
 	'''r_generate_quad_retorno : '''
 
@@ -923,6 +916,7 @@ def p_r_generate_quad_retorno(p):
 		symbol_table['global']['vars'][func_name]['address'] = var
 
 		bool_retorno = True
+
 
 # estatuto de lectura
 def p_lectura(p):
@@ -1277,6 +1271,7 @@ def p_r_goto_for(p):
 
 	fill(end, q_count)
 
+
 # # empty
 # def p_empty(p):
 # 	'''empty :'''
@@ -1389,7 +1384,6 @@ def assign_address(func, type_value):
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_bool'] += 1
-
 	elif(func != 'cte'):
 		if(type_value == 'int'):
 			# guarda la dirección
@@ -1507,21 +1501,20 @@ f = open(file, 'r')
 data = f.read()
 f.close()
 yacc.parse(data)
+# print(quadruples)
 # if yacc.parse(data) == "Valid":
 # 	print("Valid input")
 # else:
 # 	print("Invalid input")
 
-print(quadrples)
-
-# print('\n')
-# for q in quadruples:
-# 	print(q)
-# 	print('\n')
-# print('\n')
-# for key, val in symbol_table.items():
-# 	print(key, ':', val)
-# 	print('\n')
+print('\n')
+for q in quadruples:
+	print(q)
+	print('\n')
+print('\n')
+for key, val in symbol_table.items():
+	print(key, ':', val)
+	print('\n')
 
 # print("---------------------- \n")
 # for key, val in ctes_table.items():

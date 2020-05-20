@@ -6,7 +6,7 @@ principal()
 {
 	a = 5;
 	b = 15;
-	prom = a / 2;
+	prom = a / 2.2;
     si (prom > 10) entonces {
 		escribe("promedio mayor a 10");
 	} 
