@@ -79,7 +79,8 @@ tokens = [
 ]
 
 #Regular expressions
-t_CTE_CH = r'\'.\''
+# t_CTE_CH = r'\'.\''
+t_CTE_CH = r'\'(.|\\.)\''
 t_CTE_STR = r'\".*\"'
 t_COMA = r','
 t_PUNTOCOMA = r';'

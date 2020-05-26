@@ -24,7 +24,7 @@ var int x;
 	x = 0;
 	mientras (x < 11) haz
 	{
-	Arreglo[x] = y * x;
+	%%Arreglo[x] = y * x;
 	x = x+1;
 	}
 }
@@ -35,15 +35,18 @@ principal()
 	inicia (p * j - 5, 2.2, 'a');
 	desde i = 0 hasta 9 hacer
 		{ 
-		Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
+		p = fact(p);
+		%%Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
 		}
 	desde i = 0 hasta 9 hacer
 		{ 
-		OtroArreglo[i] = Arreglo[i] - p;
+		p = j;
+		%%OtroArreglo[i] = Arreglo[i] - p;
 		}
 	mientras (i < 10) haz
 	{
-		escribe("Otros datos", OtroArreglo[i], p, i + OtroArreglo[i]);
+		%%escribe("Otros datos", OtroArreglo[i], p, i + OtroArreglo[i]);
+		escribe("Otros datos", p, i);
 		i = i + 1;
 	}
 }
