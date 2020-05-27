@@ -405,7 +405,7 @@ def p_r_sum_addr(p):
 	# se suma uno al contador de variables temporales de la funcion	
 	temp_count += 1
 
-	quad = ['+', aux, dirB, result]
+	quad = ['+D', aux, dirB, result]
 
 	# guarda el cuadruplo en el stack
 	quadruples.append(quad)

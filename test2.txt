@@ -1,7 +1,7 @@
 programa foreveralone; 
 var
 	int i, j, p;
-	int Arreglo[5], OtroArreglo[10];
+	int Arreglo[10], OtroArreglo[10];
 	float valor; 
 
 funcion int fact (int j)
@@ -24,7 +24,7 @@ var int x;
 	x = 0;
 	mientras (x < 11) haz
 	{
-	%%Arreglo[x] = y * x;
+	Arreglo[x] = y * x;
 	x = x+1;
 	}
 }
@@ -36,16 +36,16 @@ principal()
 	desde i = 0 hasta 9 hacer
 		{ 
 		p = fact(p);
-		%%Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
+		Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
 		}
 	desde i = 0 hasta 9 hacer
 		{ 
 		p = j;
-		%%OtroArreglo[i] = Arreglo[i] - p;
+		OtroArreglo[i] = Arreglo[i] - p;
 		}
 	mientras (i < 10) haz
 	{
-		%%escribe("Otros datos", OtroArreglo[i], p, i + OtroArreglo[i]);
+		escribe("Otros datos", OtroArreglo[i], p, i + OtroArreglo[i]);
 		escribe("Otros datos", p, i);
 		i = i + 1;
 	}
