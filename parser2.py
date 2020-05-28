@@ -136,14 +136,14 @@ for_stack = []
 def p_programa(p) :
 	'programa : PROGRAMA ID PUNTOCOMA prog r_end_prog'
 	
-	global symbol_table
+	# global symbol_table
 
-	program_name = p[2]
+	# program_name = p[2]
 
-	# guardo el nombre del programa
-	symbol_table[program_name] =  {
-		'type' : 'program'
-	}
+	# # guardo el nombre del programa
+	# symbol_table[program_name] =  {
+	# 	'type' : 'program'
+	# }
 
 # genera cuadruplo de final de función
 def p_r_end_prog(p):
@@ -995,6 +995,7 @@ def p_r_push_cte_c(p):
 	'''r_push_cte_c : '''
 	global op_stack, type_stack
 	cte = p[-1]
+	print(cte)
 	cte_exists(cte, 'cte_char')
 
 	op_stack.append(ctes_table[cte])
@@ -1089,11 +1090,16 @@ def p_r_generate_quad_leer(p):
 def p_escritura(p):
 	'escritura : ESCRIBIR PARENT_A escr PARENT_C'
 
+# imprimir uno o varios letreros o expresiones
+def p_escr(p):
+	'''escr : escritura_dos
+	| escritura_dos COMA escr
+	'''
 
 # imprimir letrero o funcion
 def p_escritura_dos(p):
-	'''escritura_dos : CTE_STR r_push_cte_str
-	| expresion
+	'''escritura_dos : CTE_STR r_push_cte_str r_generate_quad_escr
+	| expresion r_generate_quad_escr
 	'''
 
 # guarda la cte en el diccionario de ctes
@@ -1126,12 +1132,6 @@ def p_r_generate_quad_escr(p):
 		q_count += 1
 	else:
 		error(p, 'Print action is not valid')
-
-# imprimir uno o varios letreros o expresiones
-def p_escr(p):
-	'''escr : escritura_dos r_generate_quad_escr
-	| escritura_dos r_generate_quad_escr COMA escr
-	'''
 
 # ESTATUTOS IF
 def p_decision(p):
@@ -1810,16 +1810,25 @@ def build(file):
 
 	# print(quadruples)
 	# print('\n')
-	# print(symbol_table)
+	print(symbol_table)
 	# print('\n')
 	# print(ctes_table)
 	# print('\n')
+	st = {}
+	for key in symbol_table.keys():
+		print(key)
+		st[key] = {
+			'cont_vars' : symbol_table[key]['cont_vars'],
+			'cont_temps':  symbol_table[key]['cont_temps'],
+			'quad_cont':  symbol_table[key]['quad_cont']
+		}
+
 	file = open("datos.txt", "w")
 
 	d = {
 		'quadruples' : quadruples,
 		'ctes' : ctes_table,
-		'symbol_table' : symbol_table
+		'symbol_table' : st
 	}
 
 	file.write(str(d))

@@ -35,6 +35,8 @@ principal()
 	inicia (p * j - 5, 2.2, 'a');
 	desde i = 0 hasta 9 hacer
 		{ 
+		%%escribe("i:", "**********************************************");
+		escribe(i);
 		p = fact(p);
 		Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
 		}

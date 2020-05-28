@@ -79,9 +79,8 @@ tokens = [
 ]
 
 #Regular expressions
+# t_CTE_STR = r'\".*\"'
 # t_CTE_CH = r'\'.\''
-t_CTE_CH = r'\'(.|\\.)\''
-t_CTE_STR = r'\".*\"'
 t_COMA = r','
 t_PUNTOCOMA = r';'
 # t_DOSPUNTOS = r':'
@@ -101,15 +100,21 @@ t_POR = r'\*'
 t_DIV = r'/'
 
 
-# A string containing ignored characters (spaces and tabs)
-t_ignore  = ' \t'
-
 def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     # r'[A-za-z]([A-za-z]|[0-9])*'
     t.type = reserved.get(t.value, 'ID')
     return t
 
+def t_CTE_STR(t):                                        
+    r'\".*?\"'
+    t.value = t.value[1:-1] # remuevo las comillas
+    return t 
+
+def t_CTE_CH(t):                                        
+    r'\'.\''
+    t.value = t.value[1:-1] # remuevo las comillas
+    return t 
 # # Define a variable int
 # def t_CTE_I(t):
 #     r'\d+'
@@ -173,6 +178,9 @@ def t_newline(t):
 def t_comment(t):
     r'\%\%.*'
     pass
+
+# A string containing ignored characters (spaces and tabs)
+t_ignore  = ' \t\r\n'
 
 # Error handling rule
 def t_error(t):
@@ -243,3 +251,12 @@ lex.lex()
 #     if not tok: 
 #     	break      # No more input
 #     print(tok)
+
+# def buildlexer(file):
+# 	lex.input(data)
+# 	# Tokenize
+# 	while 1:
+# 	    tok = lex.token()
+# 	    if not tok: 
+# 	    	break      # No more input
+# 	    print(tok)
