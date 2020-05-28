@@ -47,12 +47,12 @@ for key, val in ctes_table.items():
 class Memory():
 	"""docstring for Memory"""
 	def __init__(self, size_i, size_f, size_c, size_b, size_p):
-		print(size_i, size_f, size_c, size_b)
-		self.int_mem = [None] * size_i
-		self.float_mem = [None] * size_f
-		self.char_mem = [None] * size_c
-		self.bool_mem = [None] * size_b
-		self.point_mem = [None] * size_p
+		print(size_i, size_f, size_c, size_b, size_p)
+		self.int_mem = [0] * size_i
+		self.float_mem = [0.0] * size_f
+		self.char_mem = [''] * size_c
+		self.bool_mem = [False] * size_b
+		self.point_mem = [0] * size_p
 
 
 def init_Memory(func_name):
@@ -94,6 +94,7 @@ def get_val(addr):
 	# Variables Globales
 	# int
 	if addr >= 1 and addr <= 3999:
+		# print(addr)
 		return int(global_mem.int_mem[addr - 1])
 	# float
 	if addr >= 4000 and addr <= 6999:
@@ -146,7 +147,7 @@ def get_val(addr):
 	# Pointers
 	if addr >= 43000 and addr <= 45999:
 		# la dirección del indice es el key de la direccion
-		ad = local_mem.point_mem[addr - 43000]
+		ad = temp_mem.point_mem[addr - 43000]
 		correct_addr = get_val(ad)
 		return correct_addr
 
@@ -162,55 +163,57 @@ def assign_val(addr, result):
 		# print(global_mem.int_mem)
 		global_mem.int_mem[addr - 1] = result
 	# float
-	if addr >= 4000 and addr <= 6999:
-		global_mem.int_mem[addr - 4000] = result
+	elif addr >= 4000 and addr <= 6999:
+		global_mem.float_mem[addr - 4000] = result
 	# char
-	if addr >= 7000 and addr <= 9999:
-		global_mem.int_mem[addr - 7000] = result
+	elif addr >= 7000 and addr <= 9999:
+		global_mem.char_mem[addr - 7000] = result
 	
 	# Temporales 
 	# int
-	if addr >= 10000 and addr <= 12999:
+	elif addr >= 10000 and addr <= 12999:
 		temp_mem.int_mem[addr - 10000] = result
 	# float
-	if addr >= 13000 and addr <= 15999:
-		temp_mem.int_mem[addr - 13000] = result
+	elif addr >= 13000 and addr <= 15999:
+		temp_mem.float_mem[addr - 13000] = result
 	# char
-	if addr >= 16000 and addr <= 18999:
-		temp_mem.int_mem[addr - 16000] = result
+	elif addr >= 16000 and addr <= 18999:
+		temp_mem.char_mem[addr - 16000] = result
 	# bool
-	if addr >= 19000 and addr <= 21999:
-		temp_mem.int_mem[addr - 19000] = result
+	elif addr >= 19000 and addr <= 21999:
+		# print(result)
+		temp_mem.bool_mem[addr - 19000] = result
+		# print(temp_mem.bool_mem[addr - 19000])
 
 	# Variables Locales
 	# int
-	if addr >= 22000 and addr <= 24999:
+	elif addr >= 22000 and addr <= 24999:
 		# print(result)
 		# print(local_mem.int_mem[addr - 22000])
 		local_mem.int_mem[addr - 22000] = result
 	# float
-	if addr >= 25000 and addr <= 27999:
-		local_mem.int_mem[addr - 25000] = result
+	elif addr >= 25000 and addr <= 27999:
+		local_mem.float_mem[addr - 25000] = result
 	# char
-	if addr >= 28000 and addr <= 30999:
-		local_mem.int_mem[addr - 28000] = result
+	elif addr >= 28000 and addr <= 30999:
+		local_mem.char_mem[addr - 28000] = result
 	
 	# Constantes
 	# int
-	if addr >= 31000 and addr <= 33999:
+	elif addr >= 31000 and addr <= 33999:
 		list(ctes_table.keys())[list(ctes_table.values()).index(addr)] = result
 	# float
-	if addr >= 34000 and addr <= 36999:
+	elif addr >= 34000 and addr <= 36999:
 		list(ctes_table.keys())[list(ctes_table.values()).index(addr)] = result
 	# char
-	if addr >= 37000 and addr <= 39999:
+	elif addr >= 37000 and addr <= 39999:
 		list(ctes_table.keys())[list(ctes_table.values()).index(addr)] = result
 	# bool
-	if addr >= 40000 and addr <= 42999:
+	elif addr >= 40000 and addr <= 42999:
 		list(ctes_table.keys())[list(ctes_table.values()).index(addr)] = result
 
 	# Pointers
-	if addr >= 43000 and addr <= 45999:
+	elif addr >= 43000 and addr <= 45999:
 		temp_mem.point_mem[addr - 43000] = result
 
 # acciones de los cuadruplos
@@ -230,6 +233,8 @@ def quad_actions():
 		print(ins_p, quad)
 		val = get_val(quad[1])
 		# si es false
+
+		print("result: ", val)
 		if val == False:
 			ins_p = quad[3]
 		# si es true continua
@@ -309,11 +314,18 @@ def quad_actions():
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
+
+		print("val1: ", val1)
+		print("val2: ", val2)
 		
 		if val1 < val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
+
+			print("result: ", True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
+
+			print("result: ", False)
 		
 		ins_p += 1
 
@@ -397,6 +409,8 @@ def quad_actions():
 		ins_p += 1
 		quad = quadruples[ins_p]
 
+		# print('temp: ', temp_mem.bool_mem)
+
 		# asigna el valor a la variable global con el nombre de la funcion
 		if quad[0] == '=':
 			val1 = get_val(quad[1])
@@ -404,7 +418,10 @@ def quad_actions():
 			assign_val(quad[3], res)
 			ins_p += 1
 
-		print(pointer_stack)
+		# print(pointer_stack)
+
+		# print('local_mem: ', local_stack)
+		# print('temp_mem', temp_stack)
 
 		if local_stack:
 			local_mem = local_stack.pop()
@@ -412,11 +429,13 @@ def quad_actions():
 			local_mem = None
 
 		if temp_stack:
+			# print('temp memory')
 			temp_mem = temp_stack.pop()
+			# print(temp_mem.bool_mem)
 		else:
 			temp_mem = None
 
-		print(pointer_stack)
+		# print(pointer_stack)
 		ins_p = pointer_stack.pop()
 		ins_p += 1
 
@@ -428,7 +447,7 @@ def quad_actions():
 		# define el espacio de la memoria temporal local
 		temp_mem = Memory(cont_temps[0], cont_temps[1], cont_temps[2], cont_temps[3], cont_temps[4])
 
-		print('stack: ', params_stack)
+		# print('stack: ', params_stack)
 		for p in params_stack:
 			assign_val(p[0], p[1])
 
@@ -438,12 +457,12 @@ def quad_actions():
 		pointer_stack.append(ins_p)
 		# obtiene el nombre de la función
 		func_name = quad[3]
-		print(func_name)
+		# print(func_name)
 		ins_p = symbol_table[func_name]['quad_cont']
 
 	if quad[0] == 'ERA':
 		print(ins_p, quad)
-		print('era')
+		# print('era')
 		func_name = quad[3]
 		init_Memory(func_name)
 		
@@ -459,7 +478,7 @@ def quad_actions():
 		# obtiene el valor a asignar
 		param = get_val(quad[1])
 		p = [quad[3], param]
-		print('param', p)
+		# print('param', p)
 		# se le asigna el valor a la dirección del parámetro
 		# assign_val(quad[3], param)
 		params_stack.append(p)
@@ -478,7 +497,7 @@ def quad_actions():
 		else:
 			temp_mem = None
 
-		print(pointer_stack)
+		# print(pointer_stack)
 		ins_p = pointer_stack.pop()
 		ins_p += 1
 
@@ -489,6 +508,7 @@ def quad_actions():
 
 		# checa que el valor esté entre 0 y la dimensión
 		if index < 0 or index >= quad[3]:
+			print(index)
 			print("Index out of bounds")
 			sys.exit()
 		
