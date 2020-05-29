@@ -8,7 +8,7 @@ funcion int fact (int j)
 var int i;
 {
 	i = j + (p - j * 2 + j);
-	si (j == 1) entonces 
+	si (j <= 1) entonces 
 	{ 
 	regresa (j);
 	}
@@ -18,11 +18,11 @@ var int i;
 	}
 }
 
-funcion void inicia (int y, float a, char b)
+funcion void inicia (int y)
 var int x;
 {
 	x = 0;
-	mientras (x < 11) haz
+	mientras (x < 10) haz
 	{
 	Arreglo[x] = y * x;
 	x = x+1;
@@ -31,21 +31,17 @@ var int x;
 
 principal()
 {
-	lee(p); j = p * 2;
-	inicia (p * j - 5, 2.2, 'a');
+	lee(p); 
+	j = p * 2;
+	inicia (p * j - 5);
 	desde i = 0 hasta 9 hacer
 		{ 
-		%%escribe("i:", "**********************************************");
-		escribe(i);
-		p = fact(p);
+		%%p = fact(p);
+		escribe("i:", "**********************************************", i);
 		Arreglo[i] = Arreglo[i] * fact(Arreglo[i] - p);
 		}
-	desde i = 0 hasta 9 hacer
-		{ 
-		p = j;
-		OtroArreglo[i] = Arreglo[i] - p;
-		}
-	mientras (i < 10) haz
+	
+	mientras (i < 2) haz
 	{
 		escribe("Otros datos", OtroArreglo[i], p, i + OtroArreglo[i]);
 		escribe("Otros datos", p, i);

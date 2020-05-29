@@ -61,6 +61,16 @@ def init_Memory(func_name):
 	cont_vars = symbol_table[func_name]['cont_vars']
 	cont_temps = symbol_table[func_name]['cont_temps']
 
+def print_mem(m_name):
+	if m_name != None:
+		print('ints: ', m_name.int_mem)
+		print('floats: ', m_name.float_mem)
+		print('chars: ', m_name.char_mem)
+		print('bools: ', m_name.bool_mem)
+		print('pointers: ', m_name.point_mem)
+	else:
+		print('None')
+
 # DIRECCIONES DE MEMORIA
 # GLOBAL
 # Global int : 1 - 3999
@@ -98,10 +108,10 @@ def get_val(addr):
 		return int(global_mem.int_mem[addr - 1])
 	# float
 	if addr >= 4000 and addr <= 6999:
-		return float(global_mem.int_mem[addr - 4000])
+		return float(global_mem.float_mem[addr - 4000])
 	# char
 	if addr >= 7000 and addr <= 9999:
-		return global_mem.int_mem[addr - 7000]
+		return global_mem.char_mem[addr - 7000]
 	
 	# Temporales
 	# int
@@ -109,13 +119,15 @@ def get_val(addr):
 		return int(temp_mem.int_mem[addr - 10000])
 	# float
 	if addr >= 13000 and addr <= 15999:
-		return float(temp_mem.int_mem[addr - 13000])
+		return float(temp_mem.float_mem[addr - 13000])
 	# char
 	if addr >= 16000 and addr <= 18999:
-		return temp_mem.int_mem[addr - 16000]
+		return temp_mem.char_mem[addr - 16000]
 	# bool
 	if addr >= 19000 and addr <= 21999:
-		return bool(temp_mem.int_mem[addr - 19000])
+		# print(addr - 19000)
+		# print(temp_mem.bool_mem[addr - 19000])
+		return bool(temp_mem.bool_mem[addr - 19000])
 
 	# Variables Locales
 	# int
@@ -125,10 +137,10 @@ def get_val(addr):
 		return int(local_mem.int_mem[addr - 22000])
 	# float
 	if addr >= 25000 and addr <= 27999:
-		return float(local_mem.int_mem[addr - 25000])
+		return float(local_mem.float_mem[addr - 25000])
 	# char
 	if addr >= 28000 and addr <= 30999:
-		return local_mem.int_mem[addr - 28000]
+		return local_mem.char_mem[addr - 28000]
 	
 	# Constantes
 	# int
@@ -230,11 +242,18 @@ def quad_actions():
 		ins_p = quad[3]
 
 	if quad[0] == 'GOTOF':
-		print(ins_p, quad)
+		# print(ins_p, quad)
+		# print('local_mem')
+		# print_mem(local_mem)
+		# print('temp_mem')
+		# print_mem(temp_mem)
+		# print('global_mem')
+		# print_mem(global_mem)
+
 		val = get_val(quad[1])
 		# si es false
 
-		print("result: ", val)
+		# print("result: ", val)
 		if val == False:
 			ins_p = quad[3]
 		# si es true continua
@@ -248,6 +267,13 @@ def quad_actions():
 		res = val1 + val2
 		# print(val1, val2, res)
 		assign_val(quad[3], res)
+
+		# print('local_mem')
+		# print_mem(local_mem)
+		# print('temp_mem')
+		# print_mem(temp_mem)
+		# print('global_mem')
+		# print_mem(global_mem)
 		
 		ins_p += 1
 
@@ -279,10 +305,29 @@ def quad_actions():
 		ins_p += 1
 
 	if quad[0] == '=':
-		print(ins_p, quad)
+		# print(ins_p, quad)
+		# print('ASIGNACION *********************************')
+		# print('ANTES')
+		# print('local_mem')
+		# print_mem(local_mem)
+		# print('temp_mem')
+		# print_mem(temp_mem)
+		# print('global_mem')
+		# print_mem(global_mem)
+
+
 		res = get_val(quad[1])
 		# res = val1
 		assign_val(quad[3], res)
+
+		# print('\n')
+		# print('DESPUES')
+		# print('local_mem')
+		# print_mem(local_mem)
+		# print('temp_mem')
+		# print_mem(temp_mem)
+		# print('global_mem')
+		# print_mem(global_mem)
 		
 		ins_p += 1
 
@@ -321,11 +366,11 @@ def quad_actions():
 		if val1 < val2:
 			assign_val(quad[3], True)
 
-			print("result: ", True)
+			# print("result: ", True)
 		else:
 			assign_val(quad[3], False)
 
-			print("result: ", False)
+			# print("result: ", False)
 		
 		ins_p += 1
 
@@ -335,9 +380,9 @@ def quad_actions():
 		val2 = get_val(quad[2])
 		
 		if val1 > val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
 		
 		ins_p += 1
 
@@ -347,9 +392,9 @@ def quad_actions():
 		val2 = get_val(quad[2])
 		
 		if val1 <= val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
 		
 		ins_p += 1
 
@@ -359,9 +404,9 @@ def quad_actions():
 		val2 = get_val(quad[2])
 		
 		if val1 >= val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
 		
 		ins_p += 1
 
@@ -371,9 +416,9 @@ def quad_actions():
 		val2 = get_val(quad[2])
 		
 		if val1 == val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
 		
 		ins_p += 1
 
@@ -383,9 +428,9 @@ def quad_actions():
 		val2 = get_val(quad[2])
 		
 		if val1 != val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
 		
 		ins_p += 1
 
@@ -407,7 +452,10 @@ def quad_actions():
 		print(ins_p, quad)
 		# va al siguiente cuadruplo
 		ins_p += 1
+		# obtiene el cuadruplo en la siguiente posición
 		quad = quadruples[ins_p]
+
+		print(quad)
 
 		# print('temp: ', temp_mem.bool_mem)
 
@@ -416,12 +464,19 @@ def quad_actions():
 			val1 = get_val(quad[1])
 			res = val1
 			assign_val(quad[3], res)
-			ins_p += 1
+			# ins_p += 1
 
 		# print(pointer_stack)
 
 		# print('local_mem: ', local_stack)
 		# print('temp_mem', temp_stack)
+
+		# print('local_mem')
+		# print_mem(local_mem)
+		# print('temp_mem')
+		# print_mem(temp_mem)
+		# print('global_mem')
+		# print_mem(global_mem)
 
 		if local_stack:
 			local_mem = local_stack.pop()
@@ -429,13 +484,20 @@ def quad_actions():
 			local_mem = None
 
 		if temp_stack:
-			# print('temp memory')
+			print('temp memory')
 			temp_mem = temp_stack.pop()
 			# print(temp_mem.bool_mem)
 		else:
 			temp_mem = None
 
-		# print(pointer_stack)
+		# print('local_mem')
+		# print_mem(local_mem)
+		# print('temp_mem')
+		# print_mem(temp_mem)
+		# print('global_mem')
+		# print_mem(global_mem)
+
+		# print('pointer stack: ', pointer_stack)
 		ins_p = pointer_stack.pop()
 		ins_p += 1
 
@@ -508,7 +570,7 @@ def quad_actions():
 
 		# checa que el valor esté entre 0 y la dimensión
 		if index < 0 or index >= quad[3]:
-			print(index)
+			print('index: ', index)
 			print("Index out of bounds")
 			sys.exit()
 		
