@@ -1,9 +1,16 @@
 import sys
 import parser2 as parser
 
-# se manda el arhivo al parser
-file = sys.argv[1]
-parser.build(file)
+def error(message):
+	print(message)
+	sys.exit()
+
+if len(sys.argv) > 1:
+	# se manda el arhivo al parser
+	file = sys.argv[1]
+	parser.build(file)
+else:
+	error("No file found")
 
 # se lee el resultado de los quadruplos, la tabla de ctes y symboltable
 f2 = open('datos.txt', 'r', newline='\n')
@@ -241,8 +248,8 @@ def quad_actions():
 		print(ins_p, quad)
 		ins_p = quad[3]
 
-	if quad[0] == 'GOTOF':
-		# print(ins_p, quad)
+	elif quad[0] == 'GOTOF':
+		print(ins_p, quad)
 		# print('local_mem')
 		# print_mem(local_mem)
 		# print('temp_mem')
@@ -253,14 +260,14 @@ def quad_actions():
 		val = get_val(quad[1])
 		# si es false
 
-		# print("result: ", val)
+		print("result: ", val)
 		if val == False:
 			ins_p = quad[3]
 		# si es true continua
 		else:
 			ins_p += 1
 
-	if quad[0] == '+':
+	elif quad[0] == '+':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -277,7 +284,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '-':
+	elif quad[0] == '-':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -286,7 +293,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '*':
+	elif quad[0] == '*':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -295,16 +302,20 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '/':
+	elif quad[0] == '/':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
+
+		if val2 == 0:
+			error('Division by 0')
+
 		res = val1 / val2
 		assign_val(quad[3], res)
 		
 		ins_p += 1
 
-	if quad[0] == '=':
+	elif quad[0] == '=':
 		# print(ins_p, quad)
 		# print('ASIGNACION *********************************')
 		# print('ANTES')
@@ -331,7 +342,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '|':
+	elif quad[0] == '|':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -343,7 +354,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '&':
+	elif quad[0] == '&':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -355,7 +366,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '<':
+	elif quad[0] == '<':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -366,15 +377,15 @@ def quad_actions():
 		if val1 < val2:
 			assign_val(quad[3], True)
 
-			# print("result: ", True)
+			print("result: ", True)
 		else:
 			assign_val(quad[3], False)
 
-			# print("result: ", False)
+			print("result: ", False)
 		
 		ins_p += 1
 
-	if quad[0] == '>':
+	elif quad[0] == '>':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -386,7 +397,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '<=':
+	elif quad[0] == '<=':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -398,7 +409,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '>=':
+	elif quad[0] == '>=':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -410,7 +421,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '==':
+	elif quad[0] == '==':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -422,7 +433,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == '!=':
+	elif quad[0] == '!=':
 		print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
@@ -434,21 +445,21 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == 'LEER':
+	elif quad[0] == 'LEER':
 		print(ins_p, quad)
 		res = input()
 		assign_val(quad[3], res)
 
 		ins_p += 1 
 
-	if quad[0] == 'ESCRIBE':
+	elif quad[0] == 'ESCRIBE':
 		print(ins_p, quad)
 		res = get_val(quad[3])
 		print(res)
 
 		ins_p += 1
 
-	if quad[0] == 'REGRESA':
+	elif quad[0] == 'REGRESA':
 		print(ins_p, quad)
 		# va al siguiente cuadruplo
 		ins_p += 1
@@ -501,7 +512,7 @@ def quad_actions():
 		ins_p = pointer_stack.pop()
 		ins_p += 1
 
-	if quad[0] == 'GOSUB':
+	elif quad[0] == 'GOSUB':
 		print(ins_p, quad)
 		print('gosub')
 		# define el espacio de la memoria local
@@ -522,7 +533,7 @@ def quad_actions():
 		# print(func_name)
 		ins_p = symbol_table[func_name]['quad_cont']
 
-	if quad[0] == 'ERA':
+	elif quad[0] == 'ERA':
 		print(ins_p, quad)
 		# print('era')
 		func_name = quad[3]
@@ -535,7 +546,7 @@ def quad_actions():
 		
 		ins_p += 1
 
-	if quad[0] == 'PARAMETER':
+	elif quad[0] == 'PARAMETER':
 		print(ins_p, quad)
 		# obtiene el valor a asignar
 		param = get_val(quad[1])
@@ -547,7 +558,7 @@ def quad_actions():
 
 		ins_p += 1
 
-	if quad[0] == 'ENDFunc':
+	elif quad[0] == 'ENDFunc':
 		print(ins_p, quad)
 		if local_stack:
 			local_mem = local_stack.pop()
@@ -563,7 +574,7 @@ def quad_actions():
 		ins_p = pointer_stack.pop()
 		ins_p += 1
 
-	if quad[0] == 'VERIFY':
+	elif quad[0] == 'VERIFY':
 		print(ins_p, quad)
 
 		index = get_val(quad[1])
@@ -571,14 +582,13 @@ def quad_actions():
 		# checa que el valor esté entre 0 y la dimensión
 		if index < 0 or index >= quad[3]:
 			print('index: ', index)
-			print("Index out of bounds")
-			sys.exit()
+			error("Index out of bounds")
 		
 		# va al siguiente cuadruplo
 		ins_p += 1
 		
 
-	if quad[0] == '+D':
+	elif quad[0] == '+D':
 
 		print(ins_p, quad)
 		# obtiene la direccion base
@@ -594,8 +604,9 @@ def quad_actions():
 		assign_val(quad[3], result)
 		ins_p += 1
 
-	if quad[0] == 'ENDPROG':
+	else:
 		print(ins_p, quad)
+		print('endprog')
 		ins_p += 1
 
 	# if quad[0] == '':

@@ -254,7 +254,7 @@ def p_save_vars_name(p):
 
 	# checar si la variable ya existe dentro de la función
 	if var_name in list_vars:
-		error(p, 'variable ya declarada')
+		error( 'Variable' + var_name + 'has already been declared')
 
 	# si no existe, la agrega a la lista de variables
 	list_vars[var_name] = {
@@ -308,7 +308,7 @@ def p_r_push_id(p):
 		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
 	# si la variable no existe, manda error
 	else:
-		error(p, 'variable no declarada')
+		error( 'Undeclared variable')
 
 	# op_stack.append(var_name)
 	# type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
@@ -339,7 +339,7 @@ def p_r_is_array(p):
 	print('var', var_name)
 	print(parent_func)
 	if not symbol_table[parent_func]['vars'][var_name]['dim']:
-		error(p, "Variable is not an array")
+		error( "Variable is not an array")
 
 	# agrega la variable a la pila de dimensiones
 	dim_stack.append([var_name, var_dir, parent_func])
@@ -358,7 +358,7 @@ def p_r_verify_dim(p):
 
 	# verifica que el resultado de la expresion de tipo int
 	if tipo != 'int':
-		error(p, "Array dimension must be a 'int' value")
+		error( "Array dimension must be an 'int' value")
 
 	dimension = dim_stack.pop()
 	dim_stack.append(dimension)
@@ -438,7 +438,7 @@ def p_r_generate_endfunc(p):
 	# verifica que la funcion no sea void
 	# y si no tiene valor de retorno marca error
 	if not bool_retorno and symbol_table[func_name]['func_type'] != 'void':
-		error(p, 'Function ' + func_name + ' must have a return value')
+		error( 'Function ' + func_name + ' must have a return value')
 
 	# elimina la tabla de variables de la función
 	symbol_table[func_name]['vars'] = {}
@@ -477,11 +477,11 @@ def p_create_func_table(p):
 	# checa si la función ya está declarada
 	# para que no haya dos funciones con el mismo nombre
 	if func_name in symbol_table:
-		error(p, 'Function ' + func_name + ' has already been declared')
+		error( 'Function ' + func_name + ' has already been declared')
 
 	# checa que la funcion no exista como variable global
 	if func_name in symbol_table['global']['vars']:
-		error(p, 'Variable with same name as a function')
+		error( 'Function with same name as a global variable')
 
 	# sino existe, la guarda en la tabla de funciones
 	symbol_table[func_name] = {
@@ -559,7 +559,7 @@ def p_save_params_list(p):
 
 	#checa si el parámetro ya existe en la lista de parámetros 
 	if param_name in list_vars:
-		error(p, 'Parameter name already exists')
+		error( 'Parameter ' + param_name + ' already exists')
 
 	addr = assign_address(func_name, current_type)
 	# guarda los parametros en la lista de parametros
@@ -644,7 +644,7 @@ def generate_quadruple_asig(operations):
 				quadruples.append(quad)
 				q_count += 1
 			else:
-				error('Type mismatch: types do not match')
+				error('Type-mismatch: types do not match')
 
 
 # llamada de una funcion void
@@ -661,7 +661,7 @@ def p_r_check_func_exists(p):
 	llamada_func = p[-1]
 
 	if llamada_func not in symbol_table:
-		error(p, 'function does not exist')
+		error( 'Function' + llamada_func + ' does not exist')
 
 # Genera cuadruplo ERA
 def p_r_generate_ERA(p):
@@ -671,7 +671,7 @@ def p_r_generate_ERA(p):
 
 	# si la funcion no es tipo void, marca error
 	if symbol_table[llamada_func]['func_type'] != 'void':
-		error(p, llamada_func + ' is a not void function')
+		error( llamada_func + ' is a not void function')
 
 	else:
 
@@ -694,9 +694,9 @@ def p_r_generate_gosub(p):
 
 	# checa que no se haya excedido ni faltado el numero de parametros
 	if param_count < symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Missing parameters for function ' + llamada_func)
+		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Exceeded number of parameters for function ' + llamada_func)
+		error( 'Exceeded number of parameters for function ' + llamada_func)
 	else:
 
 		quad = ['GOSUB', None, None, llamada_func]
@@ -721,7 +721,7 @@ def p_r_generate_ERA_dos(p):
 
 	# si la funcion es de tipo void, marca error
 	if symbol_table[llamada_func]['func_type'] == 'void':
-		error(p, llamada_func + ' is a void function, and does not have a return value')
+		error( llamada_func + ' is a void function, and does not have a return value')
 
 	# genera el cuadruplo ERA
 	quad = ['ERA', None, None, llamada_func]
@@ -745,9 +745,9 @@ def p_r_generate_gosub_dos(p):
 	# print(quadruples)
 	# checa que no se haya excedido ni faltado el numero de parametros
 	if param_count < symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Missing parameters for function ' + llamada_func)
+		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Exceeded number of parameters for function ' + llamada_func)
+		error( 'Exceeded number of parameters for function ' + llamada_func)
 	else:
 
 		quad = ['GOSUB', None, None, llamada_func]
@@ -799,13 +799,14 @@ def p_r_generate_parameter(p):
 
 	# checa que la funcion sí reciba parametros
 	if 'params' not in symbol_table[llamada_func]:
-		error(p, 'Function ' + llamada_func + ' has no parameters')
+		error( 'Function ' + llamada_func + ' has no parameters')
 
 	arg = op_stack.pop()
 	tipo = type_stack.pop()
 
+	# checa que el tipo del parametro coincida
 	if tipo != symbol_table[llamada_func]['params'][param_count]:
-		error(p, 'Type-mismatch: Parameter type does not match')
+		error( 'Type-mismatch: Parameter type does not match')
 
 	param_address = symbol_table[llamada_func]['params_addr'][param_count]
 	# genera cuadruplo parameter
@@ -939,7 +940,7 @@ def generate_quadruple(operations):
 				# guarda el tipo del resultado
 				type_stack.append(result_type)
 			else:
-				error('Type mismatch: types do not match')
+				error('Type-mismatch: types do not match')
 
 
 
@@ -1035,8 +1036,10 @@ def p_r_generate_quad_retorno(p):
 	global op_stack, type_stack, quadruples, q_count, bool_retorno, symbol_table
 
 	# checa si la función es void o main
-	if symbol_table[func_name]['func_type'] == 'void' or symbol_table[func_name] == 'global':
-		error(p, 'Function should not have a return statement')
+	if func_name == 'global':
+		error( 'Function ' + func_name + ' should not have a return statement')
+	elif symbol_table[func_name]['func_type'] == 'void':
+		error( 'Function ' + func_name + ' should not have a return statement')
 
 	if op_stack:
 		var = op_stack.pop()
@@ -1044,7 +1047,7 @@ def p_r_generate_quad_retorno(p):
 
 		# valida que el tipo de retorno sea el mismo que el de la funcion
 		if symbol_table[func_name]['func_type'] != tipo:
-			error(p, 'Type-mismatch: return value is not the correct type')
+			error( 'Type-mismatch: return value for ' + func_name + ' is not the correct type')
 
 		quad = ['REGRESA', None, None, var]
 		
@@ -1131,7 +1134,7 @@ def p_r_generate_quad_escr(p):
 		quadruples.append(quad)
 		q_count += 1
 	else:
-		error(p, 'Print action is not valid')
+		error( 'Print action is not valid')
 
 # ESTATUTOS IF
 def p_decision(p):
@@ -1152,7 +1155,7 @@ def p_r_check_exp_type(p):
 	# si el tipo no es bool -> error
 	if(exp_type != 'bool'):
 		print(exp_type)
-		error(p, 'Type-mismatch')
+		error( 'Type-mismatch: result type is not bool')
 	else:
 		# obtiene el resultado
 		result = op_stack.pop()
@@ -1298,11 +1301,11 @@ def p_r_save_var_for(p):
 		var_type = symbol_table[parent_func]['vars'][var_name]['type']
 	# si la variable no existe, manda error
 	else:
-		error(p, 'Undeclared variable')
+		error( 'Undeclared variable')
 
 	# si el tipo de la variable no es int, manda error
 	if(var_type != 'int'):
-		error(p, 'On FOR statement, variable must be of type integer')
+		error( 'On FOR statement, variable must be of type integer')
 
 	op_stack.append(var_address)
 	type_stack.append('int')
@@ -1325,7 +1328,7 @@ def p_r_generate_quad_asig_for(p):
 			right_type = type_stack.pop()
 
 			if(right_type != 'int'):
-				error(p, 'Type-mismatch: types do not match')
+				error( 'Type-mismatch: types do not match')
 
 			# print(right_op)
 			left_op = op_stack.pop()
@@ -1359,7 +1362,9 @@ def p_r_generate_quad_asig_for(p):
 				for_stack.append(left_op)
 
 			else:
-				error(p, 'Type-mismatch: types do not match')
+				error( 'Type-mismatch: types do not match')
+		else:
+			error( 'Missing assignment in FOR statement')
 
 def p_r_check_exp_for(p):
 	'r_check_exp_for : '
@@ -1371,7 +1376,7 @@ def p_r_check_exp_for(p):
 	# si el tipo no es bool -> error
 	if(exp_type != 'bool'):
 		print(exp_type)
-		error(p, 'Type-mismatch: types do not match')
+		error( 'Type-mismatch: types do not match')
 	else:
 		# obtiene el resultado
 		result = op_stack.pop()
@@ -1429,11 +1434,13 @@ def p_r_goto_for(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    sys.exit()
+	error("Syntax error in input")
+    # sys.exit()
 
-def error(p, message):
+def error(message):
 	print("Error: ", message)
-	p_error(p)
+	# p_error(p)
+	sys.exit()
 
 
 # DIRECCIONES DE MEMORIA
@@ -1802,11 +1809,15 @@ yacc.yacc()
 
 def build(file):
 	global yacc 
-	f = open(file, 'r')
-	# print(file)
-	data = f.read()
-	f.close()
-	yacc.parse(data)
+	try:
+		f = open(file, 'r')
+		# print(file)
+		data = f.read()
+		f.close()
+		yacc.parse(data)
+	except EOFError:
+		print("Could not open file " + file)
+		sys.exit()
 
 	# print(quadruples)
 	# print('\n')
