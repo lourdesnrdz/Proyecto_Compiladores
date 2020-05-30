@@ -180,10 +180,19 @@ def assign_val(addr, result):
 	if addr >= 1 and addr <= 3999:
 		# print(addr - 1)
 		# print(global_mem.int_mem)
-		global_mem.int_mem[addr - 1] = result
+		try:
+			r = int(result)
+			global_mem.int_mem[addr - 1] = result
+		except ValueError:
+			error('Cannot cast ' + result + ' to type int')
 	# float
 	elif addr >= 4000 and addr <= 6999:
-		global_mem.float_mem[addr - 4000] = result
+		try:
+			r = float(result)
+			global_mem.float_mem[addr - 4000] = result
+		except ValueError:
+			error('Cannot cast ' + result + ' to type float')
+		# global_mem.float_mem[addr - 4000] = result
 	# char
 	elif addr >= 7000 and addr <= 9999:
 		global_mem.char_mem[addr - 7000] = result
@@ -191,10 +200,20 @@ def assign_val(addr, result):
 	# Temporales 
 	# int
 	elif addr >= 10000 and addr <= 12999:
-		temp_mem.int_mem[addr - 10000] = result
+		# temp_mem.int_mem[addr - 10000] = result
+		try:
+			r = int(result)
+			temp_mem.int_mem[addr - 10000] = result
+		except ValueError:
+			error('Cannot cast ' + result + ' to type int')
 	# float
 	elif addr >= 13000 and addr <= 15999:
-		temp_mem.float_mem[addr - 13000] = result
+		# temp_mem.float_mem[addr - 13000] = result
+		try:
+			r = float(result)
+			temp_mem.float_mem[addr - 13000] = result
+		except ValueError:
+			error('Cannot cast ' + result + ' to type float')
 	# char
 	elif addr >= 16000 and addr <= 18999:
 		temp_mem.char_mem[addr - 16000] = result
@@ -209,10 +228,20 @@ def assign_val(addr, result):
 	elif addr >= 22000 and addr <= 24999:
 		# print(result)
 		# print(local_mem.int_mem[addr - 22000])
-		local_mem.int_mem[addr - 22000] = result
+		# local_mem.int_mem[addr - 22000] = result
+		try:
+			r = int(result)
+			local_mem.int_mem[addr - 22000] = result
+		except ValueError:
+			error('Cannot cast ' + result + ' to type int')
 	# float
 	elif addr >= 25000 and addr <= 27999:
-		local_mem.float_mem[addr - 25000] = result
+		# local_mem.float_mem[addr - 25000] = result
+		try:
+			r = float(result)
+			local_mem.float_mem[addr - 25000] = result
+		except ValueError:
+			error('Cannot cast ' + result + ' to type float')
 	# char
 	elif addr >= 28000 and addr <= 30999:
 		local_mem.char_mem[addr - 28000] = result
@@ -600,7 +629,7 @@ def quad_actions():
 		result = dirB + index
 
 		# res = get_val(result)
-		# print(res)
+		print(result)
 		assign_val(quad[3], result)
 		ins_p += 1
 

@@ -10,7 +10,7 @@ principal()
 
 	si (n > 1) entonces
 	{
-		fib1 = 1;
+		fib1 = 0;
 		fib2 = 1;
 		escribe(fib1);
 

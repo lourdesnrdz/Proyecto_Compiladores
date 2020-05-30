@@ -1,0 +1,41 @@
+
+programa : PROGRAMA ID PUNTOCOMA prog
+prog : main | dec_vars dec_funciones main | dec_vars main | dec_funciones main
+main : PRINCIPAL PARENT_A PARENT_C dec_est
+dec_vars : VAR create_vars_table vars
+vars : tipo_simple ids_simple PUNTOCOMA | tipo_simple ids_simple PUNTOCOMA vars
+tipo_simple : INT | FLOAT | CHAR
+ids_simple : ID | ID dimension | ID COMA ids_simple | ID dimension COMA ids_simple
+dimension : CORCHETE_A CTE_I CORCHETE_C
+variable : ID | ID dim
+variables : variable | variable COMA variables 
+dim : CORCHETE_A expresion CORCHETE_C
+dec_funciones : funcion | funcion dec_funciones
+funcion : FUNCION tipo_simple ID func_dos | FUNCION VOID ID func_dos
+func_dos : PARENT_A PARENT_C var_funcs | PARENT_A parametros PARENT_C var_funcs
+var_funcs : dec_est | dec_vars dec_est
+parametros : tipo_simple ID  | tipo_simple ID COMA parametros
+dec_est : LLAVE_A LLAVE_C | LLAVE_A estatutos_dos LLAVE_C
+estatutos : asignacion PUNTOCOMA  | llamada PUNTOCOMA  | retorno PUNTOCOMA  | lectura PUNTOCOMA  | escritura PUNTOCOMA  | decision  | ciclo_for  | ciclo_while 
+estatutos_dos : estatutos | estatutos estatutos_dos
+asignacion : variable IGUAL expresion
+llamada : ID PARENT_A PARENT_C | ID PARENT_A expresiones PARENT_C
+expresiones : expresion | expresion COMA expresion
+expresion : t_expresion | t_expresion OR expresion
+t_expresion : g_expresion | g_expresion AND t_expresion
+g_expresion : m_expresion | m_expresion op_logicos m_expresion
+op_logicos : MAYORQUE | MENORQUE | MAYORIGUAL | MENORIGUAL | IGUALIGUAL | DIFERENTE
+m_expresion : termino | termino MAS m_expresion | termino MENOS m_expresion
+termino : factor | factor POR termino | factor DIV termino
+factor : PARENT_A expresion PARENT_C | CTE_I | CTE_F | CTE_CH | variable | llamada
+retorno : REGRESA PARENT_A expresion PARENT_C
+lectura : LEER PARENT_A variables PARENT_C
+escritura : ESCRIBIR PARENT_A escr PARENT_C
+escritura_dos : CTE_STR | expresion
+escr : escritura_dos| escritura_dos COMA escr
+decision : if | if else
+if : SI PARENT_A expresion PARENT_C ENTONCES LLAVE_A estatutos_dos LLAVE_C
+else : SINO LLAVE_A estatutos_dos LLAVE_C
+ciclo_while : MIENTRAS PARENT_A expresion PARENT_C HAZ LLAVE_A estatutos_dos LLAVE_C
+ciclo_for : DESDE variable IGUAL expresion HASTA expresion HACER LLAVE_A estatutos_dos LLAVE_C
+

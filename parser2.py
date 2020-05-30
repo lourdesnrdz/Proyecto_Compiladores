@@ -136,11 +136,12 @@ for_stack = []
 def p_programa(p) :
 	'programa : PROGRAMA ID PUNTOCOMA prog r_end_prog'
 	
-	# global symbol_table
+	global symbol_table
 
-	# program_name = p[2]
+	program_name = p[2]
 
-	# # guardo el nombre del programa
+	# guardo el nombre del programa
+	symbol_table['program'] = program_name
 	# symbol_table[program_name] =  {
 	# 	'type' : 'program'
 	# }
@@ -661,7 +662,7 @@ def p_r_check_func_exists(p):
 	llamada_func = p[-1]
 
 	if llamada_func not in symbol_table:
-		error( 'Function' + llamada_func + ' does not exist')
+		error( 'Function ' + llamada_func + ' does not exist')
 
 # Genera cuadruplo ERA
 def p_r_generate_ERA(p):
@@ -1830,12 +1831,12 @@ def build(file):
 	# print('\n')
 	st = {}
 	for key in symbol_table.keys():
-		print(key)
-		st[key] = {
-			'cont_vars' : symbol_table[key]['cont_vars'],
-			'cont_temps':  symbol_table[key]['cont_temps'],
-			'quad_cont':  symbol_table[key]['quad_cont']
-		}
+		if key != 'program':
+			st[key] = {
+				'cont_vars' : symbol_table[key]['cont_vars'],
+				'cont_temps':  symbol_table[key]['cont_temps'],
+				'quad_cont':  symbol_table[key]['quad_cont']
+			}
 
 	file = open("datos.txt", "w")
 

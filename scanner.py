@@ -180,7 +180,7 @@ def t_comment(t):
     pass
 
 # A string containing ignored characters (spaces and tabs)
-t_ignore  = ' \t\r\n'
+t_ignore  = ' \t'
 
 # Error handling rule
 def t_error(t):
