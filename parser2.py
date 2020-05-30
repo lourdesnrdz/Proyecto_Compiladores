@@ -1818,6 +1818,9 @@ def build(file):
 	except EOFError:
 		print("Could not open file " + file)
 		sys.exit()
+	except FileNotFoundError:
+		print("File not found")
+		sys.exit()
 
 	# print(quadruples)
 	# print('\n')

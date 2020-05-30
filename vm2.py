@@ -10,7 +10,7 @@ if len(sys.argv) > 1:
 	file = sys.argv[1]
 	parser.build(file)
 else:
-	error("No file found")
+	error("No file provided")
 
 # se lee el resultado de los quadruplos, la tabla de ctes y symboltable
 f2 = open('datos.txt', 'r', newline='\n')
