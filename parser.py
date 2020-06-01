@@ -684,8 +684,6 @@ def p_r_generate_gosub_dos(p):
 	global oper_stack, quadruples, q_count, op_stack, type_stack
 	# , temp_count
 
-	print(symbol_table[llamada_func])
-
 	# checa que no se haya excedido ni faltado el numero de parametros
 	if 'params_length' not in symbol_table[llamada_func]:
 		if param_count != 0:
