@@ -1,0 +1,19 @@
+programa test1; 
+var int p;
+
+funcion void inicia (int y)
+var int x;
+{
+	x = 0;
+	mientras (x < 10) haz
+	{
+		p = y * x;
+		x = x+1;
+	}
+}
+
+principal()
+{
+	inicia(5);
+	escribe("p:", p);
+}

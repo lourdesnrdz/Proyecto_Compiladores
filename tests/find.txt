@@ -1,0 +1,31 @@
+
+programa find; 
+var
+	int i;
+	char a, arr[5];
+
+funcion void find(char x) 
+var int i;
+{
+	mientras (i < 5) haz
+	{
+		si(x == arr[i]) entonces
+		{
+			escribe("Sí se encontró el valor");
+		}
+		i = i + 1;
+	}	
+}
+
+principal()
+{
+	desde i = 0 hasta 5 hacer
+	{
+		escribe("Introduce un caracter: ");
+		lee(arr[i]);
+	}
+
+	escribe("Introduce el valor que deseas buscar");
+	lee(a);
+	find(a);
+}

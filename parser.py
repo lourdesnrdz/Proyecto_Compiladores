@@ -2,7 +2,6 @@
 #parser
 
 import sys
-import os
 import ply.yacc as yacc
 from scanner import tokens
 from semantics_cube import semantic_cube
@@ -57,20 +56,21 @@ symbol_table = {
 		'next_temp_float' : 13000,
 		'next_temp_char' : 16000,
 		'next_temp_bool' : 19000,
-		# int, float, char, bool (siempre es cero)
-		'cont_vars' : [0, 0, 0, 0],
-		# int, float, char, bool
-		'cont_temps' : [0, 0, 0, 0]
+		'next_pointer' : 43000,
+		# int, float, char, bool, pointer
+		'cont_vars' : [0, 0, 0, 0, 0],
+		# int, float, char, bool, pointer
+		'cont_temps' : [0, 0, 0, 0, 0]
 	}
 }
 
 # tabla de constantes
 ctes_table = {
-	'next_cte_int' : 43001,
-	'next_cte_float' : 46000,
-	'next_cte_char' : 49000,
-	'next_cte_str' : 52000,
-	1 : 43000
+	'next_cte_int' : 31001,
+	'next_cte_float' : 34000,
+	'next_cte_char' : 37000,
+	'next_cte_str' : 40000,
+	1 : 31000
 }
 
 # precedencia de operadores en caso de conflicto
@@ -88,29 +88,26 @@ precedence = (
 # Global int : 1 - 3999
 # Global float : 4000 - 6999
 # GLOBAL char : 7000 - 9999
-# Global temporales : 
-# Global temp int : 10000 - 12999
-# Global temp float : 13000 - 15999
-# Global temp char : 16000 - 18999
-# Global temp bool : 19000 - 21999
+
+# TEMPORALES : 
+# temp int : 10000 - 12999
+# temp float : 13000 - 15999
+# temp char : 16000 - 18999
+# temp bool : 19000 - 21999
 
 # LOCAL
 # Local int : 22000 - 24999
 # Local float : 25000 - 27999
 # Local char : 28000 - 30999
 # Local temporales : 
-# Local temp int : 31000 - 33999
-# Local temp float : 34000 - 36999
-# Local temp char : 37000 - 39999
-# Local temp bool : 40000 - 42999
 
 # CONSTANTES
-# Constantes : 
-# contantes int : 43000 - 45999
-# constantes float : 46000 - 48999
-# constantes char : 49000 - 51999
-# constantes str : 52000 - 54999
+# CONSTANTES int : 31000 - 33999
+# CONSTANTES float : 34000 - 36999
+# CONSTANTES char : 37000 - 39999
+# CONSTANTES str : 40000 - 42999
 
+# POINTERS : 43000 - 45999
 
 
 # pila de operandos
@@ -130,7 +127,7 @@ q_count = 0
 
 # contador de variables temporales 
 # de los cuadruplos de una funcion
-temp_count = 0
+#temp_count = 0
 
 for_stack = []
 
@@ -143,16 +140,14 @@ def p_programa(p) :
 	program_name = p[2]
 
 	# guardo el nombre del programa
-	symbol_table[program_name] =  {
-		'type' : 'program'
-	}
+	symbol_table['program'] = program_name
 
 # genera cuadruplo de final de función
 def p_r_end_prog(p):
 	'''r_end_prog : '''
 	global quadruples, q_count
 
-	quad = ['ENDPROG', None, None, None, None]
+	quad = ['ENDPROG', None, None, None]
 	quadruples.append(quad)
 	q_count += 1
 
@@ -220,7 +215,7 @@ def p_save_vars(p):
 	# guarda las variables en la tabla de variables de la funcion
 	symbol_table[func_name]['vars'] = list_vars
 	# guarda la cantidad de variables
-	symbol_table[func_name]['vars_length'] = len(list_vars)
+	# symbol_table[func_name]['vars_length'] = len(list_vars)
 	# guarda el contador de los cuadruplos actuales
 	# en la tabla de la función actual
 	# para establecer dónde empieza la funcion
@@ -256,7 +251,7 @@ def p_save_vars_name(p):
 
 	# checar si la variable ya existe dentro de la función
 	if var_name in list_vars:
-		error(p, 'variable ya declarada')
+		error( 'Variable' + var_name + 'has already been declared')
 
 	# si no existe, la agrega a la lista de variables
 	list_vars[var_name] = {
@@ -310,12 +305,7 @@ def p_r_push_id(p):
 		type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
 	# si la variable no existe, manda error
 	else:
-		error(p, 'variable no declarada')
-
-	# op_stack.append(var_name)
-	# type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
-
-	# aux = pila.pop()
+		error( 'Undeclared variable ' + var_name)
 
 # declarar unao varias variables
 def p_variables(p):
@@ -338,10 +328,8 @@ def p_r_is_array(p):
 	# saca el tipo de la pila de tipos
 	tipo = type_stack.pop()
 
-	print('var', var_name)
-	print(parent_func)
 	if not symbol_table[parent_func]['vars'][var_name]['dim']:
-		error(p, "Variable is not an array")
+		error( "Variable is not an array")
 
 	# agrega la variable a la pila de dimensiones
 	dim_stack.append([var_name, var_dir, parent_func])
@@ -349,9 +337,12 @@ def p_r_is_array(p):
 	# agrega fondo falso
 	oper_stack.append('$')
 
+# genera cuadrupo verifica
+# checa que el valor esté dentro de las dimensiones del arreglo
 def p_r_verify_dim(p):
 	'''r_verify_dim : '''
-	global op_stack, type_stack, dim_stack, temp_count, q_count, quadruples
+	global op_stack, type_stack, dim_stack, q_count, quadruples
+	# , temp_count
 
 	val = op_stack.pop()
 	tipo = type_stack.pop()
@@ -360,20 +351,18 @@ def p_r_verify_dim(p):
 
 	# verifica que el resultado de la expresion de tipo int
 	if tipo != 'int':
-		error(p, "Array dimension must be a 'int' value")
+		error( "Array dimension must be an 'int' value")
 
 	dimension = dim_stack.pop()
 	dim_stack.append(dimension)
 	# obtiene el limite superior de la dimension de la variable
-	print(dimension[0])
-	print(symbol_table[dimension[2]]['vars'])
 	dim_value = symbol_table[dimension[2]]['vars'][dimension[0]]['dim']
 
 	# obtiene la direccion temporal para el resultado
 	result = assign_address(parent_func, 'temp_bool')
 
 	# se suma uno al contador de variables temporales de la funcion	
-	temp_count += 1
+	#temp_count += 1
 
 	# genera el cuadruplo para verificar que el valor
 	# esté dentro de las dimensiones del arreglo
@@ -383,10 +372,13 @@ def p_r_verify_dim(p):
 	quadruples.append(quad)
 	q_count += 1
 
-
+# genera el cuadruplo +D
+# que suma el index a la direccion base para obtener la direccion real
+# de la casilla
 def p_r_sum_addr(p):
 	'''r_sum_addr : '''
-	global op_stack, type_stack, dim_stack, temp_count, quadruples, q_count, oper_stack
+	global op_stack, type_stack, dim_stack, quadruples, q_count, oper_stack
+	# temp_count, 
 
 	# saca el indice de la pila de operandos
 	aux = op_stack.pop()
@@ -396,14 +388,17 @@ def p_r_sum_addr(p):
 	# saca el nombre y la direccion de la variable
 	# de la pila de dimensiones
 	dimension = dim_stack.pop()
-	# saca la dirección de la variable
+	# obtiene la dirección de la variable
 	dirB = dimension[1]
 
+	# obtiene el tipo de la variable
+	tipo_arr = symbol_table[dimension[2]]['vars'][dimension[0]]['type']
+
 	# obtiene la direccion temporal para el resultado
-	result = assign_address(func_name, 'temp_int')
+	result = assign_address(func_name, 'pointer')
 
 	# se suma uno al contador de variables temporales de la funcion	
-	temp_count += 1
+	#temp_count += 1
 
 	quad = ['+D', aux, dirB, result]
 
@@ -411,8 +406,10 @@ def p_r_sum_addr(p):
 	quadruples.append(quad)
 	q_count += 1
 
+	# mete el resultado y el tipo de la variable 
+	# al stack de operandos y tipos
 	op_stack.append(result)
-	type_stack.append('int')
+	type_stack.append(tipo_arr)
 
 	# elimina fondo falso
 	oper_stack.pop()
@@ -427,12 +424,13 @@ def p_dec_funciones(p):
 def p_r_generate_endfunc(p):
 	'''r_generate_endfunc : '''
 
-	global symbol_table, quadruples, q_count, temp_count, bool_retorno
+	global symbol_table, quadruples, q_count, bool_retorno
+	# temp_count, 
 
 	# verifica que la funcion no sea void
 	# y si no tiene valor de retorno marca error
 	if not bool_retorno and symbol_table[func_name]['func_type'] != 'void':
-		error(p, 'Function ' + func_name + ' must have a return value')
+		error( 'Function ' + func_name + ' must have a return value')
 
 	# elimina la tabla de variables de la función
 	symbol_table[func_name]['vars'] = {}
@@ -442,11 +440,10 @@ def p_r_generate_endfunc(p):
 	quadruples.append(quad)
 	q_count += 1
 
-
 	# guarda el numero de variables temporales usadas
 	# dentro de la función
-	symbol_table[func_name]['temp_length'] = temp_count
-	temp_count = 0
+	# symbol_table[func_name]['temp_length'] = temp_count
+	#temp_count = 0
 
 # tipo simple o void para funciones
 def p_funcion(p):
@@ -471,11 +468,11 @@ def p_create_func_table(p):
 	# checa si la función ya está declarada
 	# para que no haya dos funciones con el mismo nombre
 	if func_name in symbol_table:
-		error(p, 'Function ' + func_name + ' has already been declared')
+		error( 'Function ' + func_name + ' has already been declared')
 
 	# checa que la funcion no exista como variable global
 	if func_name in symbol_table['global']['vars']:
-		error(p, 'Variable with same name as a function')
+		error( 'Function with same name as a global variable')
 
 	# sino existe, la guarda en la tabla de funciones
 	symbol_table[func_name] = {
@@ -486,12 +483,13 @@ def p_create_func_table(p):
 		'next_int' : 22000,
 		'next_float' : 25000,
 		'next_char' : 28000,
-		'next_temp_int' : 31000,
-		'next_temp_float' : 34000,
-		'next_temp_char' : 37000,
-		'next_temp_bool' : 40000,
-		'cont_vars' : [0, 0, 0, 0],
-		'cont_temps' : [0, 0, 0, 0]
+		'next_temp_int' : 10000,
+		'next_temp_float' : 13000,
+		'next_temp_char' : 16000,
+		'next_temp_bool' : 19000,
+		'next_pointer' : 43000,
+		'cont_vars' : [0, 0, 0, 0, 0],
+		'cont_temps' : [0, 0, 0, 0, 0]
 	}
 
 	# la guarda en la tabla de variables globales
@@ -532,7 +530,7 @@ def p_save_params(p):
 
 # declarar o no variables dentro de una funcion
 def p_var_funcs(p):
-	'''var_funcs : dec_est
+	'''var_funcs : save_vars dec_est
 	| dec_vars dec_est
 	'''
 
@@ -552,7 +550,7 @@ def p_save_params_list(p):
 
 	#checa si el parámetro ya existe en la lista de parámetros 
 	if param_name in list_vars:
-		error(p, 'Parameter name already exists')
+		error( 'Parameter ' + param_name + ' already exists')
 
 	addr = assign_address(func_name, current_type)
 	# guarda los parametros en la lista de parametros
@@ -588,64 +586,13 @@ def p_estatutos_dos(p):
 	| estatutos estatutos_dos
 	'''
 
-# asignacion a una variable
-def p_asignacion(p):
-	'asignacion : variable IGUAL r_push_oper expresion r_generate_quad_asig'
-
-## llama a la funcion de generar cuadriplo para asignación
-def p_r_generate_quad_asig(p):
-	'''r_generate_quad_asig : '''
-	generate_quadruple_asig(['='])
-
-def generate_quadruple_asig(operations):
-	# ...
-	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count
-
-	# print(oper_stack)
-	# print(op_stack)
-	if oper_stack:
-		aux = oper_stack.pop()
-		oper_stack.append(aux)
-
-		if aux in operations:
-			right_op = op_stack.pop()
-			right_type = type_stack.pop()
-			left_op = op_stack.pop()
-			left_type = type_stack.pop()
-			operator = oper_stack.pop()
-
-			# obtiene el tipo del resultado del cubo semántico
-			result_type = semantic_cube[left_type][operator][right_type]
-			# print(left_type, operator, right_type, result_type)
-
-			# checa que el tipo del resultado sea válido
-			if(result_type != None):
-				# print(func_name)
-				# obtiene la direccion temporal para el resultado
-				result = assign_address(func_name, 'temp_' + result_type)
-
-				# se suma uno al contador de variables temporales de la funcion	
-				temp_count += 1
-
-				# result = gen_quad(left_op, operator, right_op)
-
-				# genera el cuadruplo
-				quad = [operator, right_op, None, left_op]
-				# print(quad)
-
-				# guarda el cuadruplo en el stack
-				quadruples.append(quad)
-				q_count += 1
-			else:
-				error('Type mismatch: types do not match')
-
-
 # llamada de una funcion void
 def p_llamada(p):
 	'''llamada : ID r_check_func_exists PARENT_A r_generate_ERA PARENT_C r_generate_gosub
 	| ID r_check_func_exists PARENT_A r_generate_ERA expresiones PARENT_C r_generate_gosub
 	'''
 
+# verifica que la función exista en la tabla de simbolos
 def p_r_check_func_exists(p):
 	'''r_check_func_exists : '''
 
@@ -654,7 +601,7 @@ def p_r_check_func_exists(p):
 	llamada_func = p[-1]
 
 	if llamada_func not in symbol_table:
-		error(p, 'function does not exist')
+		error( 'Function ' + llamada_func + ' does not exist')
 
 # Genera cuadruplo ERA
 def p_r_generate_ERA(p):
@@ -664,7 +611,7 @@ def p_r_generate_ERA(p):
 
 	# si la funcion no es tipo void, marca error
 	if symbol_table[llamada_func]['func_type'] != 'void':
-		error(p, llamada_func + ' is a not void function')
+		error( llamada_func + ' is a not void function')
 
 	else:
 
@@ -686,18 +633,21 @@ def p_r_generate_gosub(p):
 	global oper_stack, quadruples, q_count, op_stack, type_stack
 
 	# checa que no se haya excedido ni faltado el numero de parametros
-	if param_count < symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Missing parameters for function ' + llamada_func)
+	if 'params_length' not in symbol_table[llamada_func]:
+		if param_count != 0:
+			error(llamada_func + ' does not receive parameters')
+	elif param_count < symbol_table[llamada_func]['params_length'] - 1:
+		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Exceeded number of parameters for function ' + llamada_func)
-	else:
+		error( 'Exceeded number of parameters for function ' + llamada_func)
+	
 
-		quad = ['GOSUB', None, None, llamada_func]
-		quadruples.append(quad)
-		q_count += 1
+	quad = ['GOSUB', None, None, llamada_func]
+	quadruples.append(quad)
+	q_count += 1
 
-		# quita fondo falso
-		oper_stack.pop()
+	# quita fondo falso
+	oper_stack.pop()
 
 
 # llamada de una funcion con valor de retorno
@@ -714,7 +664,7 @@ def p_r_generate_ERA_dos(p):
 
 	# si la funcion es de tipo void, marca error
 	if symbol_table[llamada_func]['func_type'] == 'void':
-		error(p, llamada_func + ' is a void function, and does not have a return value')
+		error( llamada_func + ' is a void function, and does not have a return value')
 
 	# genera el cuadruplo ERA
 	quad = ['ERA', None, None, llamada_func]
@@ -731,54 +681,51 @@ def p_r_generate_ERA_dos(p):
 def p_r_generate_gosub_dos(p):
 	'''r_generate_gosub_dos : '''
 
-	global oper_stack, quadruples, q_count, op_stack, type_stack, temp_count
+	global oper_stack, quadruples, q_count, op_stack, type_stack
+	# , temp_count
 
-	# print('GOSUB 2')
-	# print(symbol_table[llamada_func]['params_length'])
-	# print(quadruples)
+	print(symbol_table[llamada_func])
+
 	# checa que no se haya excedido ni faltado el numero de parametros
-	if param_count < symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Missing parameters for function ' + llamada_func)
+	if 'params_length' not in symbol_table[llamada_func]:
+		if param_count != 0:
+			error(llamada_func + ' does not receive parameters')
+	elif param_count < symbol_table[llamada_func]['params_length'] - 1:
+		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
-		error(p, 'Exceeded number of parameters for function ' + llamada_func)
-	else:
+		error( 'Exceeded number of parameters for function ' + llamada_func)
+	
 
-		quad = ['GOSUB', None, None, llamada_func]
-		quadruples.append(quad)
-		q_count += 1
-			
-		func_dir = symbol_table['global']['vars'][llamada_func]['address']
-
-		# obtiene el tipo del resultado de la funcion
-		result_type = symbol_table['global']['vars'][llamada_func]['func_type']
-		# print(left_type, operator, right_type, result_type)
+	quad = ['GOSUB', None, None, llamada_func]
+	quadruples.append(quad)
+	q_count += 1
 		
-		# print(func_name)
-		# obtiene la direccion temporal para el resultado
-		result = assign_address(func_name, 'temp_' + result_type)
+	func_dir = symbol_table['global']['vars'][llamada_func]['address']
 
-		# se suma uno al contador de variables temporales de la funcion
-		temp_count += 1
+	# obtiene el tipo del resultado de la funcion
+	result_type = symbol_table['global']['vars'][llamada_func]['func_type']
 
-		# genera el cuadruplo
-		quad2 = ['=', func_dir, None, result]
-		# print(quad)
+	# obtiene la direccion temporal para el resultado
+	result = assign_address(func_name, 'temp_' + result_type)
 
-		# print(oper_stack)
-		# print(op_stack)
+	# se suma uno al contador de variables temporales de la funcion
+	#temp_count += 1
 
-		# guarda el cuadruplo en el stack
-		quadruples.append(quad2)
-		q_count += 1
+	# genera el cuadruplo
+	quad2 = ['=', func_dir, None, result]
 
-		op_stack.append(result)
-		type_stack.append(result_type)
+	# guarda el cuadruplo en el stack
+	quadruples.append(quad2)
+	q_count += 1
 
-		# quita fondo falso
-		oper_stack.pop()
+	op_stack.append(result)
+	type_stack.append(result_type)
+
+	# quita fondo falso
+	oper_stack.pop()
 
 
-# llamar o no a expresiones
+# expresiones de parámetros
 def p_expresiones(p):
 	'''expresiones : expresion r_generate_parameter
 	| expresion r_generate_parameter COMA r_act_param_count expresiones
@@ -792,13 +739,14 @@ def p_r_generate_parameter(p):
 
 	# checa que la funcion sí reciba parametros
 	if 'params' not in symbol_table[llamada_func]:
-		error(p, 'Function ' + llamada_func + ' has no parameters')
+		error( 'Function ' + llamada_func + ' has no parameters')
 
 	arg = op_stack.pop()
 	tipo = type_stack.pop()
 
+	# checa que el tipo del parametro coincida
 	if tipo != symbol_table[llamada_func]['params'][param_count]:
-		error(p, 'Type-mismatch: Parameter type does not match')
+		error( 'Type-mismatch: Parameter type does not match')
 
 	param_address = symbol_table[llamada_func]['params_addr'][param_count]
 	# genera cuadruplo parameter
@@ -814,84 +762,21 @@ def p_r_act_param_count(p):
 
 	param_count += 1
 
-# expresiones OR
-def p_expresion(p):
-	'''expresion : t_expresion r_generate_quad_or
-	| t_expresion r_generate_quad_or OR r_push_oper expresion
-	'''
-# llama a la funcion de generar cuadriplo para el OR
-def p_r_generate_quad_or(p):
-	'''r_generate_quad_or : '''
-	generate_quadruple(['|'])
+# asignacion a una variable
+def p_asignacion(p):
+	'asignacion : variable IGUAL r_push_oper expresion r_generate_quad_asig'
 
+# llama a la funcion de generar cuadruplo para asignación
+def p_r_generate_quad_asig(p):
+	'''r_generate_quad_asig : '''
+	generate_quadruple_asig(['='])
 
-# expresiones AND
-def p_t_expresion(p):
-	'''t_expresion : g_expresion r_generate_quad_and
-	| g_expresion r_generate_quad_and AND r_push_oper t_expresion
-	'''
-# llama a la funcion de generar cuadriplo para el AND
-def p_r_generate_quad_and(p):
-	'''r_generate_quad_and : '''
-	generate_quadruple(['&'])
-
-# expresiones logicas
-def p_g_expresion(p):
-	'''g_expresion : m_expresion r_generate_quad_logicos
-	| m_expresion op_logicos m_expresion r_generate_quad_logicos
-	'''
-
-# llama a la funcion de generar cuadriplo para los operadores logicos
-def p_r_generate_quad_logicos(p):
-	'''r_generate_quad_logicos : '''
-	generate_quadruple(['>', '<', '>=', '<=', '==', '!='])
-
-# operadores logicos
-def p_op_logicos(p):
-	'''op_logicos : MAYORQUE r_push_oper
-	| MENORQUE r_push_oper
-	| MAYORIGUAL r_push_oper
-	| MENORIGUAL r_push_oper
-	| IGUALIGUAL r_push_oper
-	| DIFERENTE r_push_oper
-	'''
-
-# sumas o restas
-def p_m_expresion(p):
-	'''m_expresion : termino r_generate_quad_masmen
-	| termino r_generate_quad_masmen MAS r_push_oper m_expresion
-	| termino r_generate_quad_masmen MENOS r_push_oper m_expresion
-	'''
-
-# multiplicacion y division
-def p_termino(p):
-	'''termino : factor r_generate_quad_muldiv
-	| factor r_generate_quad_muldiv POR r_push_oper termino
-	| factor r_generate_quad_muldiv DIV r_push_oper termino
-	'''
-def p_r_push_oper(p):
-	'''r_push_oper : '''
-	global oper_stack
-	oper_stack.append(p[-1])
-
-
-## llama a la funcion de generar cuadriplo para mas y menos
-def p_r_generate_quad_masmen(p):
-	'''r_generate_quad_masmen : '''
-	generate_quadruple(['+', '-'])
-
-# llama a la funcion de generar cuadriplo para por y div
-def p_r_generate_quad_muldiv(p):
-	'''r_generate_quad_muldiv : '''
-	generate_quadruple(['*', '/'])
-
-
-def generate_quadruple(operations):
+# funcion que genera el cuadruplo de asignación
+def generate_quadruple_asig(operations):
 	# ...
-	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count
+	global oper_stack, op_stack, type_stack, quadruples, q_count
+	# , temp_count
 
-	# print(oper_stack)
-	# print(op_stack)
 	if oper_stack:
 		aux = oper_stack.pop()
 		oper_stack.append(aux)
@@ -914,9 +799,121 @@ def generate_quadruple(operations):
 				result = assign_address(func_name, 'temp_' + result_type)
 
 				# se suma uno al contador de variables temporales de la funcion	
-				temp_count += 1
+				#temp_count += 1
 
 				# result = gen_quad(left_op, operator, right_op)
+
+				# genera el cuadruplo
+				quad = [operator, right_op, None, left_op]
+				# print(quad)
+
+				# guarda el cuadruplo en el stack
+				quadruples.append(quad)
+				q_count += 1
+			else:
+				error('Type-mismatch: types do not match')
+
+# funcion que mete el operador a la pila de operadores
+def p_r_push_oper(p):
+	'''r_push_oper : '''
+	global oper_stack
+	oper_stack.append(p[-1])
+
+# expresiones OR
+def p_expresion(p):
+	'''expresion : t_expresion r_generate_quad_or
+	| t_expresion r_generate_quad_or OR r_push_oper expresion
+	'''
+
+# llama a la funcion de generar cuadriplo para el OR
+def p_r_generate_quad_or(p):
+	'''r_generate_quad_or : '''
+	generate_quadruple(['|'])
+
+# expresiones AND
+def p_t_expresion(p):
+	'''t_expresion : g_expresion r_generate_quad_and
+	| g_expresion r_generate_quad_and AND r_push_oper t_expresion
+	'''
+
+# llama a la funcion de generar cuadriplo para el AND
+def p_r_generate_quad_and(p):
+	'''r_generate_quad_and : '''
+	generate_quadruple(['&'])
+
+# expresiones logicas
+def p_g_expresion(p):
+	'''g_expresion : m_expresion r_generate_quad_logicos
+	| m_expresion op_logicos m_expresion r_generate_quad_logicos
+	'''
+
+# operadores logicos
+def p_op_logicos(p):
+	'''op_logicos : MAYORQUE r_push_oper
+	| MENORQUE r_push_oper
+	| MAYORIGUAL r_push_oper
+	| MENORIGUAL r_push_oper
+	| IGUALIGUAL r_push_oper
+	| DIFERENTE r_push_oper
+	'''
+
+# llama a la funcion de generar cuadriplo para los operadores logicos
+def p_r_generate_quad_logicos(p):
+	'''r_generate_quad_logicos : '''
+	generate_quadruple(['>', '<', '>=', '<=', '==', '!='])
+
+# sumas o restas
+def p_m_expresion(p):
+	'''m_expresion : termino r_generate_quad_masmen
+	| termino r_generate_quad_masmen MAS r_push_oper m_expresion
+	| termino r_generate_quad_masmen MENOS r_push_oper m_expresion
+	'''
+
+# multiplicacion y division
+def p_termino(p):
+	'''termino : factor r_generate_quad_muldiv
+	| factor r_generate_quad_muldiv POR r_push_oper termino
+	| factor r_generate_quad_muldiv DIV r_push_oper termino
+	'''
+
+## llama a la funcion de generar cuadriplo para mas y menos
+def p_r_generate_quad_masmen(p):
+	'''r_generate_quad_masmen : '''
+	generate_quadruple(['+', '-'])
+
+# llama a la funcion de generar cuadriplo para por y div
+def p_r_generate_quad_muldiv(p):
+	'''r_generate_quad_muldiv : '''
+	generate_quadruple(['*', '/'])
+
+# funcion que genera los cuádruplos de las expresiones
+def generate_quadruple(operations):
+	# ...
+	global oper_stack, op_stack, type_stack, quadruples, q_count
+	# , temp_count
+
+	if oper_stack:
+		aux = oper_stack.pop()
+		oper_stack.append(aux)
+
+		# verifica que el operador esté dentro de las operaciones
+		if aux in operations:
+			right_op = op_stack.pop()
+			right_type = type_stack.pop()
+			left_op = op_stack.pop()
+			left_type = type_stack.pop()
+			operator = oper_stack.pop()
+
+			# obtiene el tipo del resultado del cubo semántico
+			result_type = semantic_cube[left_type][operator][right_type]
+
+			# checa que el tipo del resultado sea válido
+			if(result_type != None):
+				# obtiene la direccion temporal para el resultado
+				result = assign_address(func_name, 'temp_' + result_type)
+
+				# se suma uno al contador de variables temporales de la funcion	
+				#temp_count += 1
 
 				# genera el cuadruplo
 				quad = [operator, left_op, right_op, result]
@@ -926,15 +923,12 @@ def generate_quadruple(operations):
 				quadruples.append(quad)
 				q_count += 1
 
-				# print(result)
 				# guarda el resultado en el stack de operandos
 				op_stack.append(result)
 				# guarda el tipo del resultado
 				type_stack.append(result_type)
 			else:
-				error('Type mismatch: types do not match')
-
-
+				error('Type-mismatch: types do not match')
 
 # factores
 def p_factor(p):
@@ -945,15 +939,6 @@ def p_factor(p):
 	| variable
 	| llamada_exp
 	'''
-
-# # actualiza la flag de llamada en una expresión
-# def p_r_act_flag_llamada(p):
-# 	'''r_act_flag_llamada : '''
-
-# 	global bool_llamada_exp
-
-# 	# se le asigna true
-# 	bool_llamada_exp = True
 
 # guarda la cte en el diccionario de ctes
 # lo agrega a la pila de operandos
@@ -987,6 +972,7 @@ def p_r_push_cte_f(p):
 def p_r_push_cte_c(p):
 	'''r_push_cte_c : '''
 	global op_stack, type_stack
+	
 	cte = p[-1]
 	cte_exists(cte, 'cte_char')
 
@@ -1008,13 +994,12 @@ def p_r_pop_ff(p):
 	oper_stack.pop()
 
 # funcion para checar si la constante existe en la table de constantes
-# si no existe la incluye en la tabla
 def cte_exists(cte, cte_type):
 	global ctes_table
 
+	# si no existe la incluye en la tabla
 	if cte not in ctes_table:
 		ctes_table[cte] = assign_address('cte', cte_type)
-
 
 # retorno de una funcion
 def p_retorno(p):
@@ -1026,9 +1011,11 @@ def p_r_generate_quad_retorno(p):
 
 	global op_stack, type_stack, quadruples, q_count, bool_retorno, symbol_table
 
-	# checa si la función es void o main
-	if symbol_table[func_name]['func_type'] == 'void' or symbol_table[func_name] == 'global':
-		error(p, 'Function should not have a return statement')
+	# checa si la función es void o global (main)
+	if func_name == 'global':
+		error( 'Function ' + func_name + ' should not have a return statement')
+	elif symbol_table[func_name]['func_type'] == 'void':
+		error( 'Function ' + func_name + ' should not have a return statement')
 
 	if op_stack:
 		var = op_stack.pop()
@@ -1036,8 +1023,9 @@ def p_r_generate_quad_retorno(p):
 
 		# valida que el tipo de retorno sea el mismo que el de la funcion
 		if symbol_table[func_name]['func_type'] != tipo:
-			error(p, 'Type-mismatch: return value is not the correct type')
+			error( 'Type-mismatch: return value for ' + func_name + ' is not the correct type')
 
+		# genera el cuádruplo de retorno
 		quad = ['REGRESA', None, None, var]
 		
 		quadruples.append(quad)
@@ -1045,7 +1033,6 @@ def p_r_generate_quad_retorno(p):
 
 		# asigno el valor de la direccion de retorno a la variable global 
 		# con el nombre de la funcion
-		# symbol_table['global']['vars'][func_name]['address'] = var
 		func_dir = symbol_table['global']['vars'][func_name]['address']
 
 		# genera el cuadruplo
@@ -1058,8 +1045,8 @@ def p_r_generate_quad_retorno(p):
 		op_stack.append(func_dir)
 		type_stack.append(tipo)
 
+		# asigna true a bool_retorno
 		bool_retorno = True
-
 
 # estatuto de lectura
 def p_lectura(p):
@@ -1073,6 +1060,8 @@ def p_r_generate_quad_leer(p):
 
 	var = op_stack.pop()
 	type_stack.pop()
+
+	# genera cuádruplo de lectura
 	quad = ['LEER', None, None, var]
 	
 	quadruples.append(quad)
@@ -1082,11 +1071,16 @@ def p_r_generate_quad_leer(p):
 def p_escritura(p):
 	'escritura : ESCRIBIR PARENT_A escr PARENT_C'
 
+# imprimir uno o varios letreros o expresiones
+def p_escr(p):
+	'''escr : escritura_dos
+	| escritura_dos COMA escr
+	'''
 
 # imprimir letrero o funcion
 def p_escritura_dos(p):
-	'''escritura_dos : CTE_STR r_push_cte_str
-	| expresion
+	'''escritura_dos : CTE_STR r_push_cte_str r_generate_quad_escr
+	| expresion r_generate_quad_escr
 	'''
 
 # guarda la cte en el diccionario de ctes
@@ -1113,18 +1107,13 @@ def p_r_generate_quad_escr(p):
 		op = op_stack.pop()
 		type_stack.pop()
 
+		# genera el cuadrupl de escritura
 		quad = ['ESCRIBE', None, None, op]
-		# print(quad)
+
 		quadruples.append(quad)
 		q_count += 1
 	else:
-		error(p, 'Print action is not valid')
-
-# imprimir uno o varios letreros o expresiones
-def p_escr(p):
-	'''escr : escritura_dos r_generate_quad_escr
-	| escritura_dos r_generate_quad_escr COMA escr
-	'''
+		error( 'Print action is not valid')
 
 # ESTATUTOS IF
 def p_decision(p):
@@ -1145,13 +1134,14 @@ def p_r_check_exp_type(p):
 	# si el tipo no es bool -> error
 	if(exp_type != 'bool'):
 		print(exp_type)
-		error(p, 'Type-mismatch')
+		error( 'Type-mismatch: result type is not bool')
 	else:
 		# obtiene el resultado
 		result = op_stack.pop()
+
 		# genera el cuatruplo GotoF
 		quad = ['GOTOF', result, None, None]
-		# print(quad)
+
 		quadruples.append(quad)
 		q_count += 1
 		# guarda el contador en la pila de saltos
@@ -1165,9 +1155,7 @@ def p_r_end_if(p):
 
 	# obtiene el número del cuadruplo pendiente
 	# de la pila de saltos
-	# print(jump_stack)
 	end = jump_stack.pop()
-	# print('end: ', end)
 	# asigna el contador al cuadruplo pendiente
 	fill(end, q_count)
 
@@ -1176,14 +1164,13 @@ def p_r_goto_ifelse(p):
 
 	global jump_stack, q_count, quadruples
 
-	quad = ['Goto', None, None, None]
+	quad = ['GOTO', None, None, None]
 	# print(quad)
 	quadruples.append(quad)
 	q_count += 1
 
 	# obtiene el número del cuadruplo pendiente
 	# de la pila de saltos
-	# print(jump_stack)
 	false = jump_stack.pop()
 	# guarda el contador del goto
 	jump_stack.append(q_count-1)
@@ -1196,13 +1183,9 @@ def p_r_goto_ifelse(p):
 def fill(val, cont):
 
 	global quadruples
-	# asigna al cuadruplo a dónde va a saltar
-	# print(quadruples)
-	# print('quadruplo : ', quadruples[val])
-	# print('fill', val, cont)
-	# print('quadruplo: ', quadruples[val-1])
-	quadruples[val][3] = cont
 
+	# asigna al cuadruplo a dónde va a saltar
+	quadruples[val][3] = cont
 
 # condicion else
 def p_else(p):
@@ -1212,23 +1195,24 @@ def p_else(p):
 def p_ciclo_while(p):
 	'ciclo_while : MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while'
 
-# 
+# Genera acción GOTO
 def p_r_goto_while(p):
 	'''r_goto_while : '''
 	global jump_stack, quadruples, q_count
 
-	print(jump_stack)
-
+	# obtiene el cuadruplo de gotof
 	end = jump_stack.pop()
-	print('end', end)
+	# obtiene el cuadruplo a donde se va a regresar
+	# para volver a evaluar la expresion
 	_return = jump_stack.pop()
-	print('return', _return)
+
+	# genera cuadruplo goto
 	quad = ['GOTO', None, None, _return]
-	# print(quad)
 
 	quadruples.append(quad)
 	q_count += 1
 
+	# se le asigna el sig contador al gotof
 	fill(end, q_count)
 
 
@@ -1245,7 +1229,88 @@ def p_r_save_jump(p):
 def p_ciclo_for(p):
 	'ciclo_for : DESDE ID r_save_var_for IGUAL expresion r_generate_quad_asig_for HASTA r_save_jump r_expresion_for expresion r_check_exp_for HACER LLAVE_A estatutos_dos LLAVE_C r_goto_for'
 
+# guarda la variable
+def p_r_save_var_for(p):
+	'''r_save_var_for : '''
+	global op_stack, oper_stack, type_stack
 
+	var_name = p[-1]
+
+	# verifica que la variable exista
+	if var_name in symbol_table[func_name]['vars']:
+		parent_func = func_name
+		var_address = symbol_table[parent_func]['vars'][var_name]['address']
+		var_type = symbol_table[parent_func]['vars'][var_name]['type']
+	# checa si es una variable global
+	elif var_name in symbol_table['global']['vars']:
+		parent_func = 'global'
+		var_address = symbol_table[parent_func]['vars'][var_name]['address']
+		var_type = symbol_table[parent_func]['vars'][var_name]['type']
+	# si la variable no existe, manda error
+	else:
+		error( 'Undeclared variable ' + var_name)
+
+	# si el tipo de la variable no es int, manda error
+	if(var_type != 'int'):
+		error( 'On FOR statement, variable must be of type integer')
+
+	op_stack.append(var_address)
+	type_stack.append('int')
+	oper_stack.append('=')
+
+# genera el cuadruplo de asignacion para el for
+# desde i = 0...
+def p_r_generate_quad_asig_for(p):
+	'''r_generate_quad_asig_for : '''
+
+	global oper_stack, op_stack, type_stack, quadruples, q_count, jump_stack, for_stack
+	# temp_count,
+
+	if oper_stack:
+		aux = oper_stack.pop()
+		oper_stack.append(aux)
+
+		if aux == '=':
+			right_op = op_stack.pop()
+			right_type = type_stack.pop()
+
+			# verific que el tipo de la variable sea int
+			if(right_type != 'int'):
+				error( 'Type-mismatch: types do not match')
+
+			left_op = op_stack.pop()
+			left_type = type_stack.pop()
+			operator = oper_stack.pop()
+
+			# obtiene el tipo del resultado del cubo semántico
+			result_type = semantic_cube[left_type][operator][right_type]
+
+			# checa que el tipo del resultado sea válido
+			if(result_type != None):
+
+				# obtiene la direccion temporal para el resultado
+				result = assign_address(func_name, 'temp_' + result_type)
+
+				# se suma uno al contador de variables temporales de la funcion
+				#temp_count += 1
+
+				# genera el cuadruplo
+				quad = [operator, right_op, None, left_op]
+
+				# guarda el cuadruplo en el stack
+				quadruples.append(quad)
+				q_count += 1
+
+				# mete la variable a la pila del for
+				for_stack.append(left_op)
+
+			else:
+				error( 'Type-mismatch: types do not match')
+		else:
+			error( 'Missing assignment in FOR statement')
+
+# verifica que el valor inicial sea menor al segundo valor
+# desde i = 0 hasta 9 ...
 def p_r_expresion_for(p):
 	'''r_expresion_for : '''
 
@@ -1261,99 +1326,8 @@ def p_r_expresion_for(p):
 
 	oper_stack.append('<')
 
-	# print(op_stack)
-	# print(type_stack)
-	# print(oper_stack)
-
-	# generate_quadruple(['<'])
-
-
-def p_r_save_var_for(p):
-	'''r_save_var_for : '''
-	global op_stack, oper_stack, type_stack
-
-	var_name = p[-1]
-
-	# for q in quadruples:
-	# 	print(q)
-	# 	print('\n')
-
-	if var_name in symbol_table[func_name]['vars']:
-		parent_func = func_name
-		# op_stack.append(var_name)
-		var_address = symbol_table[parent_func]['vars'][var_name]['address']
-		var_type = symbol_table[parent_func]['vars'][var_name]['type']
-	# checa si es una variable global
-	elif var_name in symbol_table['global']['vars']:
-		parent_func = 'global'
-		# op_stack.append(var_name)
-		var_address = symbol_table[parent_func]['vars'][var_name]['address']
-		var_type = symbol_table[parent_func]['vars'][var_name]['type']
-	# si la variable no existe, manda error
-	else:
-		error(p, 'Undeclared variable')
-
-	# si el tipo de la variable no es int, manda error
-	if(var_type != 'int'):
-		error(p, 'On FOR statement, variable must be of type integer')
-
-	op_stack.append(var_address)
-	type_stack.append('int')
-	oper_stack.append('=')
-
-
-def p_r_generate_quad_asig_for(p):
-	'''r_generate_quad_asig_for : '''
-	# ...
-	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count, jump_stack, for_stack
-
-	# print(oper_stack)
-	# print(op_stack)
-	if oper_stack:
-		aux = oper_stack.pop()
-		oper_stack.append(aux)
-
-		if aux == '=':
-			right_op = op_stack.pop()
-			right_type = type_stack.pop()
-
-			if(right_type != 'int'):
-				error(p, 'Type-mismatch: types do not match')
-
-			# print(right_op)
-			left_op = op_stack.pop()
-			left_type = type_stack.pop()
-			operator = oper_stack.pop()
-
-			# obtiene el tipo del resultado del cubo semántico
-			result_type = semantic_cube[left_type][operator][right_type]
-			# print(left_type, operator, right_type, result_type)
-
-			# checa que el tipo del resultado sea válido
-			if(result_type != None):
-				# print(func_name)
-				# obtiene la direccion temporal para el resultado
-				result = assign_address(func_name, 'temp_' + result_type)
-
-				# se suma uno al contador de variables temporales de la funcion
-				temp_count += 1
-
-				# result = gen_quad(left_op, operator, right_op)
-
-				# genera el cuadruplo
-				quad = [operator, right_op, None, left_op]
-				# print(quad)
-
-				# guarda el cuadruplo en el stack
-				quadruples.append(quad)
-				q_count += 1
-
-
-				for_stack.append(left_op)
-
-			else:
-				error(p, 'Type-mismatch: types do not match')
-
+# verifica que el resultado de la expresion sea bool
+# genera gotof para el for
 def p_r_check_exp_for(p):
 	'r_check_exp_for : '
 
@@ -1363,112 +1337,84 @@ def p_r_check_exp_for(p):
 	exp_type = type_stack.pop()
 	# si el tipo no es bool -> error
 	if(exp_type != 'bool'):
-		print(exp_type)
-		error(p, 'Type-mismatch: types do not match')
+		error( 'Type-mismatch: types do not match')
 	else:
 		# obtiene el resultado
 		result = op_stack.pop()
 		# genera el cuatruplo GotoF
 		quad = ['GOTOF', result, None, None]
-		# print(quad)
+
 		quadruples.append(quad)
 		q_count += 1
+
 		# guarda el contador en la pila de saltos
 		jump_stack.append(q_count - 1)
 
-
+# genera goto al final del for
 def p_r_goto_for(p):
 	'''r_goto_for : '''
-	global jump_stack, quadruples, q_count, for_stack, temp_count
+	global jump_stack, quadruples, q_count, for_stack
+	# , temp_count
 
 	var = for_stack.pop()
 
 	cte = ctes_table[1]
-
 	
 	# obtiene la direccion temporal para el resultado
 	result = assign_address(func_name, 'temp_int')
 
 	# se suma uno al contador de variables temporales de la funcion
-	temp_count += 1
+	#temp_count += 1
 
 	# genera el cuadruplo
 	quad1 = ['+', cte, var, result]
 	quadruples.append(quad1)
 	q_count += 1
  
-
+	# genera la asignación a la variable
 	quad2 = ['=', result, None, var]
 	quadruples.append(quad2)
 	q_count += 1
 
-
+	# obtiene el quad del gotof
 	end = jump_stack.pop()
 
+	# obtiene el contador a donde se va a regresar
+	# para re-evaluar la expresion 
 	_return = jump_stack.pop()
 
+	# genera cuadruplo de goto
 	quad = ['GOTO', None, None, _return]
-	# print(quad)
 
 	quadruples.append(quad)
 	q_count += 1
 
 	fill(end, q_count)
 
-
-# # empty
-# def p_empty(p):
-# 	'''empty :'''
-
 # Error rule for syntax errors
 def p_error(p):
-    sys.exit()
+	error("Syntax error in input")
 
-def error(p, message):
+# fundion de error que imprime el mensaje
+# y termina la ejecución del programa
+def error(message):
 	print("Error: ", message)
-	p_error(p)
+	sys.exit()
 
-
-# DIRECCIONES DE MEMORIA
-# GLOBAL
-# Global int : 1 - 3999
-# Global float : 4000 - 6999
-# GLOBAL char : 7000 - 9999
-# Global temporales : 
-# Global temp int : 10000 - 12999
-# Global temp float : 13000 - 15999
-# Global temp char : 16000 - 18999
-# Global temp bool : 19000 - 21999
-
-# LOCAL
-# Local int : 22000 - 24999
-# Local float : 25000 - 27999
-# Local char : 28000 - 30999
-# Local temporales : 
-# Local temp int : 31000 - 33999
-# Local temp float : 34000 - 36999
-# Local temp char : 37000 - 39999
-# Local temp bool : 40000 - 42999
-
-# CONSTANTES
-# Constantes : 
-# contantes int : 43000 - 45999
-# constantes float : 46000 - 48999
-# constantes char : 49000 - 51999
-
-# función para asignar el valor de la dirección de memoria a una variable global, local o constante
+# función para asignar el valor de la dirección de memoria 
+# a una variable global, local o constante
 def assign_address(func, type_value):
 
 	global symbol_table, ctes_table
 
 	# direcciones para la funcion principal y variables globales
-	if(func == 'main' or func == 'global'):
-		if(type_value == 'int'):
+	if func == 'main' or func == 'global':
+		if type_value == 'int':
 			# guarda la dirección
 			address = symbol_table[func]['next_int']
 
 			# valida que la dirección no sea mayor al límite
-			if(address > 3999):
+			if address > 3999:
 				error("stack overflow")
 
 			# actualiza el valor de la siguiente dirección
@@ -1477,11 +1423,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de variables
 			symbol_table[func]['cont_vars'][0] += 1
 
-		elif(type_value == 'float'):
+		if type_value == 'float':
 			# guarda la dirección
 			address = symbol_table[func]['next_float']
 			# valida que la dirección no sea mayor al límite
-			if(address > 6999):
+			if address > 6999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_float'] += 1
@@ -1489,11 +1435,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de variables
 			symbol_table[func]['cont_vars'][1] += 1
 
-		elif(type_value == 'char'):
+		if type_value == 'char':
 			# guarda la dirección
 			address = symbol_table[func]['next_char']
 			# valida que la dirección no sea mayor al límite
-			if(address > 9999):
+			if address > 9999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_char'] += 1
@@ -1501,12 +1447,12 @@ def assign_address(func, type_value):
 			# actualiza cantidad de variables
 			symbol_table[func]['cont_vars'][2] += 1
 
-		elif(type_value == 'temp_int'):
+		if type_value == 'temp_int':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_int']
 
 			# valida que la dirección no sea mayor al límite
-			if(address > 12999):
+			if address > 12999:
 				error("stack overflow")
 
 			# actualiza el valor de la siguiente dirección
@@ -1515,11 +1461,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][0] += 1
 
-		elif(type_value == 'temp_float'):
+		if type_value == 'temp_float':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_float']
 			# valida que la dirección no sea mayor al límite
-			if(address > 15999):
+			if address > 15999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_float'] += 1
@@ -1527,11 +1473,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][1] += 1
 
-		elif(type_value == 'temp_char'):
+		if type_value == 'temp_char':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_char']
 			# valida que la dirección no sea mayor al límite
-			if(address > 18999):
+			if address > 18999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_char'] += 1
@@ -1539,11 +1485,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][2] += 1
 
-		elif(type_value == 'temp_bool'):
+		if type_value == 'temp_bool':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_bool']
 			# valida que la dirección no sea mayor al límite
-			if(address > 21999):
+			if address > 21999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_bool'] += 1
@@ -1551,13 +1497,25 @@ def assign_address(func, type_value):
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][3] += 1
 
-	elif(func != 'cte'):
-		if(type_value == 'int'):
+		if type_value == 'pointer':
+			# guarda la dirección
+			address = symbol_table[func]['next_pointer']
+			# valida que la dirección no sea mayor al límite
+			if address > 45999:
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_pointer'] += 1
+
+			# actualiza cantidad de temporales
+			symbol_table[func]['cont_temps'][4] += 1
+
+	elif func != 'cte':
+		if type_value == 'int':
 			# guarda la dirección
 			address = symbol_table[func]['next_int']
 
 			# valida que la dirección no sea mayor al límite
-			if(address > 24999):
+			if address > 24999:
 				error("stack overflow")
 
 			# actualiza el valor de la siguiente dirección
@@ -1566,11 +1524,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de vars
 			symbol_table[func]['cont_vars'][0] += 1
 
-		elif(type_value == 'float'):
+		if type_value == 'float':
 			# guarda la dirección
 			address = symbol_table[func]['next_float']
 			# valida que la dirección no sea mayor al límite
-			if(address > 27999):
+			if address > 27999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_float'] += 1
@@ -1578,11 +1536,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de vars
 			symbol_table[func]['cont_vars'][1] += 1
 
-		elif(type_value == 'char'):
+		if type_value == 'char':
 			# guarda la dirección
 			address = symbol_table[func]['next_char']
 			# valida que la dirección no sea mayor al límite
-			if(address > 30999):
+			if address > 30999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_char'] += 1
@@ -1590,12 +1548,12 @@ def assign_address(func, type_value):
 			# actualiza cantidad de vars
 			symbol_table[func]['cont_vars'][2] += 1
 
-		elif(type_value == 'temp_int'):
+		if type_value == 'temp_int':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_int']
 
 			# valida que la dirección no sea mayor al límite
-			if(address > 33999):
+			if address > 12999:
 				error("stack overflow")
 
 			# actualiza el valor de la siguiente dirección
@@ -1604,11 +1562,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][0] += 1
 
-		elif(type_value == 'temp_float'):
+		if type_value == 'temp_float':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_float']
 			# valida que la dirección no sea mayor al límite
-			if(address > 36999):
+			if address > 15999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_float'] += 1
@@ -1616,11 +1574,11 @@ def assign_address(func, type_value):
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][1] += 1
 
-		elif(type_value == 'temp_char'):
+		if type_value == 'temp_char':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_char']
 			# valida que la dirección no sea mayor al límite
-			if(address > 39999):
+			if address > 18999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_char'] += 1
@@ -1628,51 +1586,65 @@ def assign_address(func, type_value):
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][2] += 1
 
-		elif(type_value == 'temp_bool'):
+		if type_value == 'temp_bool':
 			# guarda la dirección
 			address = symbol_table[func]['next_temp_bool']
 			# valida que la dirección no sea mayor al límite
-			if(address > 42999):
+			if address > 21999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_temp_bool'] += 1
 
 			# actualiza cantidad de temporales
 			symbol_table[func]['cont_temps'][3] += 1
+
+		if type_value == 'pointer':
+			# guarda la dirección
+			address = symbol_table[func]['next_pointer']
+			# valida que la dirección no sea mayor al límite
+			if address > 45999:
+				error("stack overflow")
+			# actualiza el valor de la siguiente dirección
+			symbol_table[func]['next_pointer'] += 1
+
+			# actualiza cantidad de temporales
+			symbol_table[func]['cont_temps'][4] += 1
+
 	else:
-		if(type_value == 'cte_int'):
+		if type_value == 'cte_int':
 			# guarda la dirección
 			address = ctes_table['next_cte_int']
 
 			# valida que la dirección no sea mayor al límite
-			if(address > 45999):
+			if address > 33999:
 				error("stack overflow")
 
 			# actualiza el valor de la siguiente dirección
 			ctes_table['next_cte_int'] += 1
 
-		elif(type_value == 'cte_float'):
+		if type_value == 'cte_float':
 			# guarda la dirección
 			address = ctes_table['next_cte_float']
 			# valida que la dirección no sea mayor al límite
-			if(address > 48999):
+			if address > 36999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			ctes_table['next_cte_float'] += 1
 
-		elif(type_value == 'cte_char'):
+		if type_value == 'cte_char':
 			# guarda la dirección
 			address = ctes_table['next_cte_char']
 			# valida que la dirección no sea mayor al límite
-			if(address > 51999):
+			if address > 39999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			ctes_table['next_cte_char'] += 1
-		elif(type_value == 'cte_str'):
+
+		if type_value == 'cte_str':
 			# guarda la dirección
 			address = ctes_table['next_cte_str']
 			# valida que la dirección no sea mayor al límite
-			if(address > 54999):
+			if address > 42999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			ctes_table['next_cte_str'] += 1
@@ -1687,12 +1659,12 @@ def next_address(func, type_value, dim):
 	global symbol_table, ctes_table
 
 	# direcciones para la funcion principal y variables globales
-	if(func == 'global'):
-		if(type_value == 'int'):
+	if func == 'global':
+		if type_value == 'int':
 			# guarda la dirección
 			address = symbol_table[func]['next_int']
 			# valida que la dirección no sea mayor al límite
-			if(address > 3999):
+			if address > 3999:
 				error("stack overflow")
 
 			# actualiza el valor de la siguiente dirección
@@ -1701,11 +1673,11 @@ def next_address(func, type_value, dim):
 			# actualiza cantidad de variables
 			symbol_table[func]['cont_vars'][0] += dim
 
-		if(type_value == 'float'):
+		if type_value == 'float':
 			# guarda la dirección
 			address = symbol_table[func]['next_float'] + dim
 			# valida que la dirección no sea mayor al límite
-			if(address > 6999):
+			if address > 6999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_float'] += dim
@@ -1713,11 +1685,11 @@ def next_address(func, type_value, dim):
 			# actualiza cantidad de variables
 			symbol_table[func]['cont_vars'][1] += dim
 
-		if(type_value == 'char'):
+		if type_value == 'char':
 			# guarda la dirección
 			address = symbol_table[func]['next_char'] + dim
 			# valida que la dirección no sea mayor al límite
-			if(address > 9999):
+			if address > 9999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_char'] += dim
@@ -1726,12 +1698,12 @@ def next_address(func, type_value, dim):
 			symbol_table[func]['cont_vars'][2] += dim
 
 	else:
-		if(type_value == 'int'):
+		if type_value == 'int':
 			# guarda la dirección
 			address = symbol_table[func]['next_int'] + dim
 
 			# valida que la dirección no sea mayor al límite
-			if(address > 24999):
+			if address > 24999:
 				error("stack overflow")
 
 			# actualiza el valor de la siguiente dirección
@@ -1740,11 +1712,11 @@ def next_address(func, type_value, dim):
 			# actualiza cantidad de vars
 			symbol_table[func]['cont_vars'][0] += dim
 
-		if(type_value == 'float'):
+		if type_value == 'float':
 			# guarda la dirección
 			address = symbol_table[func]['next_float'] + dim
 			# valida que la dirección no sea mayor al límite
-			if(address > 27999):
+			if address > 27999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_float'] += dim
@@ -1752,11 +1724,11 @@ def next_address(func, type_value, dim):
 			# actualiza cantidad de vars
 			symbol_table[func]['cont_vars'][1] += dim
 
-		if(type_value == 'char'):
+		if type_value == 'char':
 			# guarda la dirección
 			address = symbol_table[func]['next_char'] + dim
 			# valida que la dirección no sea mayor al límite
-			if(address > 30999):
+			if address > 30999:
 				error("stack overflow")
 			# actualiza el valor de la siguiente dirección
 			symbol_table[func]['next_char'] += dim
@@ -1767,54 +1739,45 @@ def next_address(func, type_value, dim):
 # Build the parser
 yacc.yacc()
 
+# funcion para correr el parser
 def build(file):
 	global yacc 
-	f = open(file, 'r')
-	# print(file)
-	data = f.read()
-	f.close()
-	yacc.parse(data)
+	# se verifica que se pueda abrir el archivo
+	try:
+		f = open(file, 'r')
+		data = f.read()
+		f.close()
+		yacc.parse(data)
+	except EOFError:
+		print("Could not open file " + file)
+		sys.exit()
+	except FileNotFoundError:
+		print("File not found")
+		sys.exit()
 
-	# print(quadruples)
-	# print('\n')
-	# print(symbol_table)
-	# print('\n')
-	# print(ctes_table)
-	# print('\n')
+	# for key, val in symbol_table.items():
+	# 	print(key, ':', val)
+	# 	print('\n')
+
+	# se obtienen los datos de la tabla de simbolos
+	st = {}
+	for key in symbol_table.keys():
+		if key != 'program':
+			st[key] = {
+				'cont_vars' : symbol_table[key]['cont_vars'],
+				'cont_temps':  symbol_table[key]['cont_temps'],
+				'quad_cont':  symbol_table[key]['quad_cont']
+			}
+
+	# se crea el archivo obj
 	file = open("datos.txt", "w")
-
+	# se obtienen los datos que se van a pasar a la maquina virtual
 	d = {
 		'quadruples' : quadruples,
 		'ctes' : ctes_table,
-		'symbol_table' : symbol_table
+		'symbol_table' : st
 	}
 
+	# se escriben los datos en el archivo obj
 	file.write(str(d))
 
-# file = sys.argv[1]
-# f = open(file, 'r')
-# data = f.read()
-# f.close()
-# yacc.parse(data)
-# print(quadruples)
-# if yacc.parse(data) == "Valid":
-# 	print("Valid input")
-# else:
-# 	print("Invalid input")
-
-# file.write(str(quadruples))
-
-# print('\n')
-# for q in quadruples:
-# 	# file.write(str(q))
-# 	print(q)
-# 	print('\n')
-# print('\n')
-# for key, val in symbol_table.items():
-# 	print(key, ':', val)
-# 	print('\n')
-# print('\n')
-# print("---------------------- \n")
-# for key, val in ctes_table.items():
-# 	print(key, ':', val)
-# 	print('\n')

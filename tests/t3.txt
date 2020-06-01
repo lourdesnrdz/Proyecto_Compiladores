@@ -1,0 +1,27 @@
+programa test3; 
+var int i, p, Arreglo[10];
+
+funcion int prueba (int x, int y)
+{
+	si(x >= 0 & x < 10) entonces
+	{
+		regresa(Arreglo[x] * y);
+	}
+	sino
+	{
+		regresa(x * y);
+	}
+}
+
+principal()
+{
+	desde i = 0 hasta 9 hacer
+	{ 
+		escribe("Escribe un número:");
+		lee(Arreglo[i]);
+	}
+
+	escribe("Escribe un número:");
+	lee(p);
+	escribe(prueba(p, 2));
+}

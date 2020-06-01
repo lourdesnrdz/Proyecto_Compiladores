@@ -1,0 +1,18 @@
+programa test1; 
+var int a;
+float b, prom; 
+
+principal()
+{
+	lee(a);
+	lee(b);
+	
+	prom = a / b;
+    si (prom > 10) entonces 
+    {
+		escribe("promedio mayor a 10");
+	} 
+	sino {
+		escribe("promedio menor a 10");
+	}
+}
