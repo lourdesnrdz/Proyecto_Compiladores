@@ -3,6 +3,22 @@ programa fibonacci;
 var
 	int n, fib1, fib2, i;
 
+funcion void fib(int n) 
+var int fib1, fib2, aux;
+{
+	fib1 = 0;
+	fib2 = 1;
+	escribe(fib1);
+
+	desde i = 0 hasta n hacer
+	{
+		escribe(fib2);
+		aux = fib1;
+		fib1 = fib2;
+		fib2 = aux + fib2;
+	}
+}
+
 principal()
 {
 	escribe("Introduce numero mayor que 1: ");
@@ -10,22 +26,11 @@ principal()
 
 	si (n > 1) entonces
 	{
-		fib1 = 0;
-		fib2 = 1;
-		escribe(fib1);
-
-		desde i = 0 hasta n hacer
-		{
-			escribe(fib2);
-			fib2 = fib1 + fib2;
-			fib1 = fib2 - fib1;
-		}
+		fib(n);
 	}	
 	sino
 	{
-		escribe("numero menor a 1");
+		escribe("numero menor o igual a 1");
 	}
 
-	%%regresa(n);
-	
 }

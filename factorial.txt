@@ -1,0 +1,24 @@
+
+programa factorial; 
+var
+	int n;
+
+funcion int fact() 
+var int res;
+{
+	res = 1;
+	mientras (n > 1) haz
+	{
+		res = res * n;
+		n = n - 1;
+	}
+
+	regresa(res);
+}
+
+principal()
+{
+	escribe("Introduce numero: ");
+	lee(n); 
+	escribe(fact());
+}

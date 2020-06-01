@@ -1,6 +1,7 @@
 import sys
 import parser2 as parser
 
+# función de error
 def error(message):
 	print(message)
 	sys.exit()
@@ -16,10 +17,12 @@ else:
 f2 = open('datos.txt', 'r', newline='\n')
 data = eval(f2.read())
 f2.close()
-# print(data['ctes'])
 
+# obtiene la lista de cuádruplos
 quadruples = data['quadruples']
+# obtiene la tabla de símbolos
 symbol_table = data['symbol_table']
+# obtiene la tabla de constantes
 ctes_table = data['ctes']
 
 # int, float, char, bool
@@ -50,11 +53,12 @@ for key, val in symbol_table.items():
 
 for key, val in ctes_table.items():
 	print(key, ':', val)
+print('\n')
 
 class Memory():
 	"""docstring for Memory"""
 	def __init__(self, size_i, size_f, size_c, size_b, size_p):
-		print(size_i, size_f, size_c, size_b, size_p)
+		# crea las listas por tipo, con el tamáño específico de memoria
 		self.int_mem = [0] * size_i
 		self.float_mem = [0.0] * size_f
 		self.char_mem = [''] * size_c
@@ -67,16 +71,6 @@ def init_Memory(func_name):
 
 	cont_vars = symbol_table[func_name]['cont_vars']
 	cont_temps = symbol_table[func_name]['cont_temps']
-
-def print_mem(m_name):
-	if m_name != None:
-		print('ints: ', m_name.int_mem)
-		print('floats: ', m_name.float_mem)
-		print('chars: ', m_name.char_mem)
-		print('bools: ', m_name.bool_mem)
-		print('pointers: ', m_name.point_mem)
-	else:
-		print('None')
 
 # DIRECCIONES DE MEMORIA
 # GLOBAL
@@ -111,7 +105,6 @@ def get_val(addr):
 	# Variables Globales
 	# int
 	if addr >= 1 and addr <= 3999:
-		# print(addr)
 		return int(global_mem.int_mem[addr - 1])
 	# float
 	if addr >= 4000 and addr <= 6999:
@@ -132,15 +125,11 @@ def get_val(addr):
 		return temp_mem.char_mem[addr - 16000]
 	# bool
 	if addr >= 19000 and addr <= 21999:
-		# print(addr - 19000)
-		# print(temp_mem.bool_mem[addr - 19000])
 		return bool(temp_mem.bool_mem[addr - 19000])
 
 	# Variables Locales
 	# int
 	if addr >= 22000 and addr <= 24999:
-		# print(addr - 22000)
-		# print(local_mem.int_mem)
 		return int(local_mem.int_mem[addr - 22000])
 	# float
 	if addr >= 25000 and addr <= 27999:
@@ -166,9 +155,11 @@ def get_val(addr):
 	# Pointers
 	if addr >= 43000 and addr <= 45999:
 		# la dirección del indice es el key de la direccion
-		ad = temp_mem.point_mem[addr - 43000]
-		correct_addr = get_val(ad)
-		return correct_addr
+		ad = int(temp_mem.point_mem[addr - 43000])
+		# obtiene el valor de la casilla en la dirección ad
+		val = get_val(ad)
+		# regresa el valor de la casilla
+		return val
 
 
 # asignar el valor a la dirección de memoria
@@ -178,8 +169,6 @@ def assign_val(addr, result):
 	# Variables Globales
 	# int
 	if addr >= 1 and addr <= 3999:
-		# print(addr - 1)
-		# print(global_mem.int_mem)
 		try:
 			r = int(result)
 			global_mem.int_mem[addr - 1] = result
@@ -226,8 +215,6 @@ def assign_val(addr, result):
 	# Variables Locales
 	# int
 	elif addr >= 22000 and addr <= 24999:
-		# print(result)
-		# print(local_mem.int_mem[addr - 22000])
 		# local_mem.int_mem[addr - 22000] = result
 		try:
 			r = int(result)
@@ -262,59 +249,46 @@ def assign_val(addr, result):
 
 	# Pointers
 	elif addr >= 43000 and addr <= 45999:
-		temp_mem.point_mem[addr - 43000] = result
+		# temp_mem.point_mem[addr - 43000] = result
+		ad = int(temp_mem.point_mem[addr - 43000])
+		assign_val(ad, result)
 
 # acciones de los cuadruplos
 def quad_actions():
 	global ins_p, global_mem, global_temp_mem, temp_mem, local_mem, params_stack
 
-	
-
 	# obtiene el cuadruplo en la posicion del instruction pointer
 	quad = quadruples[ins_p]
 
 	if quad[0] == 'GOTO':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		ins_p = quad[3]
+		# print('goto: ', ins_p)
 
 	elif quad[0] == 'GOTOF':
-		print(ins_p, quad)
-		# print('local_mem')
-		# print_mem(local_mem)
-		# print('temp_mem')
-		# print_mem(temp_mem)
-		# print('global_mem')
-		# print_mem(global_mem)
+		#print(ins_p, quad)
 
 		val = get_val(quad[1])
+		
 		# si es false
-
-		print("result: ", val)
 		if val == False:
+			#a ins_p se le asigna el cuádruplo de la última casilla
 			ins_p = quad[3]
 		# si es true continua
 		else:
 			ins_p += 1
 
 	elif quad[0] == '+':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		res = val1 + val2
-		# print(val1, val2, res)
 		assign_val(quad[3], res)
-
-		# print('local_mem')
-		# print_mem(local_mem)
-		# print('temp_mem')
-		# print_mem(temp_mem)
-		# print('global_mem')
-		# print_mem(global_mem)
 		
 		ins_p += 1
 
 	elif quad[0] == '-':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		res = val1 - val2
@@ -323,7 +297,7 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == '*':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		res = val1 * val2
@@ -332,10 +306,11 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == '/':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 
+		# valida que no se divida por 0
 		if val2 == 0:
 			error('Division by 0')
 
@@ -345,79 +320,57 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == '=':
-		# print(ins_p, quad)
-		# print('ASIGNACION *********************************')
-		# print('ANTES')
-		# print('local_mem')
-		# print_mem(local_mem)
-		# print('temp_mem')
-		# print_mem(temp_mem)
-		# print('global_mem')
-		# print_mem(global_mem)
-
 
 		res = get_val(quad[1])
-		# res = val1
 		assign_val(quad[3], res)
-
-		# print('\n')
-		# print('DESPUES')
-		# print('local_mem')
-		# print_mem(local_mem)
-		# print('temp_mem')
-		# print_mem(temp_mem)
-		# print('global_mem')
-		# print_mem(global_mem)
 		
 		ins_p += 1
 
 	elif quad[0] == '|':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		
 		if val1 or val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
 		
 		ins_p += 1
 
 	elif quad[0] == '&':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		
 		if val1 and val2:
-			assign_val(quad[3], 1)
+			assign_val(quad[3], True)
 		else:
-			assign_val(quad[3], 0)
+			assign_val(quad[3], False)
 		
 		ins_p += 1
 
 	elif quad[0] == '<':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 
-		print("val1: ", val1)
-		print("val2: ", val2)
+		# print("val1: ", val1)
+		# print("val2: ", val2)
 		
 		if val1 < val2:
 			assign_val(quad[3], True)
 
-			print("result: ", True)
 		else:
 			assign_val(quad[3], False)
-
-			print("result: ", False)
 		
 		ins_p += 1
 
 	elif quad[0] == '>':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
+		# print(val1, val2)
 		
 		if val1 > val2:
 			assign_val(quad[3], True)
@@ -427,7 +380,7 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == '<=':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		
@@ -439,7 +392,7 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == '>=':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		
@@ -451,7 +404,7 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == '==':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		
@@ -463,7 +416,7 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == '!=':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		val1 = get_val(quad[1])
 		val2 = get_val(quad[2])
 		
@@ -475,48 +428,33 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == 'LEER':
-		print(ins_p, quad)
+		#print(ins_p, quad)
+		# recibe el valor de la consola
 		res = input()
 		assign_val(quad[3], res)
 
 		ins_p += 1 
 
 	elif quad[0] == 'ESCRIBE':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		res = get_val(quad[3])
+		# imprime el valor
 		print(res)
 
 		ins_p += 1
 
 	elif quad[0] == 'REGRESA':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		# va al siguiente cuadruplo
 		ins_p += 1
 		# obtiene el cuadruplo en la siguiente posición
 		quad = quadruples[ins_p]
-
-		print(quad)
-
-		# print('temp: ', temp_mem.bool_mem)
 
 		# asigna el valor a la variable global con el nombre de la funcion
 		if quad[0] == '=':
 			val1 = get_val(quad[1])
 			res = val1
 			assign_val(quad[3], res)
-			# ins_p += 1
-
-		# print(pointer_stack)
-
-		# print('local_mem: ', local_stack)
-		# print('temp_mem', temp_stack)
-
-		# print('local_mem')
-		# print_mem(local_mem)
-		# print('temp_mem')
-		# print_mem(temp_mem)
-		# print('global_mem')
-		# print_mem(global_mem)
 
 		if local_stack:
 			local_mem = local_stack.pop()
@@ -524,32 +462,22 @@ def quad_actions():
 			local_mem = None
 
 		if temp_stack:
-			print('temp memory')
+			# print('temp memory')
 			temp_mem = temp_stack.pop()
-			# print(temp_mem.bool_mem)
 		else:
 			temp_mem = None
 
-		# print('local_mem')
-		# print_mem(local_mem)
-		# print('temp_mem')
-		# print_mem(temp_mem)
-		# print('global_mem')
-		# print_mem(global_mem)
-
-		# print('pointer stack: ', pointer_stack)
 		ins_p = pointer_stack.pop()
 		ins_p += 1
 
 	elif quad[0] == 'GOSUB':
-		print(ins_p, quad)
-		print('gosub')
+		#print(ins_p, quad)
+		# print('gosub')
 		# define el espacio de la memoria local
 		local_mem = Memory(cont_vars[0], cont_vars[1], cont_vars[2], cont_vars[3], cont_vars[4])
 		# define el espacio de la memoria temporal local
 		temp_mem = Memory(cont_temps[0], cont_temps[1], cont_temps[2], cont_temps[3], cont_temps[4])
 
-		# print('stack: ', params_stack)
 		for p in params_stack:
 			assign_val(p[0], p[1])
 
@@ -563,8 +491,7 @@ def quad_actions():
 		ins_p = symbol_table[func_name]['quad_cont']
 
 	elif quad[0] == 'ERA':
-		print(ins_p, quad)
-		# print('era')
+		#print(ins_p, quad)
 		func_name = quad[3]
 		init_Memory(func_name)
 		
@@ -576,19 +503,17 @@ def quad_actions():
 		ins_p += 1
 
 	elif quad[0] == 'PARAMETER':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		# obtiene el valor a asignar
 		param = get_val(quad[1])
 		p = [quad[3], param]
-		# print('param', p)
 		# se le asigna el valor a la dirección del parámetro
-		# assign_val(quad[3], param)
 		params_stack.append(p)
 
 		ins_p += 1
 
 	elif quad[0] == 'ENDFunc':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		if local_stack:
 			local_mem = local_stack.pop()
 		else:
@@ -599,18 +524,17 @@ def quad_actions():
 		else:
 			temp_mem = None
 
-		# print(pointer_stack)
 		ins_p = pointer_stack.pop()
 		ins_p += 1
 
 	elif quad[0] == 'VERIFY':
-		print(ins_p, quad)
+		#print(ins_p, quad)
 
 		index = get_val(quad[1])
 
 		# checa que el valor esté entre 0 y la dimensión
 		if index < 0 or index >= quad[3]:
-			print('index: ', index)
+			# print('index: ', index)
 			error("Index out of bounds")
 		
 		# va al siguiente cuadruplo
@@ -618,8 +542,7 @@ def quad_actions():
 		
 
 	elif quad[0] == '+D':
-
-		print(ins_p, quad)
+		#print(ins_p, quad)
 		# obtiene la direccion base
 		dirB = quad[2]
 		# obtiene el valor del index
@@ -628,17 +551,15 @@ def quad_actions():
 		# para obtener la direccion del valor al que se quiere acceder
 		result = dirB + index
 
-		# res = get_val(result)
-		print(result)
-		assign_val(quad[3], result)
+		# print(result)
+		temp_mem.point_mem[quad[3] - 43000] = result
+		# assign_val(quad[3], result)
 		ins_p += 1
 
 	else:
-		print(ins_p, quad)
-		print('endprog')
+		# ENDPROG
 		ins_p += 1
 
-	# if quad[0] == '':
 
 init_Memory('global')
 
@@ -652,4 +573,4 @@ local_mem = None
 
 while ins_p < len(quadruples):
 	quad_actions()
-print('endprog')
+# print('endprog')

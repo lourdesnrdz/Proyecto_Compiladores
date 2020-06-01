@@ -1,0 +1,37 @@
+
+programa bubblesort; 
+var
+	int i, arr[5];
+
+funcion void sort() 
+var int i, j, temp;
+{
+	desde i = 0 hasta 4 hacer
+	{
+		desde j = 0 hasta 4 hacer
+		{
+			si(arr[j] > arr[j + 1]) entonces
+			{
+				temp = arr[j + 1];
+				arr[j + 1] = arr[j];
+				arr[j] = temp;
+			}
+		}
+	}	
+}
+
+principal()
+{
+	desde i = 0 hasta 5 hacer
+	{
+		escribe("Introduce un numero: ");
+		lee(arr[i]);
+	}
+
+	sort();
+	escribe("arreglo: ");
+	desde i = 0 hasta 5 hacer
+	{
+		escribe(arr[i]);
+	}
+}

@@ -2,7 +2,6 @@
 #parser
 
 import sys
-import os
 import ply.yacc as yacc
 from scanner import tokens
 from semantics_cube import semantic_cube
@@ -58,9 +57,9 @@ symbol_table = {
 		'next_temp_char' : 16000,
 		'next_temp_bool' : 19000,
 		'next_pointer' : 43000,
-		# int, float, char, bool (siempre es cero)
+		# int, float, char, bool, pointer
 		'cont_vars' : [0, 0, 0, 0, 0],
-		# int, float, char, bool
+		# int, float, char, bool, pointer
 		'cont_temps' : [0, 0, 0, 0, 0]
 	}
 }
@@ -151,7 +150,7 @@ def p_r_end_prog(p):
 	'''r_end_prog : '''
 	global quadruples, q_count
 
-	quad = ['ENDPROG', None, None, None, None]
+	quad = ['ENDPROG', None, None, None]
 	quadruples.append(quad)
 	q_count += 1
 
@@ -310,11 +309,6 @@ def p_r_push_id(p):
 	# si la variable no existe, manda error
 	else:
 		error( 'Undeclared variable')
-
-	# op_stack.append(var_name)
-	# type_stack.append(symbol_table[parent_func]['vars'][var_name]['type'])
-
-	# aux = pila.pop()
 
 # declarar unao varias variables
 def p_variables(p):
@@ -499,7 +493,7 @@ def p_create_func_table(p):
 		'next_temp_bool' : 19000,
 		'next_pointer' : 43000,
 		'cont_vars' : [0, 0, 0, 0, 0],
-		'cont_temps' : [0, 0, 0, 0, 0],
+		'cont_temps' : [0, 0, 0, 0, 0]
 	}
 
 	# la guarda en la tabla de variables globales
@@ -540,7 +534,7 @@ def p_save_params(p):
 
 # declarar o no variables dentro de una funcion
 def p_var_funcs(p):
-	'''var_funcs : dec_est
+	'''var_funcs : save_vars dec_est
 	| dec_vars dec_est
 	'''
 
@@ -694,18 +688,21 @@ def p_r_generate_gosub(p):
 	global oper_stack, quadruples, q_count, op_stack, type_stack
 
 	# checa que no se haya excedido ni faltado el numero de parametros
-	if param_count < symbol_table[llamada_func]['params_length'] - 1:
+	if 'params_length' not in symbol_table[llamada_func]:
+		if param_count != 0:
+			error(llamada_func + ' does not receive parameters')
+	elif param_count < symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Exceeded number of parameters for function ' + llamada_func)
-	else:
+	
 
-		quad = ['GOSUB', None, None, llamada_func]
-		quadruples.append(quad)
-		q_count += 1
+	quad = ['GOSUB', None, None, llamada_func]
+	quadruples.append(quad)
+	q_count += 1
 
-		# quita fondo falso
-		oper_stack.pop()
+	# quita fondo falso
+	oper_stack.pop()
 
 
 # llamada de una funcion con valor de retorno
@@ -742,48 +739,51 @@ def p_r_generate_gosub_dos(p):
 	global oper_stack, quadruples, q_count, op_stack, type_stack, temp_count
 
 	# print('GOSUB 2')
-	# print(symbol_table[llamada_func]['params_length'])
+	print(symbol_table[llamada_func])
 	# print(quadruples)
 	# checa que no se haya excedido ni faltado el numero de parametros
-	if param_count < symbol_table[llamada_func]['params_length'] - 1:
+	if 'params_length' not in symbol_table[llamada_func]:
+		if param_count != 0:
+			error(llamada_func + ' does not receive parameters')
+	elif param_count < symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Exceeded number of parameters for function ' + llamada_func)
-	else:
+	
 
-		quad = ['GOSUB', None, None, llamada_func]
-		quadruples.append(quad)
-		q_count += 1
-			
-		func_dir = symbol_table['global']['vars'][llamada_func]['address']
-
-		# obtiene el tipo del resultado de la funcion
-		result_type = symbol_table['global']['vars'][llamada_func]['func_type']
-		# print(left_type, operator, right_type, result_type)
+	quad = ['GOSUB', None, None, llamada_func]
+	quadruples.append(quad)
+	q_count += 1
 		
-		# print(func_name)
-		# obtiene la direccion temporal para el resultado
-		result = assign_address(func_name, 'temp_' + result_type)
+	func_dir = symbol_table['global']['vars'][llamada_func]['address']
 
-		# se suma uno al contador de variables temporales de la funcion
-		temp_count += 1
+	# obtiene el tipo del resultado de la funcion
+	result_type = symbol_table['global']['vars'][llamada_func]['func_type']
+	# print(left_type, operator, right_type, result_type)
+	
+	# print(func_name)
+	# obtiene la direccion temporal para el resultado
+	result = assign_address(func_name, 'temp_' + result_type)
 
-		# genera el cuadruplo
-		quad2 = ['=', func_dir, None, result]
-		# print(quad)
+	# se suma uno al contador de variables temporales de la funcion
+	temp_count += 1
 
-		# print(oper_stack)
-		# print(op_stack)
+	# genera el cuadruplo
+	quad2 = ['=', func_dir, None, result]
+	# print(quad)
 
-		# guarda el cuadruplo en el stack
-		quadruples.append(quad2)
-		q_count += 1
+	# print(oper_stack)
+	# print(op_stack)
 
-		op_stack.append(result)
-		type_stack.append(result_type)
+	# guarda el cuadruplo en el stack
+	quadruples.append(quad2)
+	q_count += 1
 
-		# quita fondo falso
-		oper_stack.pop()
+	op_stack.append(result)
+	type_stack.append(result_type)
+
+	# quita fondo falso
+	oper_stack.pop()
 
 
 # llamar o no a expresiones
@@ -954,15 +954,6 @@ def p_factor(p):
 	| variable
 	| llamada_exp
 	'''
-
-# # actualiza la flag de llamada en una expresión
-# def p_r_act_flag_llamada(p):
-# 	'''r_act_flag_llamada : '''
-
-# 	global bool_llamada_exp
-
-# 	# se le asigna true
-# 	bool_llamada_exp = True
 
 # guarda la cte en el diccionario de ctes
 # lo agrega a la pila de operandos
@@ -1187,7 +1178,7 @@ def p_r_goto_ifelse(p):
 
 	global jump_stack, q_count, quadruples
 
-	quad = ['Goto', None, None, None]
+	quad = ['GOTO', None, None, None]
 	# print(quad)
 	quadruples.append(quad)
 	q_count += 1
@@ -1223,7 +1214,7 @@ def p_else(p):
 def p_ciclo_while(p):
 	'ciclo_while : MIENTRAS r_save_jump PARENT_A expresion PARENT_C r_check_exp_type HAZ LLAVE_A estatutos_dos LLAVE_C r_goto_while'
 
-# 
+# Genera acción GOTO
 def p_r_goto_while(p):
 	'''r_goto_while : '''
 	global jump_stack, quadruples, q_count
@@ -1272,12 +1263,6 @@ def p_r_expresion_for(p):
 
 	oper_stack.append('<')
 
-	# print(op_stack)
-	# print(type_stack)
-	# print(oper_stack)
-
-	# generate_quadruple(['<'])
-
 
 def p_r_save_var_for(p):
 	'''r_save_var_for : '''
@@ -1318,8 +1303,6 @@ def p_r_generate_quad_asig_for(p):
 	# ...
 	global oper_stack, op_stack, type_stack, quadruples, q_count, temp_count, jump_stack, for_stack
 
-	# print(oper_stack)
-	# print(op_stack)
 	if oper_stack:
 		aux = oper_stack.pop()
 		oper_stack.append(aux)
@@ -1359,7 +1342,6 @@ def p_r_generate_quad_asig_for(p):
 				quadruples.append(quad)
 				q_count += 1
 
-
 				for_stack.append(left_op)
 
 			else:
@@ -1397,7 +1379,6 @@ def p_r_goto_for(p):
 	var = for_stack.pop()
 
 	cte = ctes_table[1]
-
 	
 	# obtiene la direccion temporal para el resultado
 	result = assign_address(func_name, 'temp_int')
@@ -1415,7 +1396,6 @@ def p_r_goto_for(p):
 	quadruples.append(quad2)
 	q_count += 1
 
-
 	end = jump_stack.pop()
 
 	_return = jump_stack.pop()
@@ -1428,11 +1408,6 @@ def p_r_goto_for(p):
 
 	fill(end, q_count)
 
-
-# # empty
-# def p_empty(p):
-# 	'''empty :'''
-
 # Error rule for syntax errors
 def p_error(p):
 	error("Syntax error in input")
@@ -1443,35 +1418,8 @@ def error(message):
 	# p_error(p)
 	sys.exit()
 
-
-# DIRECCIONES DE MEMORIA
-# GLOBAL
-# Global int : 1 - 3999
-# Global float : 4000 - 6999
-# GLOBAL char : 7000 - 9999
-
-# TEMPORALES : 
-# temp int : 10000 - 12999
-# temp float : 13000 - 15999
-# temp char : 16000 - 18999
-# temp bool : 19000 - 21999
-
-# LOCAL
-# Local int : 22000 - 24999
-# Local float : 25000 - 27999
-# Local char : 28000 - 30999
-# Local temporales : 
-
-# CONSTANTES
-# CONSTANTES int : 31000 - 33999
-# CONSTANTES float : 34000 - 36999
-# CONSTANTES char : 37000 - 39999
-# CONSTANTES str : 40000 - 42999
-
-# POINTERS : 43000 - 45999
-
-
-# función para asignar el valor de la dirección de memoria a una variable global, local o constante
+# función para asignar el valor de la dirección de memoria 
+# a una variable global, local o constante
 def assign_address(func, type_value):
 
 	global symbol_table, ctes_table
@@ -1812,7 +1760,7 @@ def build(file):
 	global yacc 
 	try:
 		f = open(file, 'r')
-		# print(file)
+
 		data = f.read()
 		f.close()
 		yacc.parse(data)
@@ -1823,12 +1771,10 @@ def build(file):
 		print("File not found")
 		sys.exit()
 
-	# print(quadruples)
-	# print('\n')
-	print(symbol_table)
-	# print('\n')
-	# print(ctes_table)
-	# print('\n')
+	for key, val in symbol_table.items():
+		print(key, ':', val)
+		print('\n')
+
 	st = {}
 	for key in symbol_table.keys():
 		if key != 'program':
@@ -1848,30 +1794,3 @@ def build(file):
 
 	file.write(str(d))
 
-# file = sys.argv[1]
-# f = open(file, 'r')
-# data = f.read()
-# f.close()
-# yacc.parse(data)
-# print(quadruples)
-# if yacc.parse(data) == "Valid":
-# 	print("Valid input")
-# else:
-# 	print("Invalid input")
-
-# file.write(str(quadruples))
-
-# print('\n')
-# for q in quadruples:
-# 	# file.write(str(q))
-# 	print(q)
-# 	print('\n')
-# print('\n')
-# for key, val in symbol_table.items():
-# 	print(key, ':', val)
-# 	print('\n')
-# print('\n')
-# print("---------------------- \n")
-# for key, val in ctes_table.items():
-# 	print(key, ':', val)
-# 	print('\n')

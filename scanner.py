@@ -7,7 +7,6 @@ reserved = {
 	'programa' : 'PROGRAMA',
 	'var' : 'VAR',
 	'principal' : 'PRINCIPAL',
-	# 'end' : 'END',
 	'int' : 'INT',
 	'float' : 'FLOAT',
 	'char' : 'CHAR',
@@ -31,7 +30,6 @@ tokens = [
 	'PROGRAMA',
 	'VAR',
 	'PRINCIPAL',
-	# 'END',
 	'INT',
 	'FLOAT',
 	'CHAR',
@@ -55,8 +53,6 @@ tokens = [
 	'CTE_STR',
 	'COMA',
 	'PUNTOCOMA',
-	# 'DOSPUNTOS',
-	# 'PUNTO',
 	'PARENT_A',
 	'PARENT_C',
 	'CORCHETE_A',
@@ -115,6 +111,7 @@ def t_CTE_CH(t):
     r'\'.\''
     t.value = t.value[1:-1] # remuevo las comillas
     return t 
+
 # # Define a variable int
 # def t_CTE_I(t):
 #     r'\d+'
