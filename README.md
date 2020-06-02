@@ -8,8 +8,7 @@ El compilador utiliza los modulos lex.py y yacc.py de la herramienta [PLY](https
 
 ## Estructura General del Lenguaje
 
-Un programa que utiliza el lenguaje FA debe iniciar con el nombre del programa, seguido por la declaración de variables globales, declaración de funciones y el procedimiento principal. Es obligatorio que el programa tenga el procedimiento principal.
-
+Un programa que utiliza el lenguaje FA debe iniciar con la variable reservada **programa** y el nombre del programa, seguido por la declaración de variables globales, declaración de funciones y el procedimiento principal. Es obligatorio que el programa contenga el procedimiento principal.
 
 ```
 programa Nombre_prog;
@@ -25,7 +24,7 @@ principal()
 ```
 
 ## Tipos de Datos
-El lenguaje FA maneja únicamente 3 tipos de datos simples: int, float, char.
+El lenguaje FA maneja únicamente 3 tipos de datos simples: **int**, **float**, **char**.
 
 Tipo | Descripción | Ejemplo
 ---- | ----------- | -------
@@ -38,10 +37,10 @@ char | Caracteres que representan una letra, número, etc. | 'a', 'b', 'c', ...
 ## Variables
 
 ### Alcance
-Se manejan dos tipos de alcance para las variables: Globales y Locales.
+Se manejan dos tipos de alcance para las variables: **Globales** y **Locales**.
 
-* Globales: se pueden utilizar en cualquier módulo aparte del principal.
-* Locales: su uso está restringido al módulo en que han sido declaradas.
+* **Globales**: se pueden utilizar en cualquier módulo aparte del principal.
+* **Locales**: su uso está restringido al módulo en que han sido declaradas.
 
 ### Variables Simples y Dimensionadas
 El lenguaje soporta variables simples y dimensionadas, éstas últimas únicamente pueden contener una dimensión de tamaño N (0 a N-1). 
@@ -51,7 +50,7 @@ int id1[cte_i], id2, id3;
 ```
 
 ### Declaración de Variables
-La declaración de variables comienza con la variable reservada var, seguido por el tipo y el id. Es posible declarar varios identificadores para el mismo tipo y éstas deben ir separadas por comas.
+La declaración de variables comienza con la variable reservada **var**, seguido por el tipo y el id. Es posible declarar varios identificadores para el mismo tipo y éstas deben ir separadas por comas.
 
 ```
 var
@@ -61,9 +60,48 @@ var
 ```
 
 ## Funciones
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+La declaración de cada función comienza con la variable reservada **funcion**, seguido por el tipo de retorno, el nombre del módulo y los parámetros. Después, sigue la declaración de variables locales, que siguen la estructura descrita anteriormente. Las funciones declaradas con un tipo distinto a void deben contener un estatuto de retorno. 
 
-Please make sure to update tests as appropriate.
+El lenguaje también soporta las llamadas recursivas a la misma función y llamadas a otras funciones.
+
+```
+funcion void inicia(int y)
+var int x;
+{
+	x = 0;
+	mientras (x < 10) haz
+	{
+		p = y * x;
+		x = x+1;
+	}
+}
+```
+
+## Parámetros
+Las funciones pueden contener o no parámetros, es completamente opcional. Los parámetros únicamente reciben **variables simples**, es decir, que no se aceptan variables dimensionadas.
+
+## Tipos de Retorno
+Los tipos retorno pueden ser cualquier tipo soportado (int, float, char) o **void**.
+
+### Funciones Void
+Las funciones void no tienen estatuto de retorno. Estas funciones no pueden ser llamadas dentro de una expresión.
+
+```
+funcion void hello_world()
+{
+	escribe("Hello World!");
+}
+```
+
+### Funciones No-Void
+Estas funciones contienen tipos diferentes a void. Deben contener un estatuto de retorno que regresa un valor con el mismo tipo de la función.
+
+```
+funcion int suma(int x, int y)
+{
+	regresa (x + y);
+}
+```
 
 ## Estatutos
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
