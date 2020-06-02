@@ -43,7 +43,7 @@ Se manejan dos tipos de alcance para las variables: **Globales** y **Locales**.
 * **Locales**: su uso está restringido al módulo en que han sido declaradas.
 
 ### Variables Simples y Dimensionadas
-El lenguaje soporta variables simples y dimensionadas, éstas últimas únicamente pueden contener una dimensión de tamaño N (0 a N-1). 
+El lenguaje soporta variables simples y dimensionadas, éstas últimas únicamente pueden contener una dimensión de **tamaño N** (0 a N-1). El tamaño de la dimensión siempre debe estar definido por una constante **entera**.
 
 ```
 int id1[cte_i], id2, id3;
@@ -112,16 +112,16 @@ A un identificador (pudiera ser simple o una casilla de un elemento dimensionado
 
 * A un identificador, se le asigna el valor que regresa una función.
 
-&nbsp;&nbsp;Id*dimension* = Nombre_Módulo((*param1*, (*param2*,…);
+&nbsp;&nbsp;Id *dimension* = Nombre_Módulo((*param1*, (*param2*,…);
 
 * A un identificador se le puede asignar el resultado de una expresión en donde se invoca a una función
 
-&nbsp;&nbsp;Id *dimension* = Nombre_Módulo(*param1*,..) + Id*dimension* – cte
+&nbsp;&nbsp;Id *dimension* = Nombre_Módulo(*param1*,..) + Id *dimension* – cte
 
 ```
 funcion float promedio()
 {
-	regresa((a + c) / b)
+	regresa((a + c) / b);
 }
 
 principal()
@@ -138,7 +138,7 @@ principal()
 ### Llamada a una Función Void
 Se manda llamar una función que no regresa valor (caso de funciones void).
 
-&nbsp;&nbsp;*Nombre_Módulo*(<param1>,..);
+&nbsp;&nbsp;*Nombre_Módulo*(*param1*,..);
 
 ```
 funcion void inicia (int y)
@@ -168,7 +168,7 @@ Este estatuto se encuentra únicamente en las funciones con un tipo distinto a v
 ```
 funcion float promedio(int a, float b, float c)
 {
-	regresa((a + c) / b)
+	regresa((a + c) / b);
 }
 
 principal()
@@ -186,7 +186,7 @@ Se puede leer uno ó más identificadores (con o sin dimensiones) separados por 
 ```
 funcion float promedio(int a, float b, float c)
 {
-	regresa((a + c) / b)
+	regresa((a + c) / b);
 }
 
 principal()
@@ -203,6 +203,13 @@ principal()
 Se pueden escribir **letreros** y/ó **resultados de expresiones** separadas por comas.
 
 &nbsp;&nbsp;**escribe** ( "letrero" ó expresión<, "letrero" ó expresión>....);
+
+```
+principal()
+{
+	escribe("x = ", a + 5);
+}
+```
 
 ### Decisión (si... entonces ... sino)
 El estatuto else es opcional, sin embargo, si se declara siempre debe seguir a un estatuto if.
