@@ -112,32 +112,56 @@ A un identificador (pudiera ser simple o una casilla de un elemento dimensionado
 
 * A un identificador, se le asigna el valor que regresa una función.
 
-Id<dimension> = Nombre_Módulo((<param1>, (<param2>,…);
+&nbsp;&nbsp;Id<dimension> = Nombre_Módulo((<param1>, (<param2>,…);
 
 * A un identificador se le puede asignar el resultado de una expresión en donde se invoca a una función
 
-Id<dimension> = Nombre_Módulo(<param1>,..) + Id<dimension> – cte
+&nbsp;&nbsp;Id<dimension> = Nombre_Módulo(<param1>,..) + Id<dimension> – cte
 
 ### Llamada a una Función Void
+Se manda llamar una función que no regresa valor (caso de funciones void).
+
+&nbsp;&nbsp;Nombre_Módulo (<param1>,..);
 
 ### Retorno de una Función
+Este estatuto se encuentra únicamente en las funciones con un tipo distinto a void e indica el retorno de un valor.
+
+&nbsp;&nbsp;regresa( exp );
 
 ### Lectura
+Se puede leer uno ó más identificadores (con o sin dimensiones) separados por comas.
+
+&nbsp;&nbsp;lee ( id<dimension> , id<dimension> >....);
 
 ### Escritura
+Se pueden escribir letreros y/ó resultados de expresiones separadas por comas.
+
+&nbsp;&nbsp;escribe ( "letrero" ó expresión<, "letrero" ó expresión>....);
 
 ### Decisión (si... entonces ... sino)
+El estatuto else es opcional, sin embargo, si se declara siempre debe seguir a un estatuto if.
+
+&nbsp;&nbsp;si (expresión) entonces
+&nbsp;&nbsp;&nbsp;{ <Estatutos> }
+&nbsp;&nbsp;sino
+&nbsp;&nbsp;&nbsp;{ <Estatutos> }
 
 ### Repetición Condicional (mientras... haz)
+Se repiten los estatutos mientras la expresión sea verdadera.
+
+&nbsp;&nbsp;mientras (expresión) haz
+&nbsp;&nbsp;&nbsp;{ <Estatutos> }
 
 ### Repetición No-Condicional (desde... hasta... hacer)
+Se repite de *N* a *M* veces, brincando de 1 en 1.
+
+&nbsp;&nbsp;desde Id<dimensiones>= exp hasta exp hacer
+&nbsp;&nbsp;&nbsp;{ <Estatutos> }
 
 ## Expresiones
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+El lenguaje soporta las operaciones aritméticas (+, -, *, /), las operaciones lógicas (&, |) y las operaciones relacionales (<, >, <=, >=, ==, !=).
 
 ## Comentarios
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+El lenguaje soporta el uso de comentarios, que son “ignorados” por el compilador y éstos deben seguir dos símbolos de porcentaje (*%%*). No se cuenta con la funcionalidad de comentarios multilínea.
 
-Please make sure to update tests as appropriate.
+&nbsp;&nbsp;%% 
