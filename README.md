@@ -31,7 +31,7 @@ Tipo | Descripción | Ejemplo
 ---- | ----------- | -------
 int | Valor numérico entero positivo | 1, 2, 3, ...
 float | Valores numéricos decimales positivos | 1, 2.0, 6.4, ...
-char | Caracteres que representan una letra, número, etc. | 'a', 'b', 'c'
+char | Caracteres que representan una letra, número, etc. | 'a', 'b', 'c', ...
 
 *Los operadores unarios no son soportados en el lenguaje de forma explícita en una expresión. Para utilizar valores negativos es necesario recibirlas por parte del usuario y estar almacenados en una variable*
 
@@ -43,9 +43,22 @@ Se manejan dos tipos de alcance para las variables: Globales y Locales.
 * Globales: se pueden utilizar en cualquier módulo aparte del principal.
 * Locales: su uso está restringido al módulo en que han sido declaradas.
 
-### Declaración de Variables
+### Variables Simples y Dimensionadas
+El lenguaje soporta variables simples y dimensionadas, éstas últimas únicamente pueden contener una dimensión de tamaño N (0 a N-1). 
 
-### Variables Dimensionadas
+```
+int id1[cte_i], id2, id3;
+```
+
+### Declaración de Variables
+La declaración de variables comienza con la variable reservada var, seguido por el tipo y el id. Es posible declarar varios identificadores para el mismo tipo y éstas deben ir separadas por comas.
+
+```
+var
+	int var1[10], var2, var3;
+	float var4;
+	char var5, var6; 
+```
 
 ## Funciones
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
