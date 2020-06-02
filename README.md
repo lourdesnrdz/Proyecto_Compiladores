@@ -257,7 +257,34 @@ desde i = 0 hasta 9 hacer
 ```
 
 ## Expresiones
-El lenguaje soporta las operaciones aritméticas (+, -, *, /), las operaciones lógicas (&, |) y las operaciones relacionales (<, >, <=, >=, ==, !=).
+El lenguaje soporta las operaciones aritméticas, las operaciones lógicas y las operaciones relacionales.
+
+### Operaciones Aritméticas
+
+Operación | Token
+---- | ----------- 
+Suma | +
+Resta | -
+Multiplicación | * 
+División | /
+
+### Operaciones Lógicas
+
+Operación | Token
+---- | ----------- 
+And | &
+Or | |
+
+### Operaciones Relacionales
+
+Operación | Token
+---- | ----------- 
+Menor Que | <
+Mayor Que | >
+Menor o Igual | <=
+Mayor o Igual | >=
+Igual Igual | ==
+Diferente | !=
 
 ## Comentarios
 El lenguaje soporta el uso de comentarios, que son “ignorados” por el compilador y éstos deben seguir dos símbolos de porcentaje (**%%**). No se cuenta con la funcionalidad de comentarios multilínea.
