@@ -32,7 +32,7 @@ int | Valor numérico entero positivo | 1, 2, 3, ...
 float | Valores numéricos decimales positivos | 1, 2.0, 6.4, ...
 char | Caracteres que representan una letra, número, etc. | 'a', 'b', 'c', ...
 
-*Los operadores unarios no son soportados en el lenguaje de forma explícita en una expresión. Para utilizar valores negativos es necesario recibirlas por parte del usuario y estar almacenados en una variable*
+*Los operadores unarios no son soportados en el lenguaje de forma explícita en una expresión. Para utilizar valores negativos es necesario recibirlos por parte del usuario y estar almacenados en una variable*
 
 ## Variables
 
@@ -48,6 +48,7 @@ El lenguaje soporta variables simples y dimensionadas, éstas últimas únicamen
 ```
 int id1[cte_i], id2, id3;
 ```
+*Cabe aclarar que siempre, a excepción de en la declaración, las Dimensiones son Expresiones aritméticas.*
 
 ### Declaración de Variables
 La declaración de variables comienza con la variable reservada **var**, seguido por el tipo y el id. Es posible declarar varios identificadores para el mismo tipo y éstas deben ir separadas por comas.
@@ -60,7 +61,7 @@ var
 ```
 
 ## Funciones
-La declaración de cada función comienza con la variable reservada **funcion**, seguido por el tipo de retorno, el nombre del módulo y los parámetros. Después, sigue la declaración de variables locales, que siguen la estructura descrita anteriormente. Las funciones declaradas con un tipo distinto a void deben contener un estatuto de retorno. 
+La declaración de cada función comienza con la variable reservada **funcion**, seguido por el tipo de retorno, el nombre del módulo y los parámetros. Después, está la declaración de variables locales, que siguen la estructura descrita anteriormente. Las funciones declaradas con un tipo distinto a void deben contener un estatuto de retorno. 
 
 El lenguaje también soporta las llamadas recursivas a la misma función y llamadas a otras funciones.
 
@@ -104,9 +105,32 @@ funcion int suma(int x, int y)
 ```
 
 ## Estatutos
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Los estatutos se declaran dentro de cada función.
 
-Please make sure to update tests as appropriate.
+### Asignación
+A un identificador (pudiera ser simple o una casilla de un elemento dimensionado) se le asigna el valor de una expresión. 
+
+* A un identificador, se le asigna el valor que regresa una función.
+
+Id<dimension> = Nombre_Módulo((<param1>, (<param2>,…);
+
+* A un identificador se le puede asignar el resultado de una expresión en donde se invoca a una función
+
+Id<dimension> = Nombre_Módulo(<param1>,..) + Id<dimension> – cte
+
+### Llamada a una Función Void
+
+### Retorno de una Función
+
+### Lectura
+
+### Escritura
+
+### Decisión (si... entonces ... sino)
+
+### Repetición Condicional (mientras... haz)
+
+### Repetición No-Condicional (desde... hasta... hacer)
 
 ## Expresiones
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
