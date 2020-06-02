@@ -112,11 +112,11 @@ A un identificador (pudiera ser simple o una casilla de un elemento dimensionado
 
 * A un identificador, se le asigna el valor que regresa una función.
 
-&nbsp;&nbsp;Id*[dimension]* = Nombre_Módulo((*param1*, (*param2*,…);
+&nbsp;&nbsp;Id*dimension* = Nombre_Módulo((*param1*, (*param2*,…);
 
 * A un identificador se le puede asignar el resultado de una expresión en donde se invoca a una función
 
-&nbsp;&nbsp;Id*[dimension]* = Nombre_Módulo(*param1*,..) + Id*[dimension]* – cte
+&nbsp;&nbsp;Id *dimension* = Nombre_Módulo(*param1*,..) + Id*dimension* – cte
 
 ```
 funcion float promedio()
@@ -138,7 +138,7 @@ principal()
 ### Llamada a una Función Void
 Se manda llamar una función que no regresa valor (caso de funciones void).
 
-&nbsp;&nbsp;Nombre_Módulo (<param1>,..);
+&nbsp;&nbsp;*Nombre_Módulo*(<param1>,..);
 
 ```
 funcion void inicia (int y)
@@ -163,7 +163,7 @@ principal()
 ### Retorno de una Función
 Este estatuto se encuentra únicamente en las funciones con un tipo distinto a void e indica el retorno de un valor.
 
-&nbsp;&nbsp;regresa(expresión);
+&nbsp;&nbsp;**regresa**(expresión);
 
 ```
 funcion float promedio(int a, float b, float c)
@@ -181,7 +181,7 @@ principal()
 ### Lectura
 Se puede leer uno ó más identificadores (con o sin dimensiones) separados por comas.
 
-&nbsp;&nbsp;lee ( id<dimension> , id<dimension> >....);
+&nbsp;&nbsp;**lee** ( id *dimension* , id *dimension* ....);
 
 ```
 funcion float promedio(int a, float b, float c)
@@ -202,7 +202,7 @@ principal()
 ### Escritura
 Se pueden escribir **letreros** y/ó **resultados de expresiones** separadas por comas.
 
-&nbsp;&nbsp;escribe ( "letrero" ó expresión<, "letrero" ó expresión>....);
+&nbsp;&nbsp;**escribe** ( "letrero" ó expresión<, "letrero" ó expresión>....);
 
 ### Decisión (si... entonces ... sino)
 El estatuto else es opcional, sin embargo, si se declara siempre debe seguir a un estatuto if.
@@ -230,10 +230,9 @@ Se repiten los estatutos mientras la expresión sea verdadera.
 
 ```
 mientras (x < 10) haz
-	{
-		x = x+1;
-	}
-
+{
+	x = x+1;
+}
 ```
 
 ### Repetición No-Condicional (desde... hasta... hacer)
