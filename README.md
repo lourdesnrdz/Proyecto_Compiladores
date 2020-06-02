@@ -112,56 +112,160 @@ A un identificador (pudiera ser simple o una casilla de un elemento dimensionado
 
 * A un identificador, se le asigna el valor que regresa una función.
 
-&nbsp;&nbsp;Id<dimension> = Nombre_Módulo((<param1>, (<param2>,…);
+&nbsp;&nbsp;Id*[dimension]* = Nombre_Módulo((*param1*, (*param2*,…);
 
 * A un identificador se le puede asignar el resultado de una expresión en donde se invoca a una función
 
-&nbsp;&nbsp;Id<dimension> = Nombre_Módulo(<param1>,..) + Id<dimension> – cte
+&nbsp;&nbsp;Id*[dimension]* = Nombre_Módulo(*param1*,..) + Id*[dimension]* – cte
+
+```
+funcion float promedio()
+{
+	regresa((a + c) / b)
+}
+
+principal()
+{
+	a = 4;
+	b = 2;
+	c = 6;
+	
+	prom = promedio();
+}
+
+```
 
 ### Llamada a una Función Void
 Se manda llamar una función que no regresa valor (caso de funciones void).
 
 &nbsp;&nbsp;Nombre_Módulo (<param1>,..);
 
+```
+funcion void inicia (int y)
+var int x;
+{
+	x = 0;
+	mientras (x < 10) haz
+	{
+		p = y * x;
+		x = x+1;
+	}
+}
+
+principal()
+{
+	inicia(5);
+	escribe("p:", p);
+}
+
+```
+
 ### Retorno de una Función
 Este estatuto se encuentra únicamente en las funciones con un tipo distinto a void e indica el retorno de un valor.
 
-&nbsp;&nbsp;regresa( exp );
+&nbsp;&nbsp;regresa(expresión);
+
+```
+funcion float promedio(int a, float b, float c)
+{
+	regresa((a + c) / b)
+}
+
+principal()
+{
+	prom = promedio(4, 2, 6);
+}
+
+```
 
 ### Lectura
 Se puede leer uno ó más identificadores (con o sin dimensiones) separados por comas.
 
 &nbsp;&nbsp;lee ( id<dimension> , id<dimension> >....);
 
+```
+funcion float promedio(int a, float b, float c)
+{
+	regresa((a + c) / b)
+}
+
+principal()
+{
+	lee(a);
+	lee(b);
+	lee(c);
+	prom = promedio(a, b, c);
+}
+
+```
+
 ### Escritura
-Se pueden escribir letreros y/ó resultados de expresiones separadas por comas.
+Se pueden escribir **letreros** y/ó **resultados de expresiones** separadas por comas.
 
 &nbsp;&nbsp;escribe ( "letrero" ó expresión<, "letrero" ó expresión>....);
 
 ### Decisión (si... entonces ... sino)
 El estatuto else es opcional, sin embargo, si se declara siempre debe seguir a un estatuto if.
 
-&nbsp;&nbsp;si (expresión) entonces
-&nbsp;&nbsp;&nbsp;{ <Estatutos> }
-&nbsp;&nbsp;sino
-&nbsp;&nbsp;&nbsp;{ <Estatutos> }
+&nbsp;&nbsp;**si**(expresión) **entonces**<br>
+&nbsp;&nbsp;&nbsp;{ *Estatutos* }<br>
+&nbsp;&nbsp;**sino**<br>
+&nbsp;&nbsp;&nbsp;{ *Estatutos* }
+
+```
+si (prom > 10) entonces 
+{
+	escribe("promedio mayor a 10");
+} 
+sino {
+	escribe("promedio menor a 10");
+}
+```
 
 ### Repetición Condicional (mientras... haz)
 Se repiten los estatutos mientras la expresión sea verdadera.
 
-&nbsp;&nbsp;mientras (expresión) haz
-&nbsp;&nbsp;&nbsp;{ <Estatutos> }
+&nbsp;&nbsp;**mientras**(expresión) **haz**<br>
+&nbsp;&nbsp;&nbsp;{ *Estatutos* }
+
+```
+mientras (x < 10) haz
+	{
+		x = x+1;
+	}
+
+```
 
 ### Repetición No-Condicional (desde... hasta... hacer)
-Se repite de *N* a *M* veces, brincando de 1 en 1.
+Se repite de **N** a **M** veces, brincando de 1 en 1.
 
-&nbsp;&nbsp;desde Id<dimensiones>= exp hasta exp hacer
-&nbsp;&nbsp;&nbsp;{ <Estatutos> }
+&nbsp;&nbsp;**desde** Id *dimensiones* = exp **hasta** exp **hacer** <br>
+&nbsp;&nbsp;&nbsp;{ *Estatutos* }
+
+```
+desde i = 0 hasta 9 hacer
+{ 
+	escribe("Escribe un número:");
+	lee(Arreglo[i]);
+}
+```
 
 ## Expresiones
 El lenguaje soporta las operaciones aritméticas (+, -, *, /), las operaciones lógicas (&, |) y las operaciones relacionales (<, >, <=, >=, ==, !=).
 
 ## Comentarios
-El lenguaje soporta el uso de comentarios, que son “ignorados” por el compilador y éstos deben seguir dos símbolos de porcentaje (*%%*). No se cuenta con la funcionalidad de comentarios multilínea.
+El lenguaje soporta el uso de comentarios, que son “ignorados” por el compilador y éstos deben seguir dos símbolos de porcentaje (**%%**). No se cuenta con la funcionalidad de comentarios multilínea.
 
-&nbsp;&nbsp;%% 
+```
+%%esta es la función inicia
+funcion void inicia (int y)
+var int x;
+{
+	x = 0;
+	mientras (x < 10) haz
+	{
+		p = y * x;
+		x = x+1;
+	}
+}
+```
