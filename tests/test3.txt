@@ -5,16 +5,6 @@ var
     %%dataframe DatosCovid;
     int VarCovid[100];
 
-funcion int fact (int j)
-var int i;
-{
-    i = j + (p - j * 2 + j);
-    si (j == 1) entonces
-        { regresa ( j ); }
-    sino
-        { regresa ( j * fact( j - 1 )); }
-}
-
 funcion void inicia (int y)
 var int x;
 {
@@ -22,13 +12,9 @@ var int x;
     mientras (x<10) haz
     {
         Arreglo[x] = y*x;
-	escribe("Arreglo x: ", Arreglo[x]);
+	    %%escribe("Arreglo x: ", Arreglo[x]);
         x = x+1;
     }
-    desde i = 0 hasta 9 hacer
-	{ 
-	Arreglo[i] = Arreglo[i] + fact(i);
-	}
 }
 
 
@@ -37,5 +23,8 @@ principal () {
     j = p*2;
     inicia (p*j-5);
     %%cargaArchivo(DatosCovid, "path", maxVariables, maxRenglones);
-    escribe("indice", Arreglo[1]);
+    desde i = 0 hasta 9 hacer
+    { 
+        escribe(Arreglo[i]);
+    }
 }

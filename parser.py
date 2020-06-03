@@ -732,7 +732,6 @@ def p_r_generate_parameter(p):
 	'''r_generate_parameter : '''
 
 	global op_stack, type_stack, quadruples, q_count, param_count
-	print(param_count)
 	# print(symbol_table[llamada_func]['params_length'])
 	if 'params_length' not in symbol_table[llamada_func]:
 		if param_count != 0:
@@ -1135,7 +1134,6 @@ def p_r_check_exp_type(p):
 	exp_type = type_stack.pop()
 	# si el tipo no es bool -> error
 	if(exp_type != 'bool'):
-		print(exp_type)
 		error( 'Type-mismatch: result type is not bool')
 	else:
 		# obtiene el resultado
