@@ -29,7 +29,7 @@ El lenguaje FA maneja únicamente 3 tipos de datos simples: **int**, **float**, 
 Tipo | Descripción | Ejemplo
 ---- | ----------- | -------
 int | Valor numérico entero positivo | 1, 2, 3, ...
-float | Valores numéricos decimales positivos | 1, 2.0, 6.4, ...
+float | Valores numéricos decimales positivos | 2.0, 6.4, 8.1, ...
 char | Caracteres que representan una letra, número, etc. | 'a', 'b', 'c', ...
 
 *Los operadores unarios no son soportados en el lenguaje de forma explícita en una expresión. Para utilizar valores negativos es necesario recibirlos por parte del usuario y estar almacenados en una variable*
@@ -132,7 +132,6 @@ principal()
 	
 	prom = promedio();
 }
-
 ```
 
 ### Llamada a una Función Void
@@ -157,7 +156,6 @@ principal()
 	inicia(5);
 	escribe("p:", p);
 }
-
 ```
 
 ### Retorno de una Función
@@ -175,7 +173,6 @@ principal()
 {
 	prom = promedio(4, 2, 6);
 }
-
 ```
 
 ### Lectura
@@ -196,13 +193,12 @@ principal()
 	lee(c);
 	prom = promedio(a, b, c);
 }
-
 ```
 
 ### Escritura
 Se pueden escribir **letreros** y/ó **resultados de expresiones** separadas por comas.
 
-&nbsp;&nbsp;**escribe** ( "letrero" ó expresión<, "letrero" ó expresión>....);
+&nbsp;&nbsp;**escribe** (*"letrero" ó expresión*, *"letrero" ó expresión*...);
 
 ```
 principal()

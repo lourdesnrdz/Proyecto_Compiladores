@@ -112,28 +112,25 @@ def t_CTE_CH(t):
     t.value = t.value[1:-1] # remuevo las comillas
     return t 
 
-# # Define a variable int
-# def t_CTE_I(t):
-#     r'\d+'
-#     t.value = int(t.value)
-#     return t
-
-# # Define a float number
-# def t_CTE_F(t):
-#     r'[0-9]+\.[0-9]+|[0-9]+'
-#     t.value = float(t.value)
-#     return t
-
 def t_CTE_F(t):
-  r'([0-9]*[.])?[0-9]+'
-  # si el numero ya es un entero
-  # se regresa el mismo numero entero
-  if int(math.floor(float(t.value))) == float(t.value):
-    t.value = int(t.value)
-    t.type = 'CTE_I'
-  else:
-    t.value = float(t.value)
-  return t
+	r'([0-9]*[.])?[0-9]+'
+	# si el numero ya es un entero
+	# se regresa el mismo numero entero
+	if int(math.floor(float(t.value))) == float(t.value):
+	# t.value = int(t.value)
+	# t.type = 'CTE_I'
+		try:
+			t.value = int(t.value)
+			t.type = 'CTE_I'
+		except ValueError:
+			# value error: si el valor termina 
+			#con .0 marca este error
+			#Ej. 2.0
+			# Entonces es float
+			t.value = float(t.value)
+	else:
+		t.value = float(t.value)
+	return t
 
 
 # OR
