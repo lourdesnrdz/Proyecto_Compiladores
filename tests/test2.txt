@@ -35,9 +35,4 @@ principal()
 	lee(v2);
 
 	escribe("Resultado:", calc());
-
-	desde i = 4 hasta 9 hacer
-	{
-		escribe("hola");
-	}
 }
