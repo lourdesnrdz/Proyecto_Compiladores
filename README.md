@@ -6,6 +6,16 @@ Forever Alone es un lenguaje procedural construido con Python en su versión 3.6
 
 El compilador utiliza los modulos lex.py y yacc.py de la herramienta [PLY](https://www.dabeaz.com/ply/ply.html) para el análisis del léxico y sintaxis. 
 
+## Ejecución
+
+Para utilizar el compilador es necesario descargar el proyecto, el scanner.py, parser.py, semantics_cube.py y vm.py deben estar en el mismo directorio. 
+
+Para ejecutar el compilador se debe abrir la terminar al directorio donde están los archivos anteriormente mencionados y correr el siguiente comando:
+
+```
+python3 vm.py <archivo>
+```
+
 ## Estructura General del Lenguaje
 
 Un programa que utiliza el lenguaje FA debe iniciar con la variable reservada **programa** y el nombre del programa, seguido por la declaración de variables globales, declaración de funciones y el procedimiento principal. Es obligatorio que el programa contenga el procedimiento principal.

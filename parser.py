@@ -251,7 +251,7 @@ def p_save_vars_name(p):
 
 	# checar si la variable ya existe dentro de la función
 	if var_name in list_vars:
-		error( 'Variable' + var_name + 'has already been declared')
+		error( 'Variable ' + var_name + ' has already been declared')
 
 	# si no existe, la agrega a la lista de variables
 	list_vars[var_name] = {
@@ -328,7 +328,7 @@ def p_r_is_array(p):
 	# saca el tipo de la pila de tipos
 	tipo = type_stack.pop()
 
-	if not symbol_table[parent_func]['vars'][var_name]['dim']:
+	if 'dim' not in symbol_table[parent_func]['vars'][var_name]:
 		error( "Variable is not an array")
 
 	# agrega la variable a la pila de dimensiones
@@ -640,7 +640,6 @@ def p_r_generate_gosub(p):
 		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Exceeded number of parameters for function ' + llamada_func)
-	
 
 	quad = ['GOSUB', None, None, llamada_func]
 	quadruples.append(quad)
@@ -688,7 +687,7 @@ def p_r_generate_gosub_dos(p):
 	if 'params_length' not in symbol_table[llamada_func]:
 		if param_count != 0:
 			error(llamada_func + ' does not receive parameters')
-	elif param_count < symbol_table[llamada_func]['params_length'] - 1:
+	elif param_count < symbol_table[llamada_func]['params_length']:
 		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Exceeded number of parameters for function ' + llamada_func)
@@ -734,6 +733,14 @@ def p_r_generate_parameter(p):
 	'''r_generate_parameter : '''
 
 	global op_stack, type_stack, quadruples, q_count, param_count
+	print(param_count)
+	# print(symbol_table[llamada_func]['params_length'])
+	if 'params_length' not in symbol_table[llamada_func]:
+		if param_count != 0:
+			error(llamada_func + ' does not receive parameters')
+	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
+		error( 'Exceeded number of parameters for function ' + llamada_func)
+	
 
 	# checa que la funcion sí reciba parametros
 	if 'params' not in symbol_table[llamada_func]:
@@ -1110,8 +1117,6 @@ def p_r_generate_quad_escr(p):
 
 		quadruples.append(quad)
 		q_count += 1
-	else:
-		error( 'Print action is not valid')
 
 # ESTATUTOS IF
 def p_decision(p):

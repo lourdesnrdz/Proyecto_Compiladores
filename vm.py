@@ -3,7 +3,7 @@ import parser as parser
 
 # función de error
 def error(message):
-	print(message)
+	print("Error: " + message)
 	sys.exit()
 
 if len(sys.argv) > 1:

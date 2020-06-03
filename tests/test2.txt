@@ -2,6 +2,7 @@ programa foreveralone;
 var
 	char op;
 	float v1, v2;
+	int i;
 
 funcion float calc ()
 {
@@ -34,4 +35,9 @@ principal()
 	lee(v2);
 
 	escribe("Resultado:", calc());
+
+	desde i = 4 hasta 9 hacer
+	{
+		escribe("hola");
+	}
 }
