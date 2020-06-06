@@ -686,7 +686,7 @@ def p_r_generate_gosub_dos(p):
 	if 'params_length' not in symbol_table[llamada_func]:
 		if param_count != 0:
 			error(llamada_func + ' does not receive parameters')
-	elif param_count < symbol_table[llamada_func]['params_length']:
+	elif param_count < symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Missing parameters for function ' + llamada_func)
 	elif param_count > symbol_table[llamada_func]['params_length'] - 1:
 		error( 'Exceeded number of parameters for function ' + llamada_func)
